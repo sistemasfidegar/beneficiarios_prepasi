@@ -12,30 +12,30 @@
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700'>
         
-        <link rel="stylesheet" href="../resources/bootstrap-3.3.6/css/bootstrap.min.css"> 
-        <link rel="stylesheet" href="../resources/formulario/css/jquery-ui.css">
-        <link rel="stylesheet" href="../resources/formulario/css/style.css">       
-        <link rel="stylesheet" href="../resources/formulario/numeric/jquery-numeric.css">   
+        <link rel="stylesheet" href="../../resources/bootstrap-3.3.6/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="../../resources/formulario/css/jquery-ui.css">
+        <link rel="stylesheet" href="../../resources/formulario/css/style.css">       
+        <link rel="stylesheet" href="../../resources/formulario/numeric/jquery-numeric.css">   
         <!--  <link rel="stylesheet" href="../resources/formulario/qtip/jquery.qtip.css">-->
 		
                  
          
-        <script type="text/javascript" src="../resources/js/jquery-1.12.0.min.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="../../resources/js/jquery-1.12.0.min.js" charset="UTF-8"></script>
         
         
-        <link rel="stylesheet" href="../resources/sweetalert/sweetalert.css">                            
-        <script type="text/javascript" src="../resources/sweetalert/sweetalert.min.js"></script>  
-        <script type="text/javascript" src="../resources/js/jquery.blockUI.js"></script>
-        <script type="text/javascript" src="../resources/formulario/js/bootbox.min.js"></script>
-        <script type="text/javascript" src="../resources/formulario/js/jquery-ui.js"></script>
-        <script type="text/javascript" src="../resources/formulario/js/jquery-validate.js"></script>
-        <script type="text/javascript" src="../resources/formulario/numeric/jquery-numeric.js"></script>
+        <link rel="stylesheet" href="../../resources/sweetalert/sweetalert.css">                            
+        <script type="text/javascript" src="../../resources/sweetalert/sweetalert.min.js"></script>  
+        <script type="text/javascript" src="../../resources/js/jquery.blockUI.js"></script>
+        <script type="text/javascript" src="../../resources/formulario/js/bootbox.min.js"></script>
+        <script type="text/javascript" src="../../resources/formulario/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="../../resources/formulario/js/jquery-validate.js"></script>
+        <script type="text/javascript" src="../../resources/formulario/numeric/jquery-numeric.js"></script>
         <!--<script type="text/javascript" src="../resources/formulario/qtip/jquery.qtip.js"></script>
           -->
-		<script type="text/javascript" src="../resources/bootstrap-3.3.6/js/bootstrap.js"></script>
+		<script type="text/javascript" src="../../resources/bootstrap-3.3.6/js/bootstrap.js"></script>
 				
-		<link href="../resources/formulario/css/bootstrap-toggle.min.css" rel="stylesheet">
-		<script type="text/javascript" src="../resources/formulario/js/bootstrap-toggle.min.js"></script>
+		<link href="../../resources/formulario/css/bootstrap-toggle.min.css" rel="stylesheet">
+		<script type="text/javascript" src="../../resources/formulario/js/bootstrap-toggle.min.js"></script>
        
         
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -46,7 +46,7 @@
          <style>
         
 	        .error {
-			    background: url("../resources/formulario/css/images/ui-bg_glass_95_fef1ec_1x400.png") repeat-x scroll 50% 50% #fef1ec !important;
+			    background: url("../../resources/formulario/css/images/ui-bg_glass_95_fef1ec_1x400.png") repeat-x scroll 50% 50% #fef1ec !important;
 			    border: 1px solid #cd0a0a !important;
 			    color: #cd0a0a;
 			}
@@ -104,6 +104,7 @@
 				  background-color: #C5C5C5;
 				  height: 2px; 
 				}
+			
         </style>
         
  <script type="text/javascript">
@@ -176,7 +177,7 @@
 			        rules: {
 			        	email1: {required : true, estructuraemail: true},
 			        	email2: {required: true, emailigual: true},
-			        	calle: "required",
+ 			        	calle: "required",
 			            noext: "required",
 			            
 			            matricula: "required",
@@ -188,6 +189,7 @@
 			            apellidoPadreP:"required",
 			            nombreMadre:"required",
 			            nombrePadre:"required",
+			            
 			        	id_estado_civil: "selectNone",
 			        	id_hijos: "selectNone",
 			        	id_ocupacion: "selectNone",
@@ -210,7 +212,7 @@
 			        	email2: {required: "Campo obligatorio", emailigual:"El email no coincide"},
 			        	calle: {required: "Campo obligatorio"},
 			            noext: {required: "Campo obligatorio"},
-			            
+			           
 			            matricula: {required: "Campo obligatorio"},
 			            materias: {required: "Campo obligatorio"},
 			            celular:  {required: "Campo obligatorio"}
@@ -228,7 +230,7 @@
 			                }, true);
 			            }
 			            //this.currentElements.removeAttr("title").removeClass("ui-state-error1");
-			            this.currentElements.css(  {"border-style":"solid","border-color":"#A4A4A4", "border-width":"1px"});
+			            this.currentElements.css(  {"border-style":"solid","border-color":"#A4A4A4","border-width":"1px"});
 			            
 			            $.each(list, function (index, error) {
 			            	 //$(error.element).css( "border-color", "red","border-style:dashed" );
@@ -254,32 +256,32 @@
 				            return true;
 				     },"Debe seleccionar una opción"
 				 );
+		 
 		 jQuery.validator.addMethod("emailigual",function (value, element)
 					{
-							var email2=$('#email1').val().toString();
-							if (element.value != email2)
-									return false;
-					        else 
-						            return true;
-										     },"El email no coincide"
-						);
+						var email2=$('#email1').val().toString();
+						if (element.value != email2)
+							return false;
+						 else 
+						    return true;
+						},"El email no coincide");
+								
+				 jQuery.validator.addMethod("estructuraemail",function (value, element)
+					{
+					 //console.log(value);
+					 var patron=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 						
-		 jQuery.validator.addMethod("estructuraemail",function (value, element)
-			{
-			 //console.log(value);
-			 var patron=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-				
-				if (patron.test(element.value)){
+						if (patron.test(element.value)){
+							
+								return true;
+						}
+						else{
+								return false;
+						}
+					},"Introduce un email valido");
+
 					
-						return true;
-				}
-				else{
-						return false;
-				}
-			},"Introduce un email valido"
-			);
-			
-		 $("#registra_beneficiario").validate(rules_form);
+		$("#registra_beneficiario").validate(rules_form);
 
 		$("#id_delegacion").change(function () {
 			var delegacion = $("#id_delegacion option:selected").val();
@@ -318,10 +320,9 @@
 		});
 		 
 		 $("#guardar").click(function ()
-					{ 
-						
-				 	 if($('#registra_beneficiario').valid()) 
-					     {
+		{ 
+			if($('#registra_beneficiario').valid()) 
+			{
 					 
 							 $.blockUI({message: 'Procesando por favor espere...'});
 				             $.ajax({
@@ -329,7 +330,7 @@
 				                 url: $('#registra_beneficiario').attr("action"),
 				                 data: $('#registra_beneficiario').serialize(),
 				                 success: function (data) {
-									//console.log(data);
+
 				                     $.unblockUI();
 				                     if(data === 'ok')
 				                     {
@@ -345,9 +346,9 @@
 				                          	  //closeOnCancel: false
 				                          	},
 				                          	function(isConfirm){
-// 				                          	  if (isConfirm) {
-// 				                          		irA('index.php/registro/registrado');
-// 				                          	  } 
+				                          	  if (isConfirm) {
+				                          		irA('index.php/registro_uni/registrado');
+				                          	  } 
 				                          	});
 				                     }
 				                     else
@@ -364,9 +365,9 @@
 				                         	  //closeOnCancel: false
 				                         	},
 				                         	function(isConfirm){
-// 				                         	  if (isConfirm) {
-// 				                         		 irA('index.php/registro/registrado');
-// 				                         	  } 
+				                         	  if (isConfirm) {
+				                         		 irA('index.php/registro_uni/registrado');
+				                         	  } 
 				                         	});
 				                     }
 				                 }
@@ -379,7 +380,12 @@
 		 $("#noint").numeric();
 		 $("#celular").numeric();
 		 $("#materias").numeric();
+		
+		 
 		// $("#").numeric();
+
+
+		
 				    
 		}); //fin ready
 		 
@@ -387,7 +393,7 @@
 	        window.location.href = '<?php echo base_url(); ?>' + uri;
 	        
 	    }  
-		   
+		
       
 		</script>
         
@@ -398,10 +404,10 @@
         <div class="register-container container">
             <div class="row">                
                 <div class="register">
-                    <form role="form" id="registra_beneficiario" name="registra_beneficiario" action="registro/guardaInscripcion" method="post">
+                    <form role="form" id="registra_beneficiario" name="registra_beneficiario" action="guardaUniversitario" method="post">
                     
                         <div style="text-align:left; padding-left:20px; border-bottom: 2px dotted #bbb; min-height:73px;">
-                        	<img src="../resources/formulario/img/logo_gdf_fidegar.png" style="padding-top:10px;" align="top" />&nbsp;
+                        	<img src="../../resources/formulario/img/logo_gdf_fidegar.png" style="padding-top:10px;" align="top" />&nbsp;
                         	<!-- <img src="../resources/formulario/img/tit_sistema.png" style="padding-top:10px;" align="top" />  -->                        	
                         </div>
                         
@@ -410,18 +416,22 @@
 	                    
 		                        <div style="text-align:left !important;"><label class="leyenda" style="color:#E6007E; padding-left:20px;">Datos Personales</label></div>	
 		                        <div style="text-align:center !important;">
-		                        
+		                        <div class="form-group">
+		                        	<input type="hidden" id="matricula_ps" name="matricula_ps" value="<?php echo $matricula;?>">
+		                        	<input type="hidden" id="id_institucion" name="id_institucion" value="<?php echo $id_institucion;?>">
+		                        	
+		                        </div>
 		                        <div class="form-group">
 								    
 		                        	<table width="100%" border="0">		                        	
 		                        		<tr>		                        			
 		                        			<td colspan="5" height="41px" align="center" valign="top" style="font-size:24px; font-weight:bold; color:#e6007e;">
-		                        				<?php echo $strNombre." ".$strAp." ".$strAm;?>
-		                        				<input type="hidden" id="nombre" name="nombre" value="<?php echo $strNombre;?>">
-		                        				<input type="hidden" id="ap_p" name="ap_p" value="<?php echo $strAp;?>">
-		                        				<input type="hidden" id="ap_m" name="ap_m" value="<?php echo $strAm;?>">
+		                        				<?php echo $nombre." ".$ap." ".$am;?>
+		                        				<input type="hidden" id="nombre" name="nombre" value="<?php echo $nombre;?>">
+		                        				<input type="hidden" id="ap" name="ap" value="<?php echo $ap;?>">
+		                        				<input type="hidden" id="am" name="am" value="<?php echo $am;?>">
 		                        				
-		                        			</td>		                        		
+		                        			</td>
 		                        		</tr>
 		                        		
 		                        		<tr>
@@ -438,15 +448,16 @@
 		                        		</tr>
 		                        	
 		                        		<tr>		                        			
-		                        			<td width="20%" align="center"><?php echo $strCurp;?><input type="hidden" id="curp" name="curp" value="<?php echo $strCurp;?>"></td>
+		                        			<td width="20%" align="center"><?php echo $curp;?><input type="hidden" id="curp" name="curp" value="<?php echo $curp;?>"></td>
 		                        			
-		                        			<td width="20%" align="center"> <?php echo $diaNac."/".$mesNac."/".$anioNac;?><input type="hidden" id="fecha_nac" name="fecha_nac" value="<?php echo $diaNac."/".$mesNac."/".$anioNac;?>"></td>
+		                        			<td width="20%" align="center"> <?php echo $fecha_nac;?><input type="hidden" id="fecha_nac" name="fecha_nac" value="<?php echo $fecha_nac;?>"></td>
 		                        			
-		                        			<td width="20%" align="center"><?php echo $strEntidad;?><input type="hidden" id="lugar_nac" name="lugar_nac" value="<?php echo $idEntidad;?>"></td>
+		                        			<td width="20%" align="center"><?php echo $lugar_nac;?><input type="hidden" id="lugar_nac" name="lugar_nac" value="<?php echo $lugar_nac;?>">
+		                        			</td>
 		                        			
 		                        			<td width="20%" align="center"><?php echo $edad;?><input type="hidden" id="edad" name="edad" value="<?php echo $edad;?>"></td>
 		                        			
-		                        			<td width="20%" align="center"> <?php echo $strGenero;?><input type="hidden" id="sexo" name="sexo" value="<?php echo $strIdGenero;?>"></td>
+		                        			<td width="20%" align="center"> <?php if($sexo==1){echo 'HOMBRE';}elseif($sexo==2){echo 'MUJER';}?><input type="hidden" id="sexo" name="sexo" value="<?php echo $sexo;?>"></td>
 		                        			
 		                        		</tr>
 		                        	</table>
@@ -471,15 +482,15 @@
 					                        	<br />
 					                        	<table width="100%" border="0">	
 					                        		<tr>
-					                        			<td width="30%" align="center" valign="top" ><label>Discapacidad:</label></td>	
+					                        			<td width="30%" align="center" valign="top"><label>Discapacidad:</label></td>	
 					                        					                        					                        			
 					                        			<td width="" align="left">
 					                        				<select id="id_discapacidad" name="id_discapacidad" class="form-control" style="width: 50%;">
 					                        					<option value="0">SIN DISCAPACIDAD</option>
-					                        					<option value="1">AUDITIVA</option>
-																<option value="2">MOTRIZ</option>
-																<option value="3">INTELECTUAL</option>
-																<option value="4">VISUAL</option>
+					                        					<option <?php if($dato['id_discapacidad']==1){ echo "selected='selected'";} ?>value="1">AUDITIVA</option>
+																<option <?php if($dato['id_discapacidad']==2){ echo "selected='selected'";} ?>value="2">MOTRIZ</option>
+																<option <?php if($dato['id_discapacidad']==3){ echo "selected='selected'";} ?>value="3">INTELECTUAL</option>
+																<option <?php if($dato['id_discapacidad']==4){ echo "selected='selected'";} ?>value="4">VISUAL</option>
 															</select>
 					                        			</td>		                        					                        					                        			
 					                        		</tr>	                        			                        				                        				                        		
@@ -506,9 +517,14 @@
 				                        					                        					                        			
 				                        			<td width="" align="left">
 				                        				<select id="id_etnia" name="id_etnia" class="form-control" style="width: 50%;">
-				                        					<option value="0">[Seleccionar]</option>
-				                        					<?php foreach ($grupo_etnico as $value){?>
-				                        					<option value="<?php echo $value['id_grupo_etnico'];?>"><?php echo $value['grupo_etnico'];?></option>
+				                        					<option value="-1">[Seleccionar]</option>
+				                        					<?php 
+				                        						foreach ($grupo_etnico as $value){
+				                        							$selected="";
+				                        							if(in_array($dato['id_grupo_etnico'],$value))
+				                        								$selected="selected";
+				                        					?>
+				                        					<option value="<?php echo $value['id_grupo_etnico'];?>" <?php echo $selected;?>><?php echo $value['grupo_etnico'];?></option>
 				                        					<?php }?>		                        					
 				                        				</select>
 				                        			</td>		                        					                        					                        			
@@ -525,56 +541,56 @@
 		                        			<td width="33%" align="center">
 		                        				<select id="id_estado_civil" name="id_estado_civil" class="form-control" style="width: 50%;">
 		                        					
-		                        					<option value="1">Soltero(a)</option>
-													<option value="2">Casado(a)</option>
-													<option value="3">Divorciado(a)</option>
-													<option value="4">Viudo(a)</option>
-													<option value="5">Union libre</option>
-													<option value="99">No sabe/sin respuesta</option>
+		                        					<option <?php if($dato['id_estado_civil']==1){ echo "selected='selected'";} ?>value="1">Soltero(a)</option>
+													<option <?php if($dato['id_estado_civil']==2){ echo "selected='selected'";} ?>value="2">Casado(a)</option>
+													<option <?php if($dato['id_estado_civil']==3){ echo "selected='selected'";} ?>value="3">Divorciado(a)</option>
+													<option <?php if($dato['id_estado_civil']==4){ echo "selected='selected'";} ?>value="4">Viudo(a)</option>
+													<option <?php if($dato['id_estado_civil']==5){ echo "selected='selected'";} ?>value="5">Union libre</option>
+												<!--<option value="99">No sabe/sin respuesta</option>  -->
 		                        					
 		                        				</select>
 		                        			</td>
 		                        			
 		                        			<td width="33%" align="center">
 		                        				<select id="id_hijos" name="id_hijos" class="form-control" style="width: 50%;">
-		                        					<option value="0"> Sin hijos </option>
-		                        					<option value="1">Uno</option>
-													<option value="2">Dos</option>
-													<option value="3">Tres</option>
-													<option value="4">Cuatro</option>
-													<option value="5">Cinco</option>
-													<option value="6">Seis</option>
-													<option value="7">Siete</option>
-													<option value="8">Ocho</option>
-													<option value="9">Nueve</option>
-													<option value="10">Diez</option>
+		                        					<option <?php if($dato['id_hijos']==0){ echo "selected='selected'";} ?> value="0"> Sin hijos </option>
+		                        					<option <?php if($dato['id_hijos']==1){ echo "selected='selected'";} ?> value="1">Uno</option>
+													<option <?php if($dato['id_hijos']==2){ echo "selected='selected'";} ?> value="2">Dos</option>
+													<option <?php if($dato['id_hijos']==3){ echo "selected='selected'";} ?> value="3">Tres</option>
+													<option <?php if($dato['id_hijos']==4){ echo "selected='selected'";} ?> value="4">Cuatro</option>
+													<option <?php if($dato['id_hijos']==5){ echo "selected='selected'";} ?> value="5">Cinco</option>
+													<option <?php if($dato['id_hijos']==6){ echo "selected='selected'";} ?> value="6">Seis</option>
+													<option <?php if($dato['id_hijos']==7){ echo "selected='selected'";} ?> value="7">Siete</option>
+													<option <?php if($dato['id_hijos']==8){ echo "selected='selected'";} ?> value="8">Ocho</option>
+													<option <?php if($dato['id_hijos']==9){ echo "selected='selected'";} ?> value="9">Nueve</option>
+													<option <?php if($dato['id_hijos']==10){ echo "selected='selected'";} ?> value="10">Diez</option>
 													
 		                        				</select>
 		                        			</td>
 		                        			
 		                        			<td width="33%" align="center">
 		                        				<select id="id_ocupacion" name="id_ocupacion" class="form-control" style="width: 50%;">
-		                        					<option value="2">Estudiante</option>
-		                        					<option value="1">Tareas del hogar</option>
-													
-													<option value="3">Artesano(a), obrero(a), trabajador(a) en actividades industriales o manuales</option>
-													<option value="4">Empleado(a) de oficina o trabajador(a) en actividades administrativas o de servicios</option>
-													<option value="5">Comerciante o empleado(a) de comercio</option>
-													<option value="6">Trabajador(a) en actividades agrícolas</option>
-													<option value="7">Trabajador(a) en servicios domésticos</option>
-													<option value="8">Vendedor(a) ambulante</option>
-													<option value="9">Trabajador(a) por cuenta propia</option>
-													<option value="10">Conductor(a) de medio de transporte</option>
-													<option value="11">Trabajador(a) en servicios de seguridad y fuerzas armadas</option>
-													<option value="12">Maestro(a) docente o trabajador(a) de la educación</option>
-													<option value="13">Profesionista o técnico(a) independiente</option>
-													<option value="14">Lider o directivo(a) del sector social o civil</option>
-													<option value="15">Funcionario(a) del sector público</option>
-													<option value="16">Empresario(a), gerente o directivo(a) de empresa</option>
-													<option value="17">Jubilado(a)/pensionado(a)</option>
-													<option value="18">Desempleado(a)/buscador(a) de trabajo</option>
-													<option value="19">Otra ocupación no especificada</option>
-													<option value="99">No sabe/sin respuesta</option>
+		                        					<option value="-1">- Selecciona -</option>
+		                        					<option <?php if($dato['id_ocupacion']==1){ echo "selected='selected'";} ?> value="1">Tareas del hogar
+													<option <?php if($dato['id_ocupacion']==2){ echo "selected='selected'";} ?> value="2">Estudiante
+													<option <?php if($dato['id_ocupacion']==3){ echo "selected='selected'";} ?> value="3">Artesano(a), obrero(a), trabajador(a) en actividades industriales o manuales
+													<option <?php if($dato['id_ocupacion']==4){ echo "selected='selected'";} ?> value="4">Empleado(a) de oficina o trabajador(a) en actividades administrativas o de servicios
+													<option <?php if($dato['id_ocupacion']==5){ echo "selected='selected'";} ?> value="5">Comerciante o empleado(a) de comercio
+													<option <?php if($dato['id_ocupacion']==6){ echo "selected='selected'";} ?> value="6">Trabajador(a) en actividades agrícolas
+													<option <?php if($dato['id_ocupacion']==7){ echo "selected='selected'";} ?> value="7">Trabajador(a) en servicios domésticos
+													<option <?php if($dato['id_ocupacion']==8){ echo "selected='selected'";} ?> value="8">Vendedor(a) ambulante
+													<option <?php if($dato['id_ocupacion']==9){ echo "selected='selected'";} ?> value="9">Trabajador(a) por cuenta propia
+													<option <?php if($dato['id_ocupacion']==10){ echo "selected='selected'";} ?> value="10">Conductor(a) de medio de transporte
+													<option <?php if($dato['id_ocupacion']==11){ echo "selected='selected'";} ?> value="11">Trabajador(a) en servicios de seguridad y fuerzas armadas
+													<option <?php if($dato['id_ocupacion']==12){ echo "selected='selected'";} ?> value="12">Maestro(a) docente o trabajador(a) de la educación
+													<option <?php if($dato['id_ocupacion']==13){ echo "selected='selected'";} ?> value="13">Profesionista o técnico(a) independiente
+													<option <?php if($dato['id_ocupacion']==14){ echo "selected='selected'";} ?> value="14">Lider o directivo(a) del sector social o civil
+													<option <?php if($dato['id_ocupacion']==15){ echo "selected='selected'";} ?> value="15">Funcionario(a) del sector público
+													<option <?php if($dato['id_ocupacion']==16){ echo "selected='selected'";} ?> value="16">Empresario(a), gerente o directivo(a) de empresa
+													<option <?php if($dato['id_ocupacion']==17){ echo "selected='selected'";} ?> value="17">Jubilado(a)/pensionado(a)
+													<option <?php if($dato['id_ocupacion']==18){ echo "selected='selected'";} ?> value="18">Desempleado(a)/buscador(a) de trabajo
+													<option <?php if($dato['id_ocupacion']==19){ echo "selected='selected'";} ?> value="19">Otra ocupación no especificada
+												<!--<option value="99">No sabe/sin respuesta  -->
 		                        				</select>
 		                        			</td>
 		                        		</tr>	                        			                        				                        		
@@ -593,20 +609,20 @@
 		                        		<tr>
 		                        			<td  width="50%" align="center">
 		                        				<div class="grupo">
-		                        					<input type="text" style="text-transform:uppercase;"  id="email1" name="email1" placeholder="Correo electrónico" value="" title="flower" class="form-control"><!-- placeholder="Correo electrónico" -->
+		                        					<input type="text"   id="email1" name="email1" style="text-transform:uppercase;" placeholder="Correo electrónico" value="<?php echo $dato['email'];?>" title="flower" class="form-control"><!-- placeholder="Correo electrónico" -->
 		                        				</div>
 		                        			</td>
 		                        			
 		                        			<td  width="50%" align="center">
 		                        				<div class="grupo">
-		                        					<input type="text" style="text-transform:uppercase;" id="email2" name="email2"  placeholder="Confirma tu correo electrónico" value="" class="form-control"><!-- placeholder="Confirma tu correo electrónico" -->
+		                        					<input type="text"  id="email2" name="email2"  style="text-transform:uppercase;" placeholder="Confirma tu correo electrónico" value="" class="form-control"><!-- placeholder="Confirma tu correo electrónico" -->
 		                        				</div>
 		                        			</td>		                        					                        					                        			
 		                        		</tr>	                        			                        				                        		
 		                        		<tr>
 		                        			<td align="center" style="color:red;" valign="top"><label>*Correo electrónico</label></td>
 		                        			
-		                        			<td align="center" style="color:red;" valign="top"><label>*Confirma tu correo electrónico</label></td>		                        					                        					                        			
+		                        			<td align="center"  style="color:red;"valign="top"><label>*Confirma tu correo electrónico</label></td>		                        					                        					                        			
 		                        		</tr>
 		                        	</table>
 		                        		
@@ -629,33 +645,40 @@
 			                        	<td align="center"  width="30%">
 				                        	<select id="id_delegacion" name="id_delegacion" class="form-control" style="width: 80%;">
 				                        		<option value="-1">[Seleccionar]</option>
-				                        		<option value="10">Álvaro Obregón</option>
-												<option value="2">Azcapotzalco</option>
-												<option value="14">Benito Juárez</option>
-												<option value="3">Coyoacán</option>
-												<option value="4">Cuajimalpa de Morelos</option>
-												<option value="15">Cuauhtémoc</option>
-												<option value="5">Gustavo A. Madero</option>
-												<option value="6">Iztacalco</option>
-												<option value="7">Iztapalapa</option>
-												<option value="8">La Magdalena Contreras</option>
-												<option value="16">Miguel Hidalgo</option>
-												<option value="9">Milpa Alta</option>
-												<option value="11">Tlahuac</option>
-												<option value="12">Tlalpan</option>
-												<option value="17">Venustiano Carranza</option>
-												<option value="13">Xochimilco</option>
+				                        		<option <?php if($del['id_delegacion']==10){ echo "selected='selected'";} ?> value="10">Álvaro Obregón</option>
+												<option <?php if($del['id_delegacion']==2) { echo "selected='selected'";} ?> value="2">Azcapotzalco</option>
+												<option <?php if($del['id_delegacion']==14){ echo "selected='selected'";} ?> value="14">Benito Juárez</option>
+												<option <?php if($del['id_delegacion']==3) { echo "selected='selected'";} ?> value="3">Coyoacán</option>
+												<option <?php if($del['id_delegacion']==4) { echo "selected='selected'";} ?> value="4">Cuajimalpa de Morelos</option>
+												<option <?php if($del['id_delegacion']==15){ echo "selected='selected'";} ?> value="15">Cuauhtémoc</option>
+												<option <?php if($del['id_delegacion']==5) { echo "selected='selected'";} ?> value="5">Gustavo A. Madero</option>
+												<option <?php if($del['id_delegacion']==6) { echo "selected='selected'";} ?> value="6">Iztacalco</option>
+												<option <?php if($del['id_delegacion']==7) { echo "selected='selected'";} ?> value="7">Iztapalapa</option>
+												<option <?php if($del['id_delegacion']==8) { echo "selected='selected'";} ?> value="8">La Magdalena Contreras</option>
+												<option <?php if($del['id_delegacion']==16){ echo "selected='selected'";} ?> value="16">Miguel Hidalgo</option>
+												<option <?php if($del['id_delegacion']==9) { echo "selected='selected'";} ?> value="9">Milpa Alta</option>
+												<option <?php if($del['id_delegacion']==11){ echo "selected='selected'";} ?> value="11">Tlahuac</option>
+												<option <?php if($del['id_delegacion']==12){ echo "selected='selected'";} ?> value="12">Tlalpan</option>
+												<option <?php if($del['id_delegacion']==17){ echo "selected='selected'";} ?> value="17">Venustiano Carranza</option>
+												<option <?php if($del['id_delegacion']==13){ echo "selected='selected'";} ?> value="13">Xochimilco</option>
 				                        	</select>
 				                        </td>
 				                        
 			                        	<td align="center" width="30%">
 				                        	<select id="id_colonia" name="id_colonia" class="form-control" width="80%" style="width: 80%;">
 				                        		<option value="-1">[Seleccionar]</option>
-					                        	
+				                        		<?php
+				                        			foreach ($colonias as $value){
+				                        				$selected="";
+						                        		if(in_array($dato['id_colonia'],$value))
+						                        			$selected="selected";
+						                        	?>
+						                        		<option value="<?php echo $value['id_colonia']?>" <?php echo $selected;?>><?php echo $value['colonia']?></option>
+						                        	<?php }?>
 					                        </select>
 			                        	</td>
 			                        	
-			                        	<td align="center" width="15%"><input type="text" id="id_cp" name="id_cp" placeholder="     código postal" value="" style="width: 80%;" readonly></td>
+			                        	<td align="center" width="15%"><input type="text" id="id_cp" name="id_cp" placeholder="     código postal" value="<?php echo $del['cp'];?>" style="width: 80%;" readonly></td>
 			                        	
 			                        	
 			                        </tr>
@@ -677,24 +700,24 @@
 			                        </tr>
 			                        <tr>
 			                       		
-			                        	<td align="center"  width="30%"><div class="grupo"><input type="text" style="text-transform:uppercase;" id="calle" name="calle" placeholder="Calle" value="" style="width: 100%;" ></div></td>
+			                        	<td align="center"  width="30%"><div class="grupo"><input type="text" id="calle" name="calle" style="text-transform:uppercase;" placeholder="Calle" value="<?php echo $dato['calle'];?>" style="width: 100%;" ></div></td>
 			                        	<td rowspan="2" width="1%"></td>
-			                        	<td width="5%"><input type="text" id="noext" name="noext"  style="width: 90%;" value=""></td>
+			                        	<td width="5%"><input type="text" id="noext" name="noext"  style="width: 90%;" value="<?php echo $dato['noext'];?>"></td>
 			                        	<td width="1%"></td>
-			                        	<td width="5%"><input type="text" id="noint" name="noint"  style="width: 90%;" value=""></td>
+			                        	<td width="5%"><input type="text" id="noint" name="noint"  style="width: 90%;" value="<?php echo $dato['noint'];?>"></td>
 				                        <td align="center" width="20%">
 				                        	<div class="grupo">
 				                        	<select id="id_residencia" name="id_residencia" class="form-control" style="width: 80%;">
 					                        	<option value="-1">[Seleccionar]</option>
-					                        	<option value="1">Menos de 6 meses</option>
-												<option value="2">6 meses a 1 año</option>
-												<option value="3">1 a 3 años</option>
-												<option value="4">3 a 5 años</option>
-												<option value="5">5 a 8 años</option>
-												<option value="6">8 a 12 años</option>
-												<option value="7">12 a 20 años</option>
-												<option value="8">20 años o mas</option>
-												<option value="99">No sabe/sin respuesta</option>
+					                        	<option <?php if($dato['id_tiempo_residencia']==1){ echo "selected='selected'";} ?> value="1">Menos de 6 meses</option>
+												<option <?php if($dato['id_tiempo_residencia']==2){ echo "selected='selected'";} ?> value="2">6 meses a 1 año</option>
+												<option <?php if($dato['id_tiempo_residencia']==3){ echo "selected='selected'";} ?> value="3">1 a 3 años</option>
+												<option <?php if($dato['id_tiempo_residencia']==4){ echo "selected='selected'";} ?> value="4">3 a 5 años</option>
+												<option <?php if($dato['id_tiempo_residencia']==5){ echo "selected='selected'";} ?> value="5">5 a 8 años</option>
+												<option <?php if($dato['id_tiempo_residencia']==6){ echo "selected='selected'";} ?> value="6">8 a 12 años</option>
+												<option <?php if($dato['id_tiempo_residencia']==7){ echo "selected='selected'";} ?> value="7">12 a 20 años</option>
+												<option <?php if($dato['id_tiempo_residencia']==8){ echo "selected='selected'";} ?> value="8">20 años o mas</option>
+												 <!-- <option value="99">No sabe/sin respuesta</option> -->
 					                        </select>
 					                        </div>
 			                        	</td>
@@ -711,8 +734,8 @@
 			                        	<td align="center" ><label>y la Calle</label></td>
 			                        </tr>
 			                        <tr>
-		                        		<td  width="50%" align="center"><input type="text" style="text-transform:uppercase;" id="ecalle" name="ecalle"  value=""></td>
-		                        		<td  width="50%" align="center"><input type="text" style="text-transform:uppercase;" id="ycalle" name="ycalle"  value=""></td>		                        					                        					                        			
+		                        		<td  width="50%" align="center"><input type="text" style="text-transform:uppercase;" id="ecalle" name="ecalle"  value="<?php echo $dato['ecalle'];?>"></td>
+		                        		<td  width="50%" align="center"><input type="text" style="text-transform:uppercase;" id="ycalle" name="ycalle"  value="<?php echo $dato['ycalle'];?>"></td>		                        					                        					                        			
 		                        	</tr>
 		                       	
 		                       	</table>
@@ -728,25 +751,25 @@
 				                    <td align="center"><label>Rampa</label></td>
 			                   	</tr>
 			                   	<tr>
-			                        <td width="3%"><input type="text" id="edificio" name="edificio"  style="width: 90%;" value=""></td>
-			                        <td width="3%"><input type="text" id="departamento" name="departamento"  style="width: 90%;" value=""></td>
-			                        <td width="3%"><input type="text" id="manzana" name="manzana"  style="width: 90%;" value=""></td>
-			                        <td width="3%"><input type="text" id="lote" name="lote"  style="width: 90%;" value=""></td>
-			                        <td width="3%"><input type="text" id="rampa" name="rampa"  style="width: 90%;" value=""></td>
+			                        <td width="3%"><input type="text" id="edificio" name="edificio"  style="width: 90%;" value="<?php echo $dato['edificio'];?>"></td>
+			                        <td width="3%"><input type="text" id="departamento" name="departamento"  style="width: 90%;" value="<?php echo $dato['departamento'];?>"></td>
+			                        <td width="3%"><input type="text" id="manzana" name="manzana"  style="width: 90%;" value="<?php echo $dato['manzana'];?>"></td>
+			                        <td width="3%"><input type="text" id="lote" name="lote"  style="width: 90%;" value="<?php echo $dato['lote'];?>"></td>
+			                        <td width="3%"><input type="text" id="rampa" name="rampa"  style="width: 90%;" value="<?php echo $dato['rampa'];?>"></td>
 			                   	</tr>
 			                   	<tr>
 			                   		<td align="center"><label>Andador</label></td>
 			                   		<td align="center"><label>Pasillo</label></td>
 				                    <td align="center"><label>Villa</label></td>
 				                    <td align="center"><label>Entrada</label></td>
-				                    <td align="center" style="color:red;"><label>*Celular</label></td>
+				                    <td align="center"><label>Celular</label></td>
 			                   	</tr>
 			                   	<tr>
-			                   		<td width="3%"><input type="text" id="andador" name="andador"  style="width: 90%;" value=""></td>
-			                        <td width="3%"><input type="text" id="pasillo" name="pasillo"  style="width: 90%;" value=""></td>
-			                        <td width="3%"><input type="text" id="villa" name="villa"  style="width: 90%;" value=""></td>
-			                        <td width="3%"><input type="text" id="entrada" name="entrada"  style="width: 90%;" value=""></td>
-			                        <td width="3%">044-55<input type="text" id="celular" name="celular"  maxlength="8" style="width: 70%;" value=""></td>
+			                   		<td width="3%"><input type="text" id="andador" name="andador"  style="width: 90%;" value="<?php echo $dato['andador'];?>"></td>
+			                        <td width="3%"><input type="text" id="pasillo" name="pasillo"  style="width: 90%;" value="<?php echo $dato['pasillo'];?>"></td>
+			                        <td width="3%"><input type="text" id="villa" name="villa"  style="width: 90%;" value="<?php echo $dato['villa'];?>"></td>
+			                        <td width="3%"><input type="text" id="entrada" name="entrada"  style="width: 90%;" value="<?php echo $dato['entrada'];?>"></td>
+			                        <td width="3%">044-55<input type="text" id="celular" name="celular"  maxlength="8" style="width: 70%;" value="<?php echo $dato['celular'];?>"></td>
 			                   	</tr>
 		                   	</table>
 		                   </div>
@@ -765,9 +788,9 @@
 					                   	</tr>
 		                       			<tr>
 		                       				
-		                       				<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoPadreP" name="apellidoPadreP"  placeholder="Apellido Paterno" value=""></td>
-		                        			<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoPadreM" name="apellidoPadreM"  placeholder="Apellido Materno" value=""></td>
-		                        			<td  width="15%" align="center" ><input type="text" style="text-transform:uppercase;" id="nombrePadre" name="nombrePadre"  placeholder="Nombre" value=""></td>
+		                       				<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoPadreP" name="apellidoPadreP"  placeholder="Apellido Paterno" value="<?php echo $dato['ap_p'];?>"></td>
+		                        			<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoPadreM" name="apellidoPadreM"  placeholder="Apellido Materno" value="<?php echo $dato['am_p'];?>"></td>
+		                        			<td  width="15%" align="center" ><input type="text" style="text-transform:uppercase;" id="nombrePadre" name="nombrePadre"  placeholder="Nombre" value="<?php echo $dato['nombre_p'];?>"></td>
 		                        				
 		                        		
 		                       			</tr>
@@ -779,9 +802,9 @@
 						                </tr>
 		                       			<tr>
 		                       			
-		                       				<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoMadreP" name="apellidoMadreP"  placeholder="Apellido Paterno" value=""></td>
-		                        			<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoMadreM" name="apellidoMadreM"  placeholder="Apellido Materno" value=""></td>
-		                        			<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="nombreMadre" name="nombreMadre"  placeholder="Nombre" value=""></td>
+		                       				<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoMadreP" name="apellidoMadreP"  placeholder="Apellido Paterno" value="<?php echo $dato['ap_m'];?>"></td>
+		                        			<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="apellidoMadreM" name="apellidoMadreM"  placeholder="Apellido Materno" value="<?php echo $dato['am_m'];?>"></td>
+		                        			<td  width="15%" align="center"><input type="text" style="text-transform:uppercase;" id="nombreMadre" name="nombreMadre"  placeholder="Nombre" value="<?php echo $dato['nombre_m'];?>"></td>
 		                       			</tr>
 		                       		
 		                       		
@@ -799,10 +822,7 @@
 		                       			<tr>
 		                       				<td rowspan="7" width="2%"></td>
 		                       				<td align="left" width="7%" ><label>Institución</label></td>
-		                       				<td colspan="4">
-		                       					<input type="text" id="institucion" name="institucion"   style="width: 100%;" value="<?php echo '  '.$institucion['institucion'];?>" readonly>
-		                       					<input type="hidden" id="id_institucion" name="id_institucion" value="<?php echo $selectInst;?>">
-		                       				</td>
+		                       				<td colspan="4"><input type="text" id="institucion" name="institucion"   style="width: 100%;" value="<?php echo '  '.$institucion['institucion'];?>" readonly></td>
 		                       				
 					                   	</tr>
 					                   	<tr><td> &nbsp; </td></tr>
@@ -811,8 +831,11 @@
 		                       				<td colspan="5">
 			                       				<select id="id_plantel" name="id_plantel" class="form-control"  style="width: 70%;">
 						                        	<option value="-1">[Seleccionar]</option>
-						                        	<?php foreach ($plantel as $value){	?>
-						                        	<option value="<?php echo $value['id_plantel']?>"><?php echo $value['plantel']?></option>
+						                        	<?php 
+						                        		foreach ($plantel as $value){	
+						                        			
+						                        	?>
+						                        		<option value="<?php echo $value['id_plantel']?>" ><?php echo $value['plantel']?></option>
 						                        	<?php }?>
 						                        </select>
 						                    </td>
@@ -825,9 +848,14 @@
 		                       				<td align="left" colspan="2" width="20%">
 		                       					<label>Carrera(en caso de que aplique)</label>
 		                       					<select id="id_carrera" name="id_carrera" class="form-control"  style="width: 90%;">
-						                        	<option value="0">[Seleccionar]</option>
-						                        	<?php foreach ($carrera as $value){	?>
-						                        	<option value="<?php echo $value['id_carrera']?>"><?php echo $value['carrera']?></option>
+						                        	<option value="-1">[Seleccionar]</option>
+						                        	<?php 
+						                        		foreach ($carrera as $value){
+						                        			$selected="";
+						                        			if(in_array($dato['id_carrera_uni'],$value))
+						                        				$selected="selected";
+						                        	?>
+						                        	<option value="<?php echo $value['id_carrera_uni']?>" <?php echo $selected;?>><?php echo $value['carrera']?></option>
 						                        	<?php }?>
 						                        </select>
 		                       				</td>
@@ -835,33 +863,38 @@
 		                       					<label>*Ciclo de ingreso al Bachillerato</label>
 		                       					<select id="id_ciclo" name="id_ciclo" class="form-control"  style="width: 90%;">
 						                        	<option value="-1">[Seleccionar]</option>
-						                        	<?php foreach ($generacion as $value){	?>
-						                        	<option value="<?php echo $value['id_generacion'];?>"><?php echo $value['generacion'];?></option>
+						                        	<?php 
+						                        		foreach ($generacion as $value){
+						                        			$selected="";
+						                        			if(in_array($dato['id_generacion'],$value))
+						                        				$selected="selected";
+						                        	?>
+						                        		<option value="<?php echo $value['id_generacion'];?>" <?php echo $selected;?>><?php echo $value['generacion'];?></option>
 						                        	<?php }?>
 						                        </select>
 		                       				</td>
-		                       				<td align="center" style="color:red;" width="20%">
+		                       				<td style="color:red;" align="center" width="20%">
 			                       				<label>*Modalidad</label>
 			                       				<select id="id_sistema" name="id_sistema" class="form-control"  style="width: 90%;">
 							                        <option value="-1">[Seleccionar]</option>
-							                        <option value="1">Sistema Escolarizado</option>
-													<option value="2">Sistema Abierto</option>
-													<option value="3">Sistema Mixto</option>
+							                        <option <?php if($dato['id_sistema']==1){ echo "selected='selected'";} ?> value="1">Sistema Escolarizado</option>
+													<option <?php if($dato['id_sistema']==2){ echo "selected='selected'";} ?> value="2">Sistema Abierto</option>
+													<option <?php if($dato['id_sistema']==3){ echo "selected='selected'";} ?> value="3">Sistema Mixto</option>
 							                        
 						                        </select>
 		                       				</td>
-		                       				<td align="center" width="20%" style="color:red;">
+		                       				<td style="color:red;" align="center" width="20%">
 		                       					<label>*Promedio (ciclo inmediato anterior)</label>
 		                       					<select id="promedio" name="promedio" class="form-control"  style="width: 90%;">
 									           		 <option value="-1">- Selecciona -</option>
-									                 <option value="1" >6.00 - 6.50 </option>
-									                 <option value="2" >6.51 - 7.00 </option>
-									                 <option value="3" >7.01 - 7.50</option>
-									                 <option value="4" >7.51 - 8.00 </option>
-									                 <option value="5" >8.01 - 8.50 </option>
-									                 <option value="6" >8.51 - 9.00 </option>
-									                 <option value="7" >9.01 - 9.50 </option>
-									                 <option value="8" >9.51 - 10.00 </option>
+									                 <option <?php if($dato['promedio']==1){ echo "selected='selected'";} ?> value="1" >6.00 - 6.50 </option>
+									                 <option <?php if($dato['promedio']==2){ echo "selected='selected'";} ?> value="2" >6.51 - 7.00 </option>
+									                 <option <?php if($dato['promedio']==3){ echo "selected='selected'";} ?> value="3" >7.01 - 7.50</option>
+									                 <option <?php if($dato['promedio']==4){ echo "selected='selected'";} ?> value="4" >7.51 - 8.00 </option>
+									                 <option <?php if($dato['promedio']==5){ echo "selected='selected'";} ?> value="5" >8.01 - 8.50 </option>
+									                 <option <?php if($dato['promedio']==6){ echo "selected='selected'";} ?> value="6" >8.51 - 9.00 </option>
+									                 <option <?php if($dato['promedio']==7){ echo "selected='selected'";} ?> value="7" >9.01 - 9.50 </option>
+									                 <option <?php if($dato['promedio']==8){ echo "selected='selected'";} ?> value="8" >9.51 - 10.00 </option>
 		   										</select>
 		                       				</td>
 						                    
@@ -869,17 +902,20 @@
 		                       			<tr><td colspan="5"> &nbsp; </td></tr>
 		                       			<tr>
 		                       				
-		                       				<td align="center" style="color:red;" colspan="2" width="20%">
+		                       				<td style="color:red;" align="center" colspan="2" width="20%">
 		                       					<label>*Matricula</label>
-		                       					<input type="text" id="matricula" name="matricula"   style="width: 100%;"value="">
+		                       					<input type="text" id="matricula" name="matricula"   style="width: 100%;"value=""> <?php //echo $dato['matricula_escuela'];?>
 		                       					
 		                       				</td>
-		                       				<td style="color:red;" align="center" style="color:red;" width="20%">
+		                       				<td style="color:red;" align="center" width="20%">
 		                       					<label>*Grado o Semestre</label>
 		                       					<select id="id_grado" name="id_grado" class="form-control"  style="width: 80%;">
 						                        	<option value="-1">[Seleccionar]</option>
-						                        	<?php foreach ($grado as $value){	?>
-						                        	<option value="<?php echo $value['id_grado']?>"><?php echo $value['grado'].' - '.$value['periodicidad'];?></option>
+						                        	<?php foreach ($grado as $value){
+						                        		$selected="";
+						                        			if(in_array($dato['id_grado_uni'],$value))
+						                        				$selected="selected";	?>
+						                        	<option value="<?php echo $value['id_grado_uni']?>" <?php echo $selected;?>><?php echo $value['grado'].' - '.$value['periodicidad'];?></option>
 						                        	<?php }?>
 						                        </select>
 		                       				</td>
@@ -887,17 +923,17 @@
 			                       				<label>*Turno</label>
 			                       				<select id="id_turno" name="id_turno" class="form-control"  style="width: 90%;">
 							                        <option value="-1">[Seleccionar]</option>
-							                        <option value="1">Matutino</option>
-													<option value="2">Vespertino</option>
-													<option value="3">Nocturno</option>
-													<option value="4">Sabatino</option>
-													<option value="5">Sin Turno</option>
-													<option value="6">Mixto</option>
+							                        <option <?php if($dato['id_turno']==1){ echo "selected='selected'";} ?> value="1">Matutino</option>
+													<option <?php if($dato['id_turno']==2){ echo "selected='selected'";} ?> value="2">Vespertino</option>
+													<option <?php if($dato['id_turno']==3){ echo "selected='selected'";} ?> value="3">Nocturno</option>
+													<option <?php if($dato['id_turno']==4){ echo "selected='selected'";} ?> value="4">Sabatino</option>
+													<option <?php if($dato['id_turno']==5){ echo "selected='selected'";} ?> value="5">Sin Turno</option>
+													<option <?php if($dato['id_turno']==6){ echo "selected='selected'";} ?> value="6">Mixto</option>
 						                        </select>
 		                       				</td>
 		                       				<td align="top" width="20%">
 		                       					<label>Materias que adeuda</label><br>
-		                       					<input  type="text" id="materias" name="materias"   style="width: 30%;"value="0">
+		                       					<input  type="text" id="materias" name="materias"   style="width: 30%;"value="<?php echo $dato['num_mat_adeuda'];?>">
 		                       				</td>
 						                    
 		                        		</tr>
