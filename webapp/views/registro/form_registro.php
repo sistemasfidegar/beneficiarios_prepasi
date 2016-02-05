@@ -331,7 +331,7 @@
 				                 success: function (data) {
 									//console.log(data);
 				                     $.unblockUI();
-				                     if(data === 'ok')
+				                     if(data == 'ok')
 				                     {
 				                    	 swal({
 				                          	  title: "¡Registro exitoso!",
@@ -375,8 +375,7 @@
 	         
 
 				     });
-		 $("#noext").numeric();
-		 $("#noint").numeric();
+		 
 		 $("#celular").numeric();
 		 $("#materias").numeric();
 		// $("#").numeric();
@@ -685,7 +684,7 @@
 				                        <td align="center" width="20%">
 				                        	<div class="grupo">
 				                        	<select id="id_residencia" name="id_residencia" class="form-control" style="width: 80%;">
-					                        	<option value="-1">[Seleccionar]</option>
+					                        	<option value="99">No sabe/sin respuesta</option>
 					                        	<option value="1">Menos de 6 meses</option>
 												<option value="2">6 meses a 1 año</option>
 												<option value="3">1 a 3 años</option>
@@ -694,7 +693,7 @@
 												<option value="6">8 a 12 años</option>
 												<option value="7">12 a 20 años</option>
 												<option value="8">20 años o mas</option>
-												<option value="99">No sabe/sin respuesta</option>
+												
 					                        </select>
 					                        </div>
 			                        	</td>
@@ -726,6 +725,7 @@
 				                    <td align="center"><label>Manzana</label></td>
 				                    <td align="center"><label>Lote</label></td>
 				                    <td align="center"><label>Rampa</label></td>
+				                    
 			                   	</tr>
 			                   	<tr>
 			                        <td width="3%"><input type="text" id="edificio" name="edificio"  style="width: 90%;" value=""></td>
@@ -733,21 +733,31 @@
 			                        <td width="3%"><input type="text" id="manzana" name="manzana"  style="width: 90%;" value=""></td>
 			                        <td width="3%"><input type="text" id="lote" name="lote"  style="width: 90%;" value=""></td>
 			                        <td width="3%"><input type="text" id="rampa" name="rampa"  style="width: 90%;" value=""></td>
+			                        
 			                   	</tr>
+			                   	</table>
+			                   	<br>
+			                   	<table width="100%" border="0">	
 			                   	<tr>
-			                   		<td align="center"><label>Andador</label></td>
 			                   		<td align="center"><label>Pasillo</label></td>
 				                    <td align="center"><label>Villa</label></td>
 				                    <td align="center"><label>Entrada</label></td>
-				                    <td align="center" style="color:red;"><label>*Celular</label></td>
+				                   	<td align="center"><label>Andador</label></td>
+				                    <td align="center" style="color:red;"><label>*Telefono</label></td>
+			                   		<td align="center" style="color:red;"><label>*Celular</label></td>
+				                   
 			                   	</tr>
 			                   	<tr>
-			                   		<td width="3%"><input type="text" id="andador" name="andador"  style="width: 90%;" value=""></td>
+			                   		
+			                   		
 			                        <td width="3%"><input type="text" id="pasillo" name="pasillo"  style="width: 90%;" value=""></td>
 			                        <td width="3%"><input type="text" id="villa" name="villa"  style="width: 90%;" value=""></td>
 			                        <td width="3%"><input type="text" id="entrada" name="entrada"  style="width: 90%;" value=""></td>
+			                        <td width="3%"><input type="text" id="andador" name="andador"  style="width: 90%;" value=""></td>
+			                        <td width="3%"><input type="text" id="telefono" name="telefono"  maxlength="8" style="width: 70%;" value=""></td>
 			                        <td width="3%">044-55<input type="text" id="celular" name="celular"  maxlength="8" style="width: 70%;" value=""></td>
 			                   	</tr>
+			                  
 		                   	</table>
 		                   </div>
 		                   

@@ -89,7 +89,7 @@ class M_registro_uni extends MY_Model{
 		return $results->result_array();
 	}
 	function DatosReinscripcion($matricula){
-		$this->sql="select  pe.id_estado_civil, pe.id_hijos, pe.celular, pe.am_m,pe.am_p,pe.ap_m,pe.ap_p,pe.email,pe.finado_madre,pe.finado_padre,pe.id_discapacidad,pe.id_grupo_etnico,pe.id_ocupacion, pe.nombre_m,pe.nombre_p,
+		$this->sql="select  pe.id_estado_civil, pe.id_hijos, pe.celular,pe.telefono, pe.am_m,pe.am_p,pe.ap_m,pe.ap_p,pe.email,pe.finado_madre,pe.finado_padre,pe.id_discapacidad,pe.id_grupo_etnico,pe.id_ocupacion, pe.nombre_m,pe.nombre_p,
 		d.andador, d.calle,d.departamento,d.ecalle,d.edificio,d.entrada,d.id_colonia,d.id_tiempo_residencia,d.lote,d.manzana,d.noext,d.noint,d.pasillo,d.rampa,d.villa,d.ycalle,
 		e.id_carrera,e.id_generacion,e.id_grado, e.id_plantel,e.id_institucion,e.id_turno,e.matricula_escuela,e.num_mat_adeuda,e.promedio,e.id_sistema
 		FROM b_direccion d
@@ -111,7 +111,7 @@ class M_registro_uni extends MY_Model{
 		$beneficiario = $this->db->query($this->sql);
 		
 		//b_personal
-		$this->sql="update b_personal set ap_p=:apellidoPadreP, am_p=:apellidoPadreM, nombre_p=:nombrePadre, ap_m=:apellidoMadreP, am_m=:apellidoMadreM, nombre_m=:nombreMadre, celular=:celular
+		$this->sql="update b_personal set ap_p=:apellidoPadreP, am_p=:apellidoPadreM, nombre_p=:nombrePadre, ap_m=:apellidoMadreP, am_m=:apellidoMadreM, nombre_m=:nombreMadre, celular=:celular,telefono=:telefono
 				, email=:email, id_archivo=:id_archivo, id_ocupacion=:id_ocupacion, id_estado_civil=:id_estado_civil,id_grupo_etnico=:id_etnia, id_hijos=:id_hijos, finado_padre=:finado_padre, 
 				finado_madre=:finado_madre, id_discapacidad=:id_discapacidad,petnica=:petnica 
 				where matricula_asignada=:matricula;";

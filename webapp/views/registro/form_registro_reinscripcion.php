@@ -376,8 +376,7 @@
 	         
 
 				     });
-		 $("#noext").numeric();
-		 $("#noint").numeric();
+		 
 		 $("#celular").numeric();
 		 $("#materias").numeric();
 		}); //fin ready
@@ -699,7 +698,7 @@
 				                        <td align="center" width="20%">
 				                        	<div class="grupo">
 				                        	<select id="id_residencia" name="id_residencia" class="form-control" style="width: 80%;">
-					                        	<option value="-1">[Seleccionar]</option>
+					                        	<option value="99">No sabe/sin respuesta</option>
 					                        	<option <?php if($dato['id_tiempo_residencia']==1){ echo "selected='selected'";} ?> value="1">Menos de 6 meses</option>
 												<option <?php if($dato['id_tiempo_residencia']==2){ echo "selected='selected'";} ?> value="2">6 meses a 1 año</option>
 												<option <?php if($dato['id_tiempo_residencia']==3){ echo "selected='selected'";} ?> value="3">1 a 3 años</option>
@@ -748,19 +747,26 @@
 			                        <td width="3%"><input type="text" id="lote" name="lote"  style="width: 90%;" value="<?php echo $dato['lote'];?>"></td>
 			                        <td width="3%"><input type="text" id="rampa" name="rampa"  style="width: 90%;" value="<?php echo $dato['rampa'];?>"></td>
 			                   	</tr>
+			               </table>
+			               <table width="100%" border="0">
 			                   	<tr>
-			                   		<td align="center"><label>Andador</label></td>
+			                   		
 			                   		<td align="center"><label>Pasillo</label></td>
 				                    <td align="center"><label>Villa</label></td>
 				                    <td align="center"><label>Entrada</label></td>
+				                    <td align="center"><label>Andador</label></td>
+				                    <td align="center" style="color:red;"><label>*Telefono</label></td>
 				                    <td align="center" style="color:red;"><label>*Celular</label></td>
 			                   	</tr>
 			                   	<tr>
-			                   		<td width="3%"><input type="text" id="andador" name="andador"  style="width: 90%;" value="<?php echo $dato['andador'];?>"></td>
+			                   		
 			                        <td width="3%"><input type="text" id="pasillo" name="pasillo"  style="width: 90%;" value="<?php echo $dato['pasillo'];?>"></td>
 			                        <td width="3%"><input type="text" id="villa" name="villa"  style="width: 90%;" value="<?php echo $dato['villa'];?>"></td>
 			                        <td width="3%"><input type="text" id="entrada" name="entrada"  style="width: 90%;" value="<?php echo $dato['entrada'];?>"></td>
+			                        <td width="3%"><input type="text" id="andador" name="andador"  style="width: 90%;" value="<?php echo $dato['andador'];?>"></td>
+			                        <td width="3%"><input type="text" id="telefono" name="telefono" maxlength="8"  style="width: 70%;" value="<?php echo $dato['telefono'];?>"></td>
 			                        <td width="3%">044-55<input type="text" id="celular" name="celular" maxlength="8"  style="width: 70%;" value="<?php echo $dato['celular'];?>"></td>
+			                        
 			                   	</tr>
 		                   	</table>
 		                   </div>
