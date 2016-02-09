@@ -167,7 +167,11 @@ class Registro extends CI_Controller {
 		$datos['ap_p'] =$this->input->post('ap_p');
 		$datos['ap_m'] =$this->input->post('ap_m');
 		$datos['curp'] =$this->input->post('curp');
-		$datos['fecha_nac'] =$this->input->post('fecha_nac');
+		
+		$datos['fecha_nac'] = misql($this->input->post('fecha_nac'));
+		
+		
+		
 		$datos['lugar_nac'] =$this->input->post('lugar_nac');
 		$datos['edad'] =$this->input->post('edad');
 		$datos['sexo'] =(int)$this->input->post('sexo');
@@ -176,16 +180,16 @@ class Registro extends CI_Controller {
 		$datos['id_estado_civil'] =$this->input->post('id_estado_civil');
 		$datos['id_hijos'] =$this->input->post('id_hijos');
 		$datos['id_ocupacion'] =$this->input->post('id_ocupacion');
-		$datos['email'] =strtoupper($this->input->post('email1'));
+		$datos['email'] =$this->input->post('email1');
 		
 		$datos['id_colonia'] =$this->input->post('id_colonia');
 		$datos['cp'] =$this->input->post('id_cp');
-		$datos['calle'] =strtoupper($this->input->post('calle'));
+		$datos['calle'] =$this->input->post('calle');
 		$datos['noext'] =$this->input->post('noext');
 		$datos['noint'] =$this->input->post('noint');
 		$datos['id_tiempo_residencia'] =$this->input->post('id_residencia');
-		$datos['ycalle'] =strtoupper($this->input->post('ycalle'));
-		$datos['ecalle'] =strtoupper($this->input->post('ecalle'));
+		$datos['ycalle'] =$this->input->post('ycalle');
+		$datos['ecalle'] =$this->input->post('ecalle');
 		$datos['edificio'] =$this->input->post('edificio');
 		$datos['departamento'] =$this->input->post('departamento');
 		$datos['manzana'] =$this->input->post('manzana');
@@ -195,8 +199,8 @@ class Registro extends CI_Controller {
 		$datos['pasillo'] =$this->input->post('pasillo');
 		$datos['villa'] =$this->input->post('villa');
 		$datos['entrada'] =$this->input->post('entrada');
-		$datos['telefono'] =$this->input->post('telefono');
-		$datos['celular'] =$this->input->post('celular');
+		$datos['telefono'] =(int)$this->input->post('telefono');
+		$datos['celular'] =(int)$this->input->post('celular');
 		
 		$aux=$this->m_registro->getUT($datos['id_colonia'],$datos['cp']);
 		
@@ -206,13 +210,13 @@ class Registro extends CI_Controller {
 		else 
 			$datos['id_uts']=0;
 		
-		$datos['apellidoPadreP'] =strtoupper($this->input->post('apellidoPadreP'));
-		$datos['apellidoPadreM'] =strtoupper($this->input->post('apellidoPadreM'));
-		$datos['nombrePadre'] 	 =strtoupper($this->input->post('nombrePadre'));
-		$datos['apellidoMadreP'] =strtoupper($this->input->post('apellidoMadreP'));
-		$datos['apellidoMadreM'] =strtoupper($this->input->post('apellidoMadreM'));
-		$datos['nombreMadre'] 	 =strtoupper($this->input->post('nombreMadre'));
-		
+		$datos['apellidoPadreP'] =$this->input->post('apellidoPadreP');
+		$datos['apellidoPadreM'] =$this->input->post('apellidoPadreM');
+		$datos['nombrePadre'] 	 =$this->input->post('nombrePadre');
+		$datos['apellidoMadreP'] =$this->input->post('apellidoMadreP');
+		$datos['apellidoMadreM'] =$this->input->post('apellidoMadreM');
+		$datos['nombreMadre'] 	 =$this->input->post('nombreMadre');
+	
 		$datos['id_institucion'] =$this->input->post('id_institucion');
 		$datos['id_plantel'] =$this->input->post('id_plantel');
 		$datos['id_carrera'] =$this->input->post('id_carrera');
@@ -269,16 +273,16 @@ class Registro extends CI_Controller {
 		$datos['id_estado_civil'] =$this->input->post('id_estado_civil');
 		$datos['id_hijos'] =$this->input->post('id_hijos');
 		$datos['id_ocupacion'] =$this->input->post('id_ocupacion');
-		$datos['email'] =strtoupper($this->input->post('email1'));
+		$datos['email'] =$this->input->post('email1');
 		
 		$datos['id_colonia'] =$this->input->post('id_colonia');
 		$datos['cp'] =$this->input->post('id_cp');
-		$datos['calle'] =strtoupper($this->input->post('calle'));
+		$datos['calle'] =$this->input->post('calle');
 		$datos['noext'] =(int)$this->input->post('noext');
 		$datos['noint'] =$this->input->post('noint');
 		$datos['id_tiempo_residencia'] =$this->input->post('id_residencia');
-		$datos['ycalle'] =strtoupper($this->input->post('ycalle'));
-		$datos['ecalle'] =strtoupper($this->input->post('ecalle'));
+		$datos['ycalle'] =($this->input->post('ycalle'));
+		$datos['ecalle'] =($this->input->post('ecalle'));
 		$datos['edificio'] =$this->input->post('edificio');
 		$datos['departamento'] =$this->input->post('departamento');
 		$datos['manzana'] =$this->input->post('manzana');
@@ -299,12 +303,12 @@ class Registro extends CI_Controller {
 			$datos['id_uts']=0;
 		
 		
-		$datos['apellidoPadreP'] =strtoupper($this->input->post('apellidoPadreP'));
-		$datos['apellidoPadreM'] =strtoupper($this->input->post('apellidoPadreM'));
-		$datos['nombrePadre'] 	 =strtoupper($this->input->post('nombrePadre'));
-		$datos['apellidoMadreP'] =strtoupper($this->input->post('apellidoMadreP'));
-		$datos['apellidoMadreM'] =strtoupper($this->input->post('apellidoMadreM'));
-		$datos['nombreMadre']  	 =strtoupper($this->input->post('nombreMadre'));
+		$datos['apellidoPadreP'] =($this->input->post('apellidoPadreP'));
+		$datos['apellidoPadreM'] =($this->input->post('apellidoPadreM'));
+		$datos['nombrePadre'] 	 =($this->input->post('nombrePadre'));
+		$datos['apellidoMadreP'] =($this->input->post('apellidoMadreP'));
+		$datos['apellidoMadreM'] =($this->input->post('apellidoMadreM'));
+		$datos['nombreMadre']  	 =($this->input->post('nombreMadre'));
 		
 		$datos['id_institucion'] =$this->input->post('id_institucion');
 		$datos['id_plantel'] =$this->input->post('id_plantel');

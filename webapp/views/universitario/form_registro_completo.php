@@ -182,7 +182,7 @@
 			            
 			            matricula: "required",
 			            materias: "required",
-			            celular:  "required",
+			            telefono:  "required",
 			            apellidoMadreP:"required",
 			            apellidoMadreM: "required",
 			            apellidoPadreM:"required",
@@ -215,7 +215,7 @@
 			           
 			            matricula: {required: "Campo obligatorio"},
 			            materias: {required: "Campo obligatorio"},
-			            celular:  {required: "Campo obligatorio"}
+			            telefono:  {required: "Campo obligatorio"}
 				        
 			        
 			        },
@@ -376,7 +376,8 @@
 	         
 
 				     });
-		
+	     
+		 $("#telefono").numeric();
 		 $("#celular").numeric();
 		 $("#materias").numeric();
 		
@@ -765,7 +766,7 @@
 				                    <td align="center"><label>Entrada</label></td>
 				                    <td align="center"><label>Andador</label></td>
 				                    <td align="center" style="color:red;"><label>*Telefono</label></td>
-				                    <td align="center" style="color:red;"><label>*Celular</label></td>
+				                    <td align="center" ><label>Celular</label></td>
 			                   	</tr>
 			                   	<tr>
 			                   		

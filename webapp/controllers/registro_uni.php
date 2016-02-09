@@ -131,16 +131,16 @@ class Registro_uni extends CI_Controller {
 		$datos['id_estado_civil'] =$this->input->post('id_estado_civil');
 		$datos['id_hijos'] =$this->input->post('id_hijos');
 		$datos['id_ocupacion'] =$this->input->post('id_ocupacion');
-		$datos['email'] =strtoupper($this->input->post('email1'));
+		$datos['email'] =($this->input->post('email1'));
 		
 		$datos['id_colonia'] =$this->input->post('id_colonia');
 		$datos['cp'] =$this->input->post('id_cp');
-		$datos['calle'] =strtoupper($this->input->post('calle'));
+		$datos['calle'] =($this->input->post('calle'));
 		$datos['noext'] =$this->input->post('noext');
 		$datos['noint'] =$this->input->post('noint');
 		$datos['id_tiempo_residencia'] =$this->input->post('id_residencia');
-		$datos['ycalle'] =strtoupper($this->input->post('ycalle'));
-		$datos['ecalle'] =strtoupper($this->input->post('ecalle'));
+		$datos['ycalle'] =($this->input->post('ycalle'));
+		$datos['ecalle'] =($this->input->post('ecalle'));
 		$datos['edificio'] =$this->input->post('edificio');
 		$datos['departamento'] =$this->input->post('departamento');
 		$datos['manzana'] =$this->input->post('manzana');
@@ -159,12 +159,12 @@ class Registro_uni extends CI_Controller {
 		}
 		else 
 			$datos['id_uts']=0;
-		$datos['apellidoPadreP'] =strtoupper($this->input->post('apellidoPadreP'));
-		$datos['apellidoPadreM'] =strtoupper($this->input->post('apellidoPadreM'));
-		$datos['nombrePadre']    =strtoupper($this->input->post('nombrePadre'));
-		$datos['apellidoMadreP'] =strtoupper($this->input->post('apellidoMadreP'));
-		$datos['apellidoMadreM'] =strtoupper($this->input->post('apellidoMadreM'));
-		$datos['nombreMadre']    =strtoupper($this->input->post('nombreMadre'));
+		$datos['apellidoPadreP'] =($this->input->post('apellidoPadreP'));
+		$datos['apellidoPadreM'] =($this->input->post('apellidoPadreM'));
+		$datos['nombrePadre']    =($this->input->post('nombrePadre'));
+		$datos['apellidoMadreP'] =($this->input->post('apellidoMadreP'));
+		$datos['apellidoMadreM'] =($this->input->post('apellidoMadreM'));
+		$datos['nombreMadre']    =($this->input->post('nombreMadre'));
 		
 		$datos['id_institucion'] =$this->input->post('id_institucion');
 		$datos['id_plantel'] =$this->input->post('id_plantel');

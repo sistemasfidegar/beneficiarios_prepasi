@@ -111,7 +111,7 @@ class M_registro_uni extends MY_Model{
 		$beneficiario = $this->db->query($this->sql);
 		
 		//b_personal
-		$this->sql="update b_personal set ap_p=:apellidoPadreP, am_p=:apellidoPadreM, nombre_p=:nombrePadre, ap_m=:apellidoMadreP, am_m=:apellidoMadreM, nombre_m=:nombreMadre, celular=:celular,telefono=:telefono
+		$this->sql="update b_personal set ap_p=upper(:apellidoPadreP), am_p=upper(:apellidoPadreM), nombre_p=upper(:nombrePadre), ap_m=upper(:apellidoMadreP), am_m=upper(:apellidoMadreM), nombre_m=upper(:nombreMadre), celular=:celular,telefono=:telefono
 				, email=:email, id_archivo=:id_archivo, id_ocupacion=:id_ocupacion, id_estado_civil=:id_estado_civil,id_grupo_etnico=:id_etnia, id_hijos=:id_hijos, finado_padre=:finado_padre, 
 				finado_madre=:finado_madre, id_discapacidad=:id_discapacidad,petnica=:petnica 
 				where matricula_asignada=:matricula;";
@@ -126,7 +126,7 @@ class M_registro_uni extends MY_Model{
 		$b_escolar = $this->db->query($this->sql);
 		
 		//b_direccion
-		$this->sql="update b_direccion set calle=:calle,noext=:noext,noint=:noint,ecalle=:ecalle,id_colonia=:id_colonia,id_ut=:id_uts,id_archivo=:id_archivo,ycalle=:ycalle
+		$this->sql="update b_direccion set calle=upper(:calle),noext=:noext,noint=:noint,ecalle=upper(:ecalle),id_colonia=:id_colonia,id_ut=:id_uts,id_archivo=:id_archivo,upper(ycalle=:ycalle)
 								,manzana=:manzana,lote=:lote,edificio=:edificio,rampa=:rampa,andador=:andador,departamento=:departamento,pasillo=:pasillo,villa=:villa,entrada=:entrada,id_tiempo_residencia=:id_tiempo_residencia
 								where matricula_asignada=:matricula;";
 		$this->bindParameters($datos);
