@@ -7,6 +7,14 @@ class M_registro extends MY_Model{
 	function M_registro(){
 		parent::__construct();
 	}
+	
+	
+	function getBeneficiarioUnico($curp){
+		$this->sql="select COUNT(*) as total from b_persona where curp = '$curp';";
+		$results = $this->db->query($this->sql);
+		return $results->result_array();
+	}
+	
 
 	function getFechaInscripcion($id_institucion){
 		$this->sql="SELECT to_char(fecha1,'DD-MM-YYYY') as inicio, to_char(fecha2,'DD-MM-YYYY') as fin FROM cat_calendario where id_institucion=$id_institucion;";
@@ -95,7 +103,7 @@ class M_registro extends MY_Model{
 		$datos['ps']='PS'.$datos['ciclo'].$datos['escolar'].$datos['cons'];
 		
 		//inserta sig consecutivo
-		$this->sql="update consecutivo_matricula set consecutivo=:cons";
+		$this->sql="update consecutivo_matricula set consecutivo=:cons;";
 		$this->bindParameters($datos);
 		$incrementa = $this->db->query($this->sql);
 		
@@ -133,16 +141,15 @@ class M_registro extends MY_Model{
 		
 		
 		
-		if ($beneficiario==1 && $b_personal==1 && $b_escolar==1&& $b_dir==1)
+		if($beneficiario==1 && $b_personal==1 && $b_escolar==1 && $b_dir==1)
 		{
 			$this->db->trans_commit();
-			return 'ok';
+			return 1;
 		}
 		else
 		{
 			$this->db->trans_rollback();
-			return 'nook';
-			
+			return 0;			
 		}
 		
 	}

@@ -154,7 +154,8 @@
 	      	        	 $("#cmpo_etnia").hide('slow');
 	      	        }	      	     
 	      	});
-		    $('.grupo').tooltip({
+	      	
+		   /* $('.grupo').tooltip({
 
 		    			    
 			      position: {
@@ -169,7 +170,7 @@
 			            .appendTo( this );
 			        }
 			      }
-			    });
+			    });*/
 
 
 		   var rules_form = {
@@ -181,7 +182,7 @@
 			            
 			            matricula: "required",
 			            materias: "required",
-			            telefono:  "required",
+			            telefono:  {required: true, minlength:8},
 			            apellidoMadreP:"required",
 			            apellidoMadreM: "required",
 			            apellidoPadreM:"required",
@@ -213,7 +214,7 @@
 			            
 			            matricula: {required: "Campo obligatorio"},
 			            materias: {required: "Campo obligatorio"},
-			            telefono:  {required: "Campo obligatorio"}
+			            telefono:  {required: "Campo obligatorio", minlength: "El número debe estar a 8 digitos"}
 				        
 			        
 			        },
@@ -248,12 +249,13 @@
 	
 		 jQuery.validator.addMethod("selectNone",function (value, element)
 		{
-						if (element.value == "-1")
+					if (element.value == "-1")
 							return false;
 				        else
 				            return true;
-				     },"Debe seleccionar una opción"
-				 );
+				     },"Debs seleccionar una opción"
+		);
+			
 		 jQuery.validator.addMethod("emailigual",function (value, element)
 					{
 							var email2=$('#email1').val().toString();
@@ -262,7 +264,7 @@
 					        else 
 						            return true;
 										     },"El email no coincide"
-						);
+		);
 						
 		 jQuery.validator.addMethod("estructuraemail",function (value, element)
 			{
@@ -273,13 +275,14 @@
 					
 						return true;
 				}
-				else{
+				else
+				{
 						return false;
 				}
-			},"Introduce un email valido"
-			);
+			 },"Introduce un email valido");
+		 
 			
-		 $("#registra_beneficiario").validate(rules_form);
+		$("#registra_beneficiario").validate(rules_form);
 
 		$("#id_delegacion").change(function () {
 			var delegacion = $("#id_delegacion option:selected").val();
@@ -299,6 +302,7 @@
 
 			
 		});
+		
 		$("#id_colonia").change(function (){
 			//var idCp= document.form_dat.selectCp.value;
 			var combo = document.getElementById('id_colonia');
@@ -320,10 +324,11 @@
 		 $("#guardar").click(function ()
 					{ 
 						
-				 	 if($('#registra_beneficiario').valid()) 
+				 	     if($('#registra_beneficiario').valid()) 
 					     {
+						     $('#guardar').hide('fast');
 					 
-							 $.blockUI({message: 'Procesando por favor espere...'});
+							 $.blockUI({message: 'Procesando por favor espera...'});
 				             $.ajax({
 				                 type: 'POST',
 				                 url: $('#registra_beneficiario').attr("action"),
@@ -331,8 +336,12 @@
 				                 success: function (data) {
 									//console.log(data);
 				                     $.unblockUI();
-				                     if(data == 'ok')
+
+				                     //alert(data);
+				                     
+				                     if(data==1)
 				                     {
+				                    	 $('#leyenda').show('fast');
 				                    	 swal({
 				                          	  title: "¡Registro exitoso!",
 				                          	  text: "",
@@ -345,12 +354,13 @@
 				                          	  //closeOnCancel: false
 				                          	},
 				                          	function(isConfirm){
-// 				                          	  if (isConfirm) {
-// 				                          		irA('index.php/registro/registrado');
-// 				                          	  } 
+ 				                          	  if (isConfirm) {
+ 				                          		irA('registro/reimpresion/<?php echo $strCurp;?>');
+ 				                          	  } 
 				                          	});
 				                     }
-				                     else
+				                     
+				                     if(data!=1)
 				                     {
 				                    	 swal({
 				                         	  title: "Ocurrio un error, intentelo más tarde!!!",
@@ -364,9 +374,9 @@
 				                         	  //closeOnCancel: false
 				                         	},
 				                         	function(isConfirm){
-// 				                         	  if (isConfirm) {
-// 				                         		 irA('index.php/registro/registrado');
-// 				                         	  } 
+ 				                         	  if (isConfirm) {
+ 				                         		 irA('registro/error_registro');
+ 				                         	  } 
 				                         	});
 				                     }
 				                 }
@@ -376,15 +386,27 @@
 
 				     });
 	     
-		 $("#telefono").numeric();
-		 $("#celular").numeric();
-		 $("#materias").numeric();
-		// $("#").numeric();
+			 $("#telefono").numeric();
+			 $("#celular").numeric();
+			 $("#materias").numeric();
+			
+
+			 jQuery('#telefono').keyup(function () {  
+				    this.value = this.value.replace(/[^0-9]/g,''); 
+			 });
+	
+			 jQuery('#celular').keyup(function () {  
+				    this.value = this.value.replace(/[^0-9]/g,''); 
+			 });
+	
+			 jQuery('#materias').keyup(function () {  
+				    this.value = this.value.replace(/[^0-9]/g,''); 
+			 });
 				    
 		}); //fin ready
 		 
 		function irA(uri) {
-	        window.location.href = '<?php echo base_url(); ?>' + uri;
+	        window.location.href = uri;
 	        
 	    }  
 		   
@@ -392,6 +414,18 @@
 		</script>
         
     </head>
+    <?php 
+    
+    //ESTE CÓDIGO ES PARA EVITAR QUE EL USUARIO ENVÍE VARIOS REGISTROS
+    $evita_registro = '';
+    $leyenda = 'display:none;';
+    if($total_benef>0 && $id_archivo==1)
+    {
+    	$evita_registro = 'display:none;';
+    	$leyenda = 'display:block;';
+    }
+    
+    ?>
 
     <body>
        
@@ -593,7 +627,7 @@
 		                        		<tr>
 		                        			<td  width="50%" align="center">
 		                        				<div class="grupo">
-		                        					<input type="text" style="text-transform:uppercase;"  id="email1" name="email1" placeholder="Correo electrónico" value="" title="flower" class="form-control"><!-- placeholder="Correo electrónico" -->
+		                        					<input type="text" style="text-transform:uppercase;"  id="email1" name="email1" placeholder="Correo electrónico" value="" class="form-control"><!-- placeholder="Correo electrónico" -->
 		                        				</div>
 		                        			</td>
 		                        			
@@ -924,7 +958,14 @@
 
                        </div>
                                              
-                        	<button id="guardar" type="button" style="font-weight:bold;">REGISTRARSE</button>
+                        	<button id="guardar" type="button" style="font-weight:bold;<?php echo $evita_registro;?>">REGISTRARSE</button>
+                        	
+                        	
+                        		<div id="leyenda" style="<?php echo $leyenda;?>">
+                        			<br />
+                        			<span style="font-size:20px; font-weight:bold;">Imprime tus documentos <a href="registro/reimpresion/<?php echo $strCurp;?>">aquí</a></span>
+                        		</div>
+                        	
                                                                   
                     </form>
                    
