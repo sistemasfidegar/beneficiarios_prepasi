@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Reimpresion extends CI_Controller {
+class Reimpresion_uni extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -18,16 +18,16 @@ class Reimpresion extends CI_Controller {
 		$aux=$this->m_reimpresion->getModuloActivo($id_modulo);
 		$inicio=new DateTime($aux[0]['inicio']);
 		$fin = new DateTime($aux[0]['fin']);
-		
+	
 			
 		if ($hoy >= $inicio && $hoy <=$fin){
-			$this->load->view('reimpresion_bach/busca_beneficiario', true, false);
+			$this->load->view('reimpresion_uni/busca_beneficiario', true, false);
 		}
 		else{
 			$datos['sin_ins']=2;
-			$this->load->view('reimpresion_bach/sin_registro', $datos, false);
+			$this->load->view('reimpresion_uni/sin_registro', $datos, false);
 		}
-		
+	
 	}
 	
 	function ajax_beneficiario_matricula(){
@@ -63,43 +63,42 @@ class Reimpresion extends CI_Controller {
 			echo 'bad';
 		}
 	}
+	
 	function buscaBeneficiario($matricula){
-		
+	
 		$aux = $this->m_reimpresion->getIdentificacion($matricula);
-    	$data['identificacion'] = $aux[0];
-    	
-    	if($data['identificacion']['id_archivo']==2 || $data['identificacion']['id_archivo']==1){
-    		
-    		$data['direccion']=0;
-    		$data['escolar']=0;
-    		
-    		
-    		$aux = $this->m_reimpresion->getDireccion($matricula);
-    		if($aux!=null){
-	    		$data['direccion'] = $aux[0];
-    		}
-	    	$aux = $this->m_reimpresion->getEscolarBach($matricula);
-	    	if($aux!= null){
-	    		$data['escolar'] = $aux[0];
-	    	}
-	    	
-	    	$data['matricula']=$matricula;
-	    	
-	    	$this->load->view('reimpresion_bach/v_datos', $data, false);
-	    }
-	    else if($data['identificacion']['id_archivo']==3)
-	    { 
-	    	$datos['sin_ins']=3;
-	    	$this->load->view('reimpresion_bach/sin_registro', $datos, false);
-	    }
-	    else
-	    {
-	    	$datos['sin_ins']=1;
-	    	$this->load->view('reimpresion_bach/sin_registro', $datos, false);
-	    }
+		$data['identificacion'] = $aux[0];
+		 
+		if($data['identificacion']['id_archivo']==3){
+	
+			$data['direccion']=0;
+			$data['escolar']=0;
+	
+	
+			$aux = $this->m_reimpresion->getDireccion($matricula);
+			if($aux!=null){
+				$data['direccion'] = $aux[0];
+			}
+			$aux = $this->m_reimpresion->getEscolarUni($matricula);
+			if($aux!= null){
+				$data['escolar'] = $aux[0];
+			}
+	
+			$data['matricula']=$matricula;
+	
+			$this->load->view('reimpresion_uni/v_datos', $data, false);
+		}
+		else if($data['identificacion']['id_archivo']==2 || $data['identificacion']['id_archivo']==1)
+		{
+			$datos['sin_ins']=3;
+			$this->load->view('reimpresion_uni/sin_registro', $datos, false);
+		}
+		else
+		{
+			$datos['sin_ins']=1;
+			$this->load->view('reimpresion_uni/sin_registro', $datos, false);
+		}
 	}
-	
-	
 	function pdf(){
 		$data['matricula']= $this->input->post('matricula');
 		$data['nombre']= $this->input->post('nombre');
@@ -108,25 +107,25 @@ class Reimpresion extends CI_Controller {
 		$data['fecha_carga']= $this->input->post('fecha_carga');
 		$data['id_archivo']= $this->input->post('id_archivo');
 		$data['curp']= $this->input->post('curp');
-		
+	
 		$data['correo']= $this->input->post('correo');
 		$data['tel']= $this->input->post('tel');
-		
-		
+	
+	
 		$data['institucion']= $this->input->post('institucion');
 		$data['plantel']= $this->input->post('plantel');
-		
+	
 		$data['grado']= $this->input->post('grado');
 		$data['turno']= $this->input->post('turno');
 		$data['promedio']= $this->input->post('promedio');
 		$data['modalidad']= $this->input->post('sistema');
-		
+	
 		$data['padre']= $this->input->post('padre');
 		$data['madre']= $this->input->post('madre');
 		$data['ecivil']= $this->input->post('e_civil');
 		$data['sexo']= $this->input->post('sexo');
 		$data['fecha_nac']= $this->input->post('fecha_nac');
-		
+	
 		//$data['']= $this->input->post('');
 		$data['cel']= $this->input->post('cel');
 		if ($data['cel']=='')
@@ -183,21 +182,21 @@ class Reimpresion extends CI_Controller {
 		$pdf->SetTitle('Documentos Prepa Si');
 		$pdf->SetSubject('Reimpresión de Documentos');
 		$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
+	
 		ob_start();
 		//remove default header/footer
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false);
 		// set default header data
-		
+	
 		// set margins
 		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 		//$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-				
+	
 		// set image scale factor
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-		
+	
 		// set some language-dependent strings (optional)
 		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 			require_once(dirname(__FILE__).'/lang/eng.php');
@@ -208,16 +207,16 @@ class Reimpresion extends CI_Controller {
 		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		// establecer el modo de fuente por defecto
 		$pdf->setFontSubsetting(true);
-		
+	
 		// Establecer el tipo de letra
-		
+	
 		$pdf->SetFont('helvetica', '', 10); //Normal
 		$arriba = 6;
 		$izq = 10;
 		$der = 10;
-		
+	
 		$pdf->AddPage('L','LETTER');
-
+	
 		$pdf->SetFont('pdfahelvetica', '', 10); //Normal
 		//$pdf->SetFont('pdfahelveticai', '', 10); // S
 		$pdf->SetTextColor(0,0,0);
@@ -231,7 +230,7 @@ class Reimpresion extends CI_Controller {
 		$style5 = array('width' => 0.25, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 64, 128));
 		$style6 = array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => '10,10', 'color' => array(0, 128, 0));
 		$style7 = array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 128, 0));
-		
+	
 		# Marco
 		//$pdf->RoundedRect(5, 15-$arriba, 268, 200, 0, '1010', 'NULL');
 		$pdf->RoundedRect(12, 15-$arriba, 120, 200, 0, '1000', 'NULL');
@@ -240,64 +239,64 @@ class Reimpresion extends CI_Controller {
 		//$pdf->Line(15, 44, 264.4, 44, $style2);
 		# Linea media punteada
 		$pdf->Line(140, 5-$arriba, 140, 210+$arriba, $style3);
-		
+	
 		# Logos de Encabezado
 		$pdf->Image('resources/img/cdmx.png', 85-$izq, 20-$arriba, 50, 13, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		# Textos
 		$pdf->Text(60-$izq, 10-$arriba, 'Formato para Prepa Sí');
-		
+	
 		$pdf->SetFont('pdfahelveticab',	'', 9);	// Negrita
 		$pdf->Text(35-$izq, 40-$arriba, 'Entrega – Recepción Documentos PREPA SÍ 2015-2016');
-		
+	
 		$pdf->SetFont('pdfahelvetica',	'', 9);	// Normal
 		$pdf->SetLineStyle(array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
 		$pdf->RoundedRect(34-$izq, 39-$arriba, 87, 6, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(44-$izq, 51-$arriba, 'Fecha de registro electrónico: ___________________');
 		$pdf->Text(27-$izq, 62-$arriba, 'Nombre: ____________________________________________________');
-		
+	
 		$pdf->Text(27-$izq, 72-$arriba, '1.- Solicitud de');
 		$pdf->RoundedRect(126-$izq, 72-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(27-$izq, 80-$arriba, '2.- Comprobante de domicilio, expedido dentro de los 3 meses');
 		$pdf->Text(33-$izq, 84-$arriba, 'anteriores al mes en el que se realice la entrega de los');
 		$pdf->Text(33-$izq, 88-$arriba, 'documentos (copia y original para cotejo):.....................................');
 		$pdf->RoundedRect(126-$izq, 88-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(27-$izq, 96-$arriba, '3.- Comprobante de Inscripcion (vigente), sellado por tu');
 		$pdf->Text(32-$izq, 100-$arriba, ' institución educativa (copia y original para cotejo):........................');
 		$pdf->RoundedRect(126-$izq, 100-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(27-$izq, 108-$arriba, '4.- Comprobante de calificaciones vigente y sellado');
 		$pdf->Text(32-$izq, 112-$arriba, '(copia y original para cotejo):...........................................................');
 		$pdf->RoundedRect(126-$izq, 112-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(27-$izq, 120-$arriba, '5.- Identificación con fotografia (copia y original para cotejo):..............');
 		$pdf->RoundedRect(126-$izq, 121-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(48-$izq, 167-$arriba, 'Fecha de recepción de expediente: ___________________');
 		$pdf->Text(115-$izq, 171-$arriba, 'día/mes/año');
-		
-		
+	
+	
 		$pdf->SetFont('pdfahelveticab', '', 8); //Negrita
 		$pdf->Rect(25-$izq, 161+15-$arriba, 115, 16, 'DF', null, array(192,192,192));
-		
+	
 		$pdf->Text(25-$izq, 161+15-$arriba, 'Tus documentos y datos, seran revisados en oficinas centrales. Si se detecta alguna');
 		$pdf->Text(25-$izq, 165+15-$arriba, 'inconsistencia no procederá tu tramite en tanto no regularices la situación. Te lo');
 		$pdf->Text(25-$izq, 169+15-$arriba, 'notificaremos vía correo electrónico, por lo que consúltalo regularmente, ya que de');
 		$pdf->Text(25-$izq, 173+15-$arriba, 'no regularizarlo no podremos incorporarte al programa.');
-		
+	
 		$pdf->SetFont('pdfahelvetica',	'', 9);	// Normal
-		
+	
 		$pdf->endLayer();
-		
-		
+	
+	
 		//***********************************************************hoja 2**********************************************************//////////
-		
+	
 		# Logos de Encabezado
 		$pdf->Image('resources/img/cdmx.png', 117+85+$der, 20-$arriba, 50, 13, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		# Textos
 		$pdf->Text(127+55+$der, 10-$arriba, 'Formato para el Beneficiario');
 		$pdf->SetFont('pdfahelveticab',	'', 9);	// Negrita
@@ -305,32 +304,32 @@ class Reimpresion extends CI_Controller {
 		$pdf->SetFont('pdfahelvetica',	'', 9);	// Normal
 		$pdf->SetLineStyle(array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
 		$pdf->RoundedRect(158+$der, 39-$arriba, 87, 6, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(115+50+$der, 51-$arriba, 'Fecha de registro electrónico: ___________________');
 		$pdf->Text(115+27+$der, 62-$arriba, 'Nombre: ____________________________________________________');
-		
+	
 		$pdf->Text(115+27+$der, 72-$arriba, '1.- Solicitud de');
 		$pdf->RoundedRect(105+136+$der, 72-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(115+27+$der, 80-$arriba, '2.- Comprobante de domicilio, expedido dentro de los 3 meses');
 		$pdf->Text(115+33+$der, 84-$arriba, 'anteriores al mes en el que se realice la entrega de los');
 		$pdf->Text(115+33+$der, 88-$arriba, 'documentos (copia y original para cotejo):.....................................');
 		$pdf->RoundedRect(105+136+$der, 88-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(115+27+$der, 96-$arriba, '3.- Comprobante de Inscripcion (vigente), sellado por tu');
 		$pdf->Text(115+32+$der, 100-$arriba, 'institución educativa (copia y original para cotejo):.........................');
 		$pdf->RoundedRect(105+136+$der, 100-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(115+27+$der, 108-$arriba, '4.- Comprobante de calificaciones vigente y sellado');
 		$pdf->Text(115+32+$der, 112-$arriba, '(copia y original para cotejo):...........................................................');
 		$pdf->RoundedRect(105+136+$der, 112-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(115+27+$der, 120-$arriba, '5.- Identificación con fotografia (copia y original para cotejo):..............');
 		$pdf->RoundedRect(105+136+$der, 121-$arriba, 8, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->Text(110+55+$der, 167-$arriba, 'Fecha de recepción de expediente: ___________________');
 		$pdf->Text(110+122+$der, 171-$arriba, 'día/mes/año');
-		
+	
 		if($data['id_archivo']==1){
 			$pdf->SetFont('pdfahelvetica', '', 9);
 			//$pdf->Text(17, 148+16, 'Entregó expediente _____________________________      ____________');
@@ -344,7 +343,7 @@ class Reimpresion extends CI_Controller {
 			$pdf->SetFont('pdfahelvetica', '', 8);
 			$pdf->Text(78-$izq, 146+14-$arriba, 'Nombre');
 			$pdf->Text(118-$izq, 146+14-$arriba, 'Firma');
-		
+	
 			$pdf->SetFont('pdfahelvetica', '', 9);
 			//$pdf->Text(124+17, 148+16, 'Entregó expediente _____________________________      ____________');
 			$pdf->Text(27+115+$der, 128+17-$arriba, 'Entregó expediente _____________________________     ____________');
@@ -357,26 +356,26 @@ class Reimpresion extends CI_Controller {
 			$pdf->SetFont('pdfahelvetica', '', 8);
 			$pdf->Text(78+115+$der, 144+16-$arriba, 'Nombre');
 			$pdf->Text(118+115+$der, 144+16-$arriba, 'Firma');
-		
+	
 		}else{
 			$pdf->Text(27-$izq, 136-$arriba, 'Entregó expediente _____________________________     ____________');
 			$pdf->Text(78-$izq, 140-$arriba, 'Nombre');
 			$pdf->Text(118-$izq, 140-$arriba, 'Firma');
-		
+	
 			$pdf->Text(27-$izq, 149+3-$arriba, 'Recibió / Cotejó: _______________________________     ____________');
 			$pdf->Text(78-$izq, 154+3-$arriba, 'Nombre');
 			$pdf->Text(118-$izq, 154+3-$arriba, 'Firma');
-		
+	
 			$pdf->Text(27+115+$der, 136-$arriba, 'Entregó expediente _____________________________     ____________');
 			$pdf->Text(78+115+$der, 140-$arriba, 'Nombre');
 			$pdf->Text(118+115+$der, 140-$arriba, 'Firma');
-		
+	
 			$pdf->Text(27+115+$der, 149+3-$arriba, 'Recibió / Cotejó: _______________________________     ____________');
 			$pdf->Text(78+115+$der, 154+3-$arriba, 'Nombre');
 			$pdf->Text(118+115+$der, 154+3-$arriba, 'Firma');
-		
+	
 		}
-		
+	
 		$pdf->SetFont('pdfahelveticab', '', 8); //Negrita
 		$pdf->Rect(125+16+$der, 161+15-$arriba, 115, 16, 'DF', null, array(192,192,192));
 		//$pdf->Rect(25-$izq, 163+15-$arriba, 115, 16, 'DF', null, array(192,192,192));
@@ -384,15 +383,15 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(125+16+$der, 165+15-$arriba, 'inconsistencia no procederá tu tramite en tanto no regularices la situación. Te lo');
 		$pdf->Text(125+16+$der, 169+15-$arriba, 'notificaremos vía correo electrónico, por lo que consúltalo regularmente, ya que de');
 		$pdf->Text(125+16+$der, 173+15-$arriba, 'no regularizarlo no podremos incorporarte al programa.');
-		
+	
 		$pdf->Text(125-$izq, 189, 'F-1516-01');
 		$pdf->Text(125+116+$der,189, 'F-1516-01');
-		
-		
+	
+	
 		$pdf->SetFont('pdfahelvetica',	'', 9);	// Normal
-		
-		
-		
+	
+	
+	
 		///////////////////////////////////////////////////////
 		//	Datos de ENTREGA RECEPCION DE DOCUMENTOS
 		///////////////////////////////////////////////////////
@@ -402,31 +401,31 @@ class Reimpresion extends CI_Controller {
 			$puntos = "................................................";
 			$pdf->Text(27-$izq, 128-$arriba, '6.- Número de Monedero Electrónico (Tarjeta Prepa Sí):');
 			$pdf->Text(118+24+$der, 128-$arriba, '6.- Número de Monedero Electrónico (Tarjeta Prepa Sí):');
-		
+	
 			$pdf->Line(27-$izq, 140-$arriba, 126, 140-$arriba, $style2);
-		
+	
 			$pdf->Line(120+24+$der, 140-$arriba, 145+116, 140-$arriba, $style2);
-		
-		
+	
+	
 			//	$pdf->RoundedRect(20, 128, 60, 5, 3, '0000', 'NULL');
-		
+	
 			$pdf->SetFont('pdfahelvetica',	'', 9);
 			$pdf->Text(27-$izq, 140+9-$arriba, 'y Recibió Tarjeta');
 			$pdf->Text(124+18+$der, 140+9-$arriba, 'y Recibió Tarjeta');
 		}
-		
+	
 		if($data['id_archivo']==2){
 			$tramite = "Reinscripción";
 			$puntos = "............................................";
-		
+	
 		}
 		if($data['id_archivo']==3){
 			$tramite = "Universitario";
 			$puntos = "..............................................";
-		
+	
 		}
 		$estilo = array('padding'=>'auto' );
-		
+	
 		//Negrita
 		$pdf->SetFont('pdfahelveticab', '', 8);
 		$pdf->Text(87-$izq, 51-$arriba, fecha_con_letra($data['fecha_carga']));
@@ -434,32 +433,32 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(42-$izq, 62-$arriba, $data['paterno'].' '.$data['materno'].' '.$data['nombre']);
 		$pdf->SetFont('pdfahelvetica', '', 9);
 		$pdf->Text(49-$izq, 72-$arriba, $tramite.' (impresión):'.$puntos);
-		
+	
 		$pdf->SetFont('pdfahelveticab', '', 8);
 		$pdf->Text(65, 192, $data['matricula']);
 		$pdf->endLayer();
 		$pdf->Text(124+84+$der, 45, fecha_con_letra($data['fecha_carga']));
 		$pdf->Text(124+32+$der, 62-$arriba, $data['paterno'].' '.$data['materno'].' '.$data['nombre']);
-		
+	
 		$pdf->SetFont('pdfahelvetica', '', 9);
 		$pdf->Text(164+$der, 72-$arriba, $tramite.' (impresión):'.$puntos);
 		$pdf->SetFont('pdfahelveticab', '', 8);
 		$pdf->Text(124+70+$der, 192, $data['matricula']);
 		$pdf->endLayer();
-		
+	
 		$pdf->write1DBarcode($data['matricula'], 'C128', 65-$izq, 184,50, 10, 0.4, $estilo, 'N');
 		$pdf->Image('resources/img/logo_fide_ps.jpg', 26-$izq, 187, 21, 8, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		$pdf->write1DBarcode($data['matricula'], 'C128', 112+70+$der, 184, 50, 10, 0.4, $estilo, 'N');
 		$pdf->Image('resources/img/logo_fide_ps.jpg', 125+18+$der, 187, 21, 8, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		///////////////////////////////////////////////////DATOS PERSONALES//////////////////////////////////////////////////
 		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		$bajar=3;
-		
+	
 		$pdf->AddPage('P','LETTER');
 		//$fontname = $pdf->addTTFfont('./font/DejaVuSans.ttf', 'TrueTypeUnicode', '', 32);
-		
+	
 		//$pdf->SetFont('dejavusans', '', 10);
 		//$pdf->SetFont('pdfahelveticab', '', 10); //Negrita
 		$pdf->SetFont('pdfahelvetica', '', 9); //Normal
@@ -475,20 +474,20 @@ class Reimpresion extends CI_Controller {
 		$style5 = array('width' => 0.25, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 64, 128));
 		$style6 = array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => '10,10', 'color' => array(0, 128, 0));
 		$style7 = array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(255, 128, 0));
-		
+	
 		# Imagenes del Encabezado
 		//-$pdf->Image('../images/angel2.jpg', 15, 6, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		//-$pdf->Image('../images/fideicomiso.jpg', 38, 6, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		//-$pdf->Image('../images/prepasi.png', 180, 6, 21, 23, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		$pdf->Image('resources/img/cdmx.png', 153, 8, 50, 13, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		//$pdf->SetFontSize(7);
 		$pdf->SetFont('pdfahelvetica', '', 7); //Normal
-		
+	
 		// create some HTML content
 		$html = '
-		
+	
 <div align="justify"><br /><br /><br /><br /><br /><br />
   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -519,18 +518,18 @@ class Reimpresion extends CI_Controller {
   </em></p>
 </div>
 <div align="center"><em><br>Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y  sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está  prohibido el uso de este programa con fines políticos, electorales, de lucro y  otros distintos a los establecidos. Quien haga uso indebido de los recursos de  este programa en el Distrito Federa, será sancionado de acuerdo con la ley  aplicable y ante la autoridad competente</em></div>
-		
-		
+	
+	
 ';
 		// output the HTML content
 		$pdf->writeHTML($html, true, 0, true, 0);
-		
+	
 		##############################################################################
 		# SOLICITUD DE INSCRIPCIÓN
 		##############################################################################
-		
+	
 		$pdf->SetFont('pdfahelveticab', '', 9); //Negrita
-		
+	
 		$pdf->Text(15, 8, 'GOBIERNO DEL DISTRITO FEDERAL');
 		$pdf->Text(15, 12, 'FIDEICOMISO EDUCACIÓN GARANTIZADA');
 		$pdf->Text(15, 16, 'PROGRAMA DE ESTÍMULOS PARA EL BACHILLERATO UNIVERSAL');
@@ -546,15 +545,15 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(88, 20, 'SOLICITUD DE '.$tipo.'');
 		$pdf->SetFont('pdfahelvetica', '', 10); //Normal
 		$pdf->SetFontSize(10);
-		
-		
+	
+	
 		$pdf->Text(15, 25, 'FECHA DE TRAMITE:');
 		$pdf->RoundedRect(55, 25, 50, 5, 3, '0000', 'NULL');
 		$pdf->RoundedRect(150, 25, 51, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->SetFontSize(7);
 		$pdf->Text(170, 30, '*CURP');
-		
+	
 		$pdf->SetFontSize(10);
 		$pdf->SetTextColor(0, 100, 50, 0);
 		$pdf->Text(15, 31, '1.- IDENTIFICACIÓN:');
@@ -566,7 +565,7 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(34, 41, '*Apellido Paterno');
 		$pdf->Text(95, 41, '*Apellido Materno');
 		$pdf->Text(165, 41, '*Nombre(s)');
-		
+	
 		$pdf->RoundedRect(15, 45, 60, 5, 3, '0000', 'NULL');
 		$pdf->RoundedRect(78, 45, 60, 5, 3, '0000', 'NULL');
 		$pdf->RoundedRect(141, 45, 60, 5, 3, '0000', 'NULL');
@@ -574,17 +573,17 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(34, 50, '*Correo electrónico');
 		$pdf->Text(96, 50, '*Teléfono particular');
 		$pdf->Text(163, 50, '*Teléfono celular');
-		
-		
+	
+	
 		$pdf->RoundedRect(15, 54, 90, 5, 3, '0000', 'NULL');
 		$pdf->RoundedRect(110, 54, 90, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->SetFontSize(7);
 		$pdf->Text(38, 59, 'Nombre del padre');
 		$pdf->Text(114, 59, 'Nombre de la madre');
-		
-		
-		
+	
+	
+	
 		$pdf->SetFontSize(10);
 		$pdf->SetTextColor(0, 100, 50, 0);
 		$pdf->Text(15, 57+$bajar+2, '2.- DOMICILIO:');
@@ -595,7 +594,7 @@ class Reimpresion extends CI_Controller {
 		$pdf->RoundedRect(148, 62+$bajar+2, 17, 5, 3, '0000', 'NULL');
 		$pdf->RoundedRect(166, 62+$bajar+2, 17, 5, 3, '0000', 'NULL');
 		$pdf->RoundedRect(184, 62+$bajar+2, 17, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->SetFontSize(7);
 		$pdf->Text(60, 67+$bajar+2, '*Calle');
 		$pdf->Text(111, 67+$bajar+2, '*No Exterior');
@@ -622,16 +621,16 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(51, 87+$bajar+2, '*Delegacion');
 		$pdf->Text(104, 87+$bajar+2, '*Código Postal');
 		//$pdf->RoundedRect(15, 69, 95, 4, 3, '0000', 'NULL');
-		
-		
-		
+	
+	
+	
 		$pdf->SetFontSize(10);
 		$pdf->SetTextColor(0, 100, 50, 0);
 		$pdf->Text(15, 92+$bajar+2, '3.- DATOS ESCOLARES:');
 		$pdf->SetTextColor(0, 0, 0, 100);
 		$pdf->RoundedRect(15, 97+$bajar+2, 95, 5, 3, '0000', 'NULL');
 		$pdf->RoundedRect(111, 97+$bajar+2, 90, 5, 3, '0000', 'NULL');
-		
+	
 		$pdf->SetFontSize(7);
 		$pdf->Text(51, 102+$bajar+2, '*Institución');
 		$pdf->Text(155, 102+$bajar+2,  '*Plantel');
@@ -643,7 +642,7 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(98, 112+$bajar+2, 'Turno');
 		$pdf->Text(139, 112+$bajar+2, 'Modalidad');
 		$pdf->Text(179, 112+$bajar+2, 'Promedio');
-		
+	
 		$pdf->SetFont('pdfahelveticab', '', 9); //Negrita
 		$pdf->Text(35, 117+$bajar, 'La inscripción al Programa de Estímulos para el Bachillerato Universal (en lo sucesivo Prepa Sí)');
 		$pdf->Text(39, 121+$bajar, 'queda sujeta al cumplimiento de los requisitos de la Convocatoria y la verificación de datos.');
@@ -660,12 +659,12 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(91, 140+$bajar, 'Prepa Sí');
 		$pdf->SetFont('pdfahelvetica', '', 9); //Normal
 		$pdf->Text(105, 140+$bajar, 'o viceversa.');
-		
+	
 		//$pdf->RoundedRect(15, 104+15+2, 45, 5, 3, '0000', 'NULL');
-		
+	
 		//$pdf->SetFont('pdfahelveticai', '', 6); // S
 		$pdf->SetFont('pdfahelveticabi', '', 6); // S N
-		
+	
 		$pdf->Text(140, 157+$bajar+2, 'Firma del alumno o alumna');
 		$pdf->Text(140, 173+$bajar+2, 'Firma del alumno o alumna');
 		# Linea para firma
@@ -677,14 +676,14 @@ class Reimpresion extends CI_Controller {
 		$pdf->SetFont('pdfahelveticabi', '', 6); // S N
 		$pdf->Text(32, 232+$bajar, 'Firma del padre/madre o tutor');
 		$pdf->Text(24, 234+$bajar, '(En caso que el alumno(a) sea menor de edad)');
-		
+	
 		$pdf->Text(140, 232+$bajar, 'Firma del alumno o alumna');
 		$pdf->SetFont('pdfahelveticab', '', 8); //Negrita
 		//$pdf->Text(79, 229, 'Firma del padre/madre o tutor');
 		$pdf->Line(23, 232+$bajar, 75, 232+$bajar, $style2);
 		$pdf->Line(120, 232+$bajar, 190, 232+$bajar, $style2);
 		$pdf->SetFont('pdfahelvetica', '', 9); //Normal
-		
+	
 		///////////////////////////////////////////////////////
 		//	Datos de DATOS PERSONALES
 		///////////////////////////////////////////////////////
@@ -701,12 +700,12 @@ class Reimpresion extends CI_Controller {
 		$pdf->SetFont('pdfahelveticab', '', 10);
 		$pdf->Text(79, 45, $data['tel']);
 		$pdf->Text(142, 45, $data['cel']);
-		
-		
+	
+	
 		$pdf->Text(16, 54, $data['padre']);
 		$pdf->Text(110, 54, $data['madre']);
-		
-		
+	
+	
 		$pdf->Text(16, 63+$bajar+2, $data['calle']);
 		$pdf->Text(112, 63+$bajar+2, $data['noext']);
 		$pdf->Text(130, 63+$bajar+2, $data['noint']);
@@ -722,18 +721,18 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(117, 73+$bajar+2,  $data['colonia']);
 		$pdf->Text(16, 83+$bajar+2, $data['delegacion']);
 		$pdf->Text(108, 83+$bajar+2, $data['cp']);
-		
+	
 		$pdf->SetFont('pdfahelveticab', '', 7); //Negrita
 		$pdf->Text(16, 98+$bajar+2, $data['institucion']);
 		$pdf->Text(112, 98+$bajar+2, $data['plantel']);
-		
+	
 		$pdf->SetFont('pdfahelveticab', '', 10); //Negrita
 		$pdf->Text(16, 108+$bajar+2, $data['grado']);
 		$pdf->Text(84, 108+$bajar+2, $data['turno']);
-		
-		 $pdf->Text(123.5, 108+$bajar+2, $data['modalidad']);
-		$pdf->Text(176, 108+$bajar+2, $data['promedio']);	
-		
+	
+		$pdf->Text(123.5, 108+$bajar+2, $data['modalidad']);
+		$pdf->Text(176, 108+$bajar+2, $data['promedio']);
+	
 		$pdf->endLayer();
 		//cambio de 6 a 14 el sexto parametro
 		$estilo = array('padding'=>'auto' );
@@ -743,18 +742,18 @@ class Reimpresion extends CI_Controller {
 		$pdf->SetFont('pdfahelveticab', '', 8);
 		$pdf->Text(185, 255, 'F-1516-02');
 		//$pdf->write1DBarcode('F-1314-02', 'C128', 160, 250, 40, 14, 0.4, $stylecb, 'N');
-		
-		
+	
+	
 		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		///////////////////////////////////////////////////POLIZA DE SEGURO///////////////////////////////////////////////////
 		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		$pdf->AddPage('P','LETTER');
-		
+	
 		//$pdf->SetFont('pdfahelveticab',	'', 10);	// Negrita
 		//$pdf->SetFont('pdfahelveticabi',	'', 6);		// S N
 		//$pdf->SetFont('pdfahelvetica',	'', 10);	// Normal
 		//$pdf->SetFont('pdfahelveticai',	'', 10);	// S
-		
+	
 		$pdf->SetTextColor(0,0,0);
 		$style = array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => '10,20,5,10', 'phase' => 10, 'color' => array(255, 0, 0));
 		$style2 = array('width' => 0.3, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
@@ -769,18 +768,18 @@ class Reimpresion extends CI_Controller {
 		$style8 = array('width' => 0.2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
 		# Imagenes del Encabezado
 		$pdf->Image('resources/img/banorte.jpg', 15, 10, 75, 15, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		$pdf->SetFontSize(9);
-		
+	
 		// create some HTML content
 		$html = '<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		
+	
 <div align="justify">
 Advertencia: Si designas a menores de edad como beneficiarios, no es necesario señalar a un mayor de edad como representante para cobrar el seguro, ya que si lo haces, el representante tiene derecho a disponer de la suma asegurada, pues no queda obligado jurídicamente a entregársela a el o los beneficiarios del seguro.
 </div>
-		
+	
 <div align="justify">En el caso de que el beneficiario sea menor de edad, el padre o tutor deberá firmar de manera obligatoria este documento para su validez.</div>';
-		
+	
 		// output the HTML content
 		$pdf->writeHTML($html, true, 0, true, 0);
 		//$pdf->SetFontSize(6);
@@ -804,9 +803,9 @@ Con fundamento en el artículo 16 de la Ley de Protección de Datos Personales p
 <br />
 ';
 		$pdf->writeHTML($html1, true, 0, true, 0);
-		
-		
-		
+	
+	
+	
 		//$pdf->SetFontSize(6);
 		$pdf->SetFont('pdfahelvetica', '', 9); //Normal
 		$html2 = '
@@ -814,13 +813,13 @@ Con fundamento en el artículo 16 de la Ley de Protección de Datos Personales p
 <div align="justify"><strong>IMPORTANTE<br/>
 Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 </strong></div>';
-		
+	
 		$pdf->writeHTML($html2, true, 0, true, 0);
-		
-		
-		
-		
-		
+	
+	
+	
+	
+	
 		$pdf->SetFont('pdfahelveticab', '', 9); //Negrita
 		$pdf->Text(92, 18, 'Consentimiento de seguro: ACCIDENTES PERSONALES COLECTIVO');
 		# Linea 1
@@ -847,7 +846,7 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		# Linea 5
 		$pdf->Line(15, 71, 200, 71, $style2);
 		//Datos de (de los) asegurado(s)
-		
+	
 		$pdf->Text(15, 72, 'Datos de (de los) asegurado (s)');
 		$pdf->SetLineStyle(array('width' => 0.3, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
 		# Rectangulo de contenido
@@ -857,20 +856,20 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		$pdf->Line(112, 77, 112, 92, $style2);
 		$pdf->Line(132, 77, 132, 92, $style2);
 		$pdf->Line(167, 77, 167, 92, $style2);
-		
+	
 		$pdf->Text(18, 81, 'Nombre y Apellidos Completos');
 		$pdf->Text(75, 77, 'Fecha de Nacimiento');
 		$pdf->Text(136, 77, 'Fecha de Alta');
-		
+	
 		$pdf->Text(78, 81, 'Dia     Mes     Año');
 		$pdf->Text(116, 81, 'Sexo');
-		
+	
 		$pdf->Text(134, 81, 'Dia     Mes     Año');
 		$pdf->Text(173, 81, 'Parentesco');
 		# Linea 6
 		$pdf->Line(15, 94, 200, 94, $style2);
 		$pdf->Text(15, 94.5, 'Regla para determinar la suma asegurada: Suma Asegurada fija igual a $10,000.00');
-		
+	
 		# Linea 7
 		$pdf->Line(15, 100, 200, 100, $style2);
 		$pdf->SetFontSize(9);
@@ -883,22 +882,22 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		$pdf->Text(15, 111, 'Nombre completo de los Beneficiarios (para efectos de identificación) y porcentaje de participación');
 		# Linea 9
 		$pdf->Line(15, 121.5, 200, 121.5, $style2);
-		
+	
 		$pdf->SetFont('pdfahelvetica',	'', 7);	// Normal
-		
+	
 		$pdf->Text(16, 243, 'FIRMA DEL REPRESENTANTE DEL');
 		$pdf->Text(87, 243, 'FIRMA DEL PADRE O TUTOR');
 		$pdf->Text(148, 243, 'FIRMA DEL BENEFICIARIO/ALUMNO');
-		
+	
 		$pdf->Text(15, 246, 'CONTRATANTE (BANCO MERCANTIL');
 		$pdf->Text(163, 246, 'ASEGURADO');
-		
+	
 		$pdf->Text(28, 249, 'DEL NORTE, S.A.)');
-		
+	
 		$pdf->Line(15, 243, 67, 243, $style2);
 		$pdf->Line(81, 243, 133, 243, $style2);
 		$pdf->Line(147, 243, 199, 243, $style2);
-		
+	
 		//$pdf->Line(15, 262, 200, 262, $style8);
 		//$pdf->Line(15, 94, 255, 94, $style2);
 		//$pdf->Text(185, 255, 'F-1415-02');
@@ -918,11 +917,11 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		$estilo = array('padding'=>'auto' );
 		$pdf->write1DBarcode($data['matricula'], 'C128', 150, 247.5, 40, 9, 0.4, $estilo, 'N');
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-		
+	
 		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		///////////////////////////////////////////////////FORMATO TARJETAS//////////////////////////////////////////////////
 		///////////////////////////////////////////////////---------------//////////////////////////////////////////////////
-		
+	
 		$pdf->AddPage('P','LETTER');
 		//$pdf->SetXY(110, 200);
 		$pdf->SetFontSize(13);
@@ -932,7 +931,7 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		//-$pdf->Image('../images/angel2.jpg', 10, 35, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		//-$pdf->Image('../images/fideicomiso.jpg', 40, 35, 20, 20, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		//-$pdf->Image('../images/prepasi.png', 80, 35, 20, 20, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		$pdf->Image('resources/img/tarjeta_cdmx.jpg', 11, 37, 87, 14, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		$codarr='';
 		# Primer Codigo de Barras
@@ -940,22 +939,22 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		array($data['matricula'], 'C128', '25', '68', 60, 20, 0.4,
 		array('position'=>'S', 'border'=>false, 'padding'=>4, 'fgcolor'=>array(0,0,0), 'bgcolor'=>array(255,255,255), 'text'=>true, 'font'=>'helvetica', 'fontsize'=>8, 'stretchtext'=>4), 'N'));
 		$codarr .= '<tcpdf method="write1DBarcode" params="'.$params.'" />';
-		
+	
 		$pdf->Text(30, 61, ''.$data['nombre'].'');
 		$pdf->Text(135, 61, ''.$data['nombre'].'');
 		$pdf->Text(10, 56, 'Nombre: '.$data['paterno'].' '.$data['materno'].'');
 		$pdf->Text(115, 56, 'Nombre: '.$data['paterno'].' '.$data['materno'].'');
 		$pdf->writeHTML($codarr, '', '', '', 0);
-		
+	
 		# Segunda Credencial
 		$pdf->RoundedRect(112, 33, 95, 63, 3, '1111', 'NULL');
 		//-$pdf->Image('../images/angel2.jpg', 114, 35, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		//-$pdf->Image('../images/fideicomiso.jpg', 144, 35, 20, 20, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		//-$pdf->Image('../images/prepasi.png', 184, 35, 20, 20, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		$pdf->Image('resources/img/tarjeta_cdmx.jpg', 115, 37, 87, 14, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
-		
+	
+	
 		# Segundo Codigo de Barras
 		$params = $pdf->serializeTCPDFtagParameters(
 		array($data['matricula'], 'C128', '130', '68', 60, 20, 0.4,
@@ -967,9 +966,9 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		/*$pdf->Image('../images/angel2.jpg', 10, 107, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		 $pdf->Image('../images/fideicomiso.jpg', 40, 107, 20, 20, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		$pdf->Image('../images/prepasi.png', 80, 107, 20, 20, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);*/
-		
+	
 		$pdf->Image('resources/img/tarjeta_cdmx.jpg', 11, 109, 87, 14, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		# Tercer Codigo de Barras 140+72
 		$params = $pdf->serializeTCPDFtagParameters(
 		array($data['matricula'], 'C128', '25', '140', 60, 20, 0.4,
@@ -981,9 +980,9 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		/*$pdf->Image('../images/angel2.jpg', 114, 107, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		 $pdf->Image('../images/fideicomiso.jpg', 144, 107, 20, 20, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		$pdf->Image('../images/prepasi.png', 184, 107, 20, 20, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);*/
-		
+	
 		$pdf->Image('resources/img/tarjeta_cdmx.jpg', 115, 109, 87, 14, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		# Cuarto Codigo de Barras 140+72
 		$params = $pdf->serializeTCPDFtagParameters(
 		array($data['matricula'], 'C128', '130', '140', 60, 20, 0.4,
@@ -995,9 +994,9 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		/*$pdf->Image('../images/angel2.jpg', 10, 179, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		 $pdf->Image('../images/fideicomiso.jpg', 40, 179, 20, 20, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		$pdf->Image('../images/prepasi.png', 80, 179, 20, 20, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);*/
-		
+	
 		$pdf->Image('resources/img/tarjeta_cdmx.jpg', 11, 181, 87, 14, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
+	
 		# Quinto Codigo de Barras 140+72
 		$params = $pdf->serializeTCPDFtagParameters(
 		array(''.$data['matricula'].'', 'C128', '25', '212', 60, 20, 0.4,
@@ -1009,39 +1008,39 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		/*$pdf->Image('../images/angel2.jpg', 114, 179, 23, 23, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		 $pdf->Image('../images/fideicomiso.jpg', 144, 179, 20, 20, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
 		$pdf->Image('../images/prepasi.png', 184, 179, 20, 20, 'PNG', '', '', true, 100, '', false, false, 0, false, false, false);*/
-		
+	
 		$pdf->Image('resources/img/tarjeta_cdmx.jpg', 115, 181, 87, 14, 'JPG', '', '', true, 100, '', false, false, 0, false, false, false);
-		
-		
-		
+	
+	
+	
 		# Sexto Codigo de Barras 140+72
 		$params = $pdf->serializeTCPDFtagParameters(
 		array(''.$data['matricula'].'', 'C128', '130', '212', 60, 20, 0.4,
 		array('position'=>'S', 'border'=>false, 'padding'=>4, 'fgcolor'=>array(0,0,0), 'bgcolor'=>array(255,255,250), 'text'=>true, 'font'=>'helvetica', 'fontsize'=>8, 'stretchtext'=>4), 'N'));
 		$codarr .= '<tcpdf method="write1DBarcode" params="'.$params.'" />';
 		$pdf->writeHTML($codarr, '', '', '', 0);
-		
+	
 		$pdf->Text(30, 133, ''.$data['nombre'].'');
 		$pdf->Text(135, 133, ''.$data['nombre'].'');
-		
+	
 		$pdf->Text(30, 205, ''.$data['nombre'].'');
 		$pdf->Text(135, 205, ''.$data['nombre'].'');
-		
-		
+	
+	
 		$pdf->Text(10, 128, 'Nombre: '.$data['paterno'].' '.$data['materno'].'');
 		$pdf->Text(115, 128, 'Nombre: '.$data['paterno'].' '.$data['materno'].'');
-		
+	
 		$pdf->Text(10, 200, 'Nombre: '.$data['paterno'].' '.$data['materno'].'');
 		$pdf->Text(115, 200, 'Nombre: '.$data['paterno'].' '.$data['materno'].'');
-		
+	
 		$pdf->setCellPaddings(1, 1, 1, 1);
 		// set cell margins
 		$pdf->setCellMargins(1, 1, 1, 1);
-		
+	
 		// ---------------------------------------------------------
-		
+	
 		//$pdf->writeHTML($html, '', '', '', 0);
-		
+	
 		$pdf->SetFont('helvetica', '', 5);
 		// print a message
 		$txt = '“Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está prohibido el uso de este programa con fines políticos, electorales, de lucro y otros distintos a los establecidos. Quien haga uso indebido de los recursos de este programa en el Distrito Federal, será sancionado de acuerdo con la ley aplicable y ante la autoridad competente.”';
@@ -1050,34 +1049,39 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		$txt = '“Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está prohibido el uso de este programa con fines políticos, electorales, de lucro y otros distintos a los establecidos. Quien haga uso indebido de los recursos de este programa en el Distrito Federal, será sancionado de acuerdo con la ley aplicable y ante la autoridad competente.”';
 		$pdf->MultiCell(90, 0, $txt, 0, 'C', false, 1, 115, 82, true, 0, false, true, 0, 'T', false);
 		$pdf->Ln(2);
-		
+	
 		$txt = '“Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está prohibido el uso de este programa con fines políticos, electorales, de lucro y otros distintos a los establecidos. Quien haga uso indebido de los recursos de este programa en el Distrito Federal, será sancionado de acuerdo con la ley aplicable y ante la autoridad competente.”';
 		$pdf->MultiCell(90, 0, $txt, 0, 'C', false, 1, 10, 154, true, 0, false, true, 0, 'T', false);
 		$pdf->Ln(2);
 		$txt = '“Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está prohibido el uso de este programa con fines políticos, electorales, de lucro y otros distintos a los establecidos. Quien haga uso indebido de los recursos de este programa en el Distrito Federal, será sancionado de acuerdo con la ley aplicable y ante la autoridad competente.”';
 		$pdf->MultiCell(90, 0, $txt, 0, 'C', false, 1, 115, 154, true, 0, false, true, 0, 'T', false);
 		$pdf->Ln(2);
-		
+	
 		$txt = '“Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está prohibido el uso de este programa con fines políticos, electorales, de lucro y otros distintos a los establecidos. Quien haga uso indebido de los recursos de este programa en el Distrito Federal, será sancionado de acuerdo con la ley aplicable y ante la autoridad competente.”';
 		$pdf->MultiCell(90, 0, $txt, 0, 'C', false, 1, 10, 226, true, 0, false, true, 0, 'T', false);
 		$pdf->Ln(2);
 		$txt = '“Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está prohibido el uso de este programa con fines políticos, electorales, de lucro y otros distintos a los establecidos. Quien haga uso indebido de los recursos de este programa en el Distrito Federal, será sancionado de acuerdo con la ley aplicable y ante la autoridad competente.”';
 		$pdf->MultiCell(90, 0, $txt, 0, 'C', false, 1, 115, 226, true, 0, false, true, 0, 'T', false);
 		$pdf->Ln(2);
-		
-		
+	
+	
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		
-		
-		
-
-	// reset pointer to the last page
-	//$pdf->lastPage();
+	
+	
+	
+	
+		// reset pointer to the last page
+		//$pdf->lastPage();
 		$nombre_archivo = utf8_decode("Registro_".$data['matricula'].".pdf");
-		
+	
 		$pdf->Output($nombre_archivo, 'I');
 		ob_end_flush();
 	}
-}
 	
-?>
+	
+	
+	
+	
+	
+	
+}

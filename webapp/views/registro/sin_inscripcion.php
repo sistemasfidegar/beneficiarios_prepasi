@@ -84,7 +84,7 @@
 		                   		<td><h1><?php echo $institucion['institucion'];?></h1></td>		                        		
 		                   </tr>
 		                   <tr>
-		                   		<td><h3> NO ESTA EN PERIODO DE INSCRIPCIÓN</h3></td>		                        		
+		                   		<td><h3> NO ESTA EN PERIODO DE INSCRIPCION</h3></td>		                        		
 		                   </tr>
 		                </table>        	
 					</div>					
@@ -101,7 +101,7 @@
 		                    	<td colspan="5" height="41px" align="center" valign="top" style="font-size:24px; font-weight:bold; color:#e6007e;"><?php echo $strNombre." ".$strAp." ".$strAm;?></td>		                        		
 		                    </tr>
 		                   <tr>
-		                   		<td>AÚN NO ES PERIODO DE INSCRIPCIÓN</td>		                        		
+		                   		<td>AÚN NO ES PERIODO DE INSCRIPCION</td>		                        		
 		                   </tr>
 		                </table>        	
 					</div>					
@@ -120,7 +120,7 @@
 		                   		<td><?php echo $matricula;?></td>		                        		
 		                   </tr>
 		                   <tr>
-		                   		<td><h3>Tiene  pagos límite como beneficiario Bachillerato.</h3></td>		                        		
+		                   		<td><h3>Tiene  pagos limite como beneficiario Bachillerato.</h3></td>		                        		
 		                   </tr>
 		                   <tr>
 		                   		<td><a href="#">link universitario</a></td>		                        		
@@ -161,7 +161,7 @@
 		                    	<td colspan="5" height="41px" align="center" valign="top" style="font-size:24px; font-weight:bold; color:#e6007e;"><?php echo $strNombre." ".$strAp." ".$strAm;?></td>		                        		
 		                    </tr>
 		                   <tr>
-			            		<td align="center" class=""><br>LA INSTITUCIÓN NO ES LA MISMA QUE CONTIENE TU REGISTRO. <br><br></td>
+			            		<td align="center" class=""><br>LA INSTITUCION NO ES LA MISMA QUE CONTIENE TU REGISTRO. <br><br></td>
 			            	</tr>
 			            	</table>	
 					</div>					

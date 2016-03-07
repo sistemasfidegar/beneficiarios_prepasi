@@ -7,14 +7,6 @@ class M_registro extends MY_Model{
 	function M_registro(){
 		parent::__construct();
 	}
-	
-	
-	function getBeneficiarioUnico($curp){
-		$this->sql="select COUNT(*) as total from b_persona where curp = '$curp';";
-		$results = $this->db->query($this->sql);
-		return $results->result_array();
-	}
-	
 
 	function getFechaInscripcion($id_institucion){
 		$this->sql="SELECT to_char(fecha1,'DD-MM-YYYY') as inicio, to_char(fecha2,'DD-MM-YYYY') as fin FROM cat_calendario where id_institucion=$id_institucion;";
@@ -103,7 +95,7 @@ class M_registro extends MY_Model{
 		$datos['ps']='PS'.$datos['ciclo'].$datos['escolar'].$datos['cons'];
 		
 		//inserta sig consecutivo
-		$this->sql="update consecutivo_matricula set consecutivo=:cons;";
+		$this->sql="update consecutivo_matricula set consecutivo=:cons";
 		$this->bindParameters($datos);
 		$incrementa = $this->db->query($this->sql);
 		
@@ -111,14 +103,14 @@ class M_registro extends MY_Model{
 			
 		
 		//beneficiario
-		$this->sql="insert into beneficiario (matricula_asignada, ap, am, nombre, id_solicitud,id_archivo, id_generacion_ps,fecha_carga, id_programa) values(:ps,:ap_p,:ap_m,:nombre,:id_solicitud,:id_archivo,:id_generacion,now(),:id_programa) returning matricula_asignada;";
+		$this->sql="insert into beneficiarios (matricula_asignada, ap, am, nombre, id_solicitud,id_archivo, id_generacion_ps,fecha_carga, id_programa) values(:ps,:ap_p,:ap_m,:nombre,:id_solicitud,:id_archivo,:id_generacion,now(),:id_programa) returning matricula_asignada;";
  		$this->bindParameters($datos);
 		$beneficiario = $this->db->query($this->sql);
 		
 	 //print_r($beneficiario);
 		
 		//b_personal
-		$this->sql="insert into b_persona (matricula_asignada,ap_p, am_p, nombre_p,ap_m, am_m, nombre_m, celular,telefono, fecha_nacimiento, edad, id_sexo, email, curp, id_archivo, id_ocupacion,
+		$this->sql="insert into b_personal (matricula_asignada,ap_p, am_p, nombre_p,ap_m, am_m, nombre_m, celular,telefono, fecha_nacimiento, edad, id_sexo, email, curp, id_archivo, id_ocupacion,
 										   id_estado_civil,id_grupo_etnico,id_hijos,finado_padre, finado_madre, id_lugar_nacimiento, id_discapacidad,petnica)
  							 		values(:ps,upper(:apellidoPadreP), upper(:apellidoPadreM), upper(:nombrePadre),upper(:apellidoMadreP), upper(:apellidoMadreM), upper(:nombreMadre), :celular,:telefono, :fecha_nac, :edad, :sexo, upper(:email), :curp, :id_archivo, :id_ocupacion,
 										   :id_estado_civil,:id_etnia,:id_hijos,:finado_padre, :finado_madre, :lugar_nac, :id_discapacidad, :petnica) returning matricula_asignada;";
@@ -127,13 +119,13 @@ class M_registro extends MY_Model{
 		$b_personal = $this->db->query($this->sql);
 		
 		//b_escolar
-		$this->sql="insert into b_escuela (matricula_asignada,matricula_escuela, id_institucion,id_plantel,id_turno,promedio,id_grado,id_sistema,num_mat_adeuda,id_archivo,id_carrera, id_generacion) 
+		$this->sql="insert into b_escolar (matricula_asignada,matricula_escuela, id_institucion,id_plantel,id_turno,promedio,id_grado,id_sistema,num_mat_adeuda,id_archivo,id_carrera, id_generacion) 
 									values(:ps,:matricula_escuela, :id_institucion,:id_plantel,:id_turno,:promedio,:id_grado,:id_sistema,:materias,:id_archivo,:id_carrera, :id_generacion) returning matricula_asignada;";
 		$this->bindParameters($datos);
 		$b_escolar = $this->db->query($this->sql);
 		
 		//b_direccion
-		$this->sql="insert into b_dir (matricula_asignada,calle,noext,noint,ecalle,id_colonia,id_entidad,id_ut,id_archivo,ycalle,manzana,lote,edificio,rampa,andador,departamento,pasillo,villa,entrada,id_tiempo_residencia)
+		$this->sql="insert into b_direccion (matricula_asignada,calle,noext,noint,ecalle,id_colonia,id_entidad,id_ut,id_archivo,ycalle,manzana,lote,edificio,rampa,andador,departamento,pasillo,villa,entrada,id_tiempo_residencia)
 									values(:ps,upper(:calle),:noext,:noint,upper(:ecalle),:id_colonia,:lugar_nac,:id_uts,:id_archivo,upper(:ycalle),:manzana,:lote,:edificio,:rampa,:andador,:departamento,:pasillo,:villa,:entrada,:id_tiempo_residencia) returning matricula_asignada;";
 		$this->bindParameters($datos);
 		$b_dir = $this->db->query($this->sql);
@@ -141,15 +133,16 @@ class M_registro extends MY_Model{
 		
 		
 		
-		if($beneficiario==1 && $b_personal==1 && $b_escolar==1 && $b_dir==1)
+		if ($beneficiario==1 && $b_personal==1 && $b_escolar==1&& $b_dir==1)
 		{
 			$this->db->trans_commit();
-			return 1;
+			return 'ok';
 		}
 		else
 		{
 			$this->db->trans_rollback();
-			return 0;			
+			return 'nook';
+			
 		}
 		
 	}

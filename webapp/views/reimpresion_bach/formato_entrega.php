@@ -1,209 +1,6 @@
 <?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Reimpresion extends CI_Controller {
-
-	public function __construct() {
-		parent::__construct();
-	
-			
-		$this->load->model('m_reimpresion');
-		$this->load->helper('my_date_helper');
-	}
-	public function index()
-	{
-		$id_modulo=3;
-		$hoy=new DateTime(fecha_actual());
-		$aux=$this->m_reimpresion->getModuloActivo($id_modulo);
-		$inicio=new DateTime($aux[0]['inicio']);
-		$fin = new DateTime($aux[0]['fin']);
-		
-			
-		if ($hoy >= $inicio && $hoy <=$fin){
-			$this->load->view('reimpresion_bach/busca_beneficiario', true, false);
-		}
-		else{
-			$datos['sin_ins']=2;
-			$this->load->view('reimpresion_bach/sin_registro', $datos, false);
-		}
-		
-	}
-	
-	function ajax_beneficiario_matricula(){
-		
-		
-		$matricula =  $this->input->post('matricula');
-		
-		
-		$aux=$this->m_reimpresion->getMatricula($matricula);
-		
-		if($aux!=null)
-		{
-			echo $matricula = $aux[0]['matricula_asignada'];
-		}
-		else
-		{
-			echo 'bad';
-		}
-	}
-	function ajax_beneficiario_unam(){
-		
-		$matricula =  $this->input->post('matricula_escuela');
-		
-		
-		$aux=$this->m_reimpresion->getMatriculaUnam($matricula);
-		
-		if($aux!=null)
-		{
-			echo $matricula = $aux[0]['matricula_asignada'];
-		}
-		else
-		{
-			echo 'bad';
-		}
-	}
-	function buscaBeneficiario($matricula){
-		
-		$aux = $this->m_reimpresion->getIdentificacion($matricula);
-    	$data['identificacion'] = $aux[0];
-    	
-    	if($data['identificacion']['id_archivo']==2 || $data['identificacion']['id_archivo']==1){
-    		
-    		$data['direccion']=0;
-    		$data['escolar']=0;
-    		
-    		
-    		$aux = $this->m_reimpresion->getDireccion($matricula);
-    		if($aux!=null){
-	    		$data['direccion'] = $aux[0];
-    		}
-	    	$aux = $this->m_reimpresion->getEscolarBach($matricula);
-	    	if($aux!= null){
-	    		$data['escolar'] = $aux[0];
-	    	}
-	    	
-	    	$data['matricula']=$matricula;
-	    	
-	    	$this->load->view('reimpresion_bach/v_datos', $data, false);
-	    }
-	    else if($data['identificacion']['id_archivo']==3)
-	    { 
-	    	$datos['sin_ins']=3;
-	    	$this->load->view('reimpresion_bach/sin_registro', $datos, false);
-	    }
-	    else
-	    {
-	    	$datos['sin_ins']=1;
-	    	$this->load->view('reimpresion_bach/sin_registro', $datos, false);
-	    }
-	}
-	
-	
-	function pdf(){
-		$data['matricula']= $this->input->post('matricula');
-		$data['nombre']= $this->input->post('nombre');
-		$data['paterno']= $this->input->post('paterno');
-		$data['materno']= $this->input->post('materno');
-		$data['fecha_carga']= $this->input->post('fecha_carga');
-		$data['id_archivo']= $this->input->post('id_archivo');
-		$data['curp']= $this->input->post('curp');
-		
-		$data['correo']= $this->input->post('correo');
-		$data['tel']= $this->input->post('tel');
-		
-		
-		$data['institucion']= $this->input->post('institucion');
-		$data['plantel']= $this->input->post('plantel');
-		
-		$data['grado']= $this->input->post('grado');
-		$data['turno']= $this->input->post('turno');
-		$data['promedio']= $this->input->post('promedio');
-		$data['modalidad']= $this->input->post('sistema');
-		
-		$data['padre']= $this->input->post('padre');
-		$data['madre']= $this->input->post('madre');
-		$data['ecivil']= $this->input->post('e_civil');
-		$data['sexo']= $this->input->post('sexo');
-		$data['fecha_nac']= $this->input->post('fecha_nac');
-		
-		//$data['']= $this->input->post('');
-		$data['cel']= $this->input->post('cel');
-		if ($data['cel']=='')
-			$data['cel']='----';
-		$data['calle']= $this->input->post('calle');
-		if ($data['calle']=='')
-			$data['calle']='----';
-		$data['noext']= $this->input->post('noext');
-		if ($data['noext']=='')
-			$data['noext']='----';
-		$data['noint']= $this->input->post('noint');
-		if ($data['noint']=='')
-			$data['noint']='----';
-		$data['manzana']= $this->input->post('manzana');
-		if ($data['manzana']=='')
-			$data['manzana']='----';
-		$data['lote']= $this->input->post('lote');
-		if ($data['lote']=='')
-			$data['lote']='----';
-		$data['noedif']= $this->input->post('noedif');
-		if ($data['noedif']=='')
-			$data['noedif']='----';
-		$data['nodpto']= $this->input->post('nodpto');
-		if ($data['nodpto']=='')
-			$data['nodpto']='----';
-		$data['andador']= $this->input->post('andador');
-		if ($data['andador']=='')
-			$data['andador']='----';
-		$data['rampa']= $this->input->post('rampa');
-		if ($data['rampa']=='')
-			$data['rampa']='----';
-		$data['pasillo']= $this->input->post('pasillo');
-		if ($data['pasillo']=='')
-			$data['pasillo']='----';
-		$data['villa']= $this->input->post('villa');
-		if ($data['villa']=='')
-			$data['villa']='----';
-		$data['entrada']= $this->input->post('entrada');
-		if ($data['entrada']=='')
-			$data['entrada']='----';
-		$data['colonia']= $this->input->post('colonia');
-		if ($data['colonia']=='')
-			$data['colonia']='----';
-		$data['delegacion']= $this->input->post('delegacion');
-		if($data['delegacion']=='')
-			$data['delegacion']='----';
-		$data['cp']= $this->input->post('cp');
-		if($data['cp']=='')
-			$data['cp']='----';
-		$this->load->library('Pdf');
-		$pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-		$pdf->SetCreator(PDF_CREATOR);
-		$pdf->SetAuthor('Cony Jaramillo');
-		$pdf->SetTitle('Documentos Prepa Si');
-		$pdf->SetSubject('Reimpresión de Documentos');
-		$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-		ob_start();
-		//remove default header/footer
-		$pdf->setPrintHeader(false);
-		$pdf->setPrintFooter(false);
-		// set default header data
-		
-		// set margins
-		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-		//$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-				
-		// set image scale factor
-		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-		
-		// set some language-dependent strings (optional)
-		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-			require_once(dirname(__FILE__).'/lang/eng.php');
-			$pdf->setLanguageArray($l);
-		}
-		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
+// ---------------------------------------------------------
+///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		///////////////////////////////////////////////////FORMATO ENTREGA///////////////////////////////////////////////////
 		///////////////////////////////////////////////////---------------///////////////////////////////////////////////////
 		// establecer el modo de fuente por defecto
@@ -217,7 +14,9 @@ class Reimpresion extends CI_Controller {
 		$der = 10;
 		
 		$pdf->AddPage('L','LETTER');
-
+		
+		//$pdf->SetFont('dejavusans', '', 10);
+		//$pdf->SetFont('pdfahelveticab', '', 10); //Negrita
 		$pdf->SetFont('pdfahelvetica', '', 10); //Normal
 		//$pdf->SetFont('pdfahelveticai', '', 10); // S
 		$pdf->SetTextColor(0,0,0);
@@ -696,16 +495,15 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(16, 36, $data['paterno']);
 		$pdf->Text(79, 36, $data['materno']);
 		$pdf->Text(142, 36, $data['nombre']);
-		$pdf->SetFont('pdfahelveticab', '', 8);
+		
 		$pdf->Text(16, 45, $data['correo']);
-		$pdf->SetFont('pdfahelveticab', '', 10);
-		$pdf->Text(79, 45, $data['tel']);
-		$pdf->Text(142, 45, $data['cel']);
+ 		$pdf->Text(79, 45, $data['tel']);
+ 		$pdf->Text(142, 45, $data['cel']);
 		
 		
-		$pdf->Text(16, 54, $data['padre']);
-		$pdf->Text(110, 54, $data['madre']);
-		
+		/*$pdf->Text(16, 54, $padre);
+		$pdf->Text(110, 54, $madre);
+		*/
 		
 		$pdf->Text(16, 63+$bajar+2, $data['calle']);
 		$pdf->Text(112, 63+$bajar+2, $data['noext']);
@@ -723,16 +521,16 @@ class Reimpresion extends CI_Controller {
 		$pdf->Text(16, 83+$bajar+2, $data['delegacion']);
 		$pdf->Text(108, 83+$bajar+2, $data['cp']);
 		
-		$pdf->SetFont('pdfahelveticab', '', 7); //Negrita
+		$pdf->SetFont('pdfahelveticab', '', 8); //Negrita
 		$pdf->Text(16, 98+$bajar+2, $data['institucion']);
 		$pdf->Text(112, 98+$bajar+2, $data['plantel']);
 		
 		$pdf->SetFont('pdfahelveticab', '', 10); //Negrita
 		$pdf->Text(16, 108+$bajar+2, $data['grado']);
 		$pdf->Text(84, 108+$bajar+2, $data['turno']);
-		
-		 $pdf->Text(123.5, 108+$bajar+2, $data['modalidad']);
-		$pdf->Text(176, 108+$bajar+2, $data['promedio']);	
+		/*FALTA
+		$pdf->Text(123.5, 108+$bajar+2, $data['modalidad']);
+		$pdf->Text(176, 108+$bajar+2, $data['promedio']);		*/
 		
 		$pdf->endLayer();
 		//cambio de 6 a 14 el sexto parametro
@@ -1068,16 +866,5 @@ Si eres menor de edad, debe firmar el padre, la madre o el tutor.
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
-		
-		
 
-	// reset pointer to the last page
-	//$pdf->lastPage();
-		$nombre_archivo = utf8_decode("Registro_".$data['matricula'].".pdf");
-		
-		$pdf->Output($nombre_archivo, 'I');
-		ob_end_flush();
-	}
-}
-	
 ?>

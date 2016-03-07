@@ -11,42 +11,73 @@ class M_reimpresion extends MY_Model{
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}
-	function getBeneficiarioCurp($curp){
-		$this->sql="select  pe.id_estado_civil, pe.id_hijos, pe.celular, pe.telefono, pe.am_m,pe.am_p,pe.ap_m,pe.ap_p,pe.email,pe.finado_madre,pe.finado_padre,pe.id_discapacidad,pe.id_grupo_etnico,pe.id_ocupacion, pe.nombre_m,pe.nombre_p,
-		d.andador, d.calle,d.departamento,d.ecalle,d.edificio,d.entrada,d.id_colonia,d.id_tiempo_residencia,d.lote,d.manzana,d.noext,d.noint,d.pasillo,d.rampa,d.villa,d.ycalle,
-		e.id_carrera,e.id_generacion,e.id_grado, e.id_plantel,e.id_institucion,e.id_turno,e.matricula_escuela,e.num_mat_adeuda,e.promedio,e.id_sistema,
-		b.ap, b.ap, b.am, b.matricula_asignada
-		FROM b_direccion d
-		INNER JOIN b_escolar e on d.matricula_asignada= e.matricula_asignada
-		INNER JOIN b_personal pe on e.matricula_asignada=pe.matricula_asignada
-		INNER JOIN beneficiarios b on b.matricula_asignada=pe.matricula_asignada
-		where curp='$curp' and b.id_archivo in (1,2,3);";
+	
+	
+	function getMatricula($dato){
+		$this->sql="SELECT B.matricula_asignada
+						FROM beneficiarios B
+						INNER JOIN b_personal P on b.matricula_asignada = p.matricula_asignada
+						WHERE  P.matricula_asignada ='$dato' OR P.CURP='$dato' and b.id_archivo in (1,2,3);";
+		
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}
-	function getBeneficiarioPS($matricula){
-		$this->sql="select  pe.id_estado_civil, pe.id_hijos, pe.celular, pe.telefono, pe.am_m,pe.am_p,pe.ap_m,pe.ap_p,pe.email,pe.finado_madre,pe.finado_padre,pe.id_discapacidad,pe.id_grupo_etnico,pe.id_ocupacion, pe.nombre_m,pe.nombre_p,
-		d.andador, d.calle,d.departamento,d.ecalle,d.edificio,d.entrada,d.id_colonia,d.id_tiempo_residencia,d.lote,d.manzana,d.noext,d.noint,d.pasillo,d.rampa,d.villa,d.ycalle,
-		e.id_carrera,e.id_generacion,e.id_grado, e.id_plantel,e.id_institucion,e.id_turno,e.matricula_escuela,e.num_mat_adeuda,e.promedio,e.id_sistema,
-		b.ap, b.ap, b.am, b.matricula_asignada
-		FROM b_direccion d
-		INNER JOIN b_escolar e on d.matricula_asignada= e.matricula_asignada
-		INNER JOIN b_personal pe on e.matricula_asignada=pe.matricula_asignada
-		INNER JOIN beneficiarios b on b.matricula_asignada=pe.matricula_asignada
-		where b.matricula_asignada='$matricula' and b.id_archivo in (1,2,3);";
+	function getMatriculaUnam($dato){
+		$this->sql="SELECT matricula_asignada FROM  b_escolar 	WHERE matricula_escuela ='$dato' and id_archivo in (1,2,3);";
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}
-	function getBeneficiarioNocta($nocta){
-		$this->sql="select  pe.id_estado_civil, pe.id_hijos, pe.celular, pe.telefono, pe.am_m,pe.am_p,pe.ap_m,pe.ap_p,pe.email,pe.finado_madre,pe.finado_padre,pe.id_discapacidad,pe.id_grupo_etnico,pe.id_ocupacion, pe.nombre_m,pe.nombre_p,
-		d.andador, d.calle,d.departamento,d.ecalle,d.edificio,d.entrada,d.id_colonia,d.id_tiempo_residencia,d.lote,d.manzana,d.noext,d.noint,d.pasillo,d.rampa,d.villa,d.ycalle,
-		e.id_carrera,e.id_generacion,e.id_grado, e.id_plantel,e.id_institucion,e.id_turno,e.matricula_escuela,e.num_mat_adeuda,e.promedio,e.id_sistema,
-		b.ap, b.ap, b.am, b.matricula_asignada
-		FROM b_direccion d
-		INNER JOIN b_escolar e on d.matricula_asignada= e.matricula_asignada
-		INNER JOIN b_personal pe on e.matricula_asignada=pe.matricula_asignada
-		INNER JOIN beneficiarios b on b.matricula_asignada=pe.matricula_asignada
-		where e.matricula_escuela='$nocta' and b.id_archivo in (1,2,3);";
+	function getIdentificacion($matricula)
+	{
+		$this->sql = "select matricula_asignada, ap,am,nombre,b.id_archivo, ap_p, am_p,nombre_p,ap_m,am_m,nombre_m, telefono,celular,fecha_nacimiento,
+				        edad,id_sexo,email,curp,id_ocupacion,id_estado_civil,id_lugar_nacimiento,to_char(b.fecha_carga, 'yyyy-MM-dd') as fecha 
+						from	beneficiarios b
+						inner join b_personal p using(matricula_asignada)
+						where matricula_asignada = '$matricula';";
+				
+		$results = $this->db->query($this->sql);
+		return $results->result_array();
+	}
+	function getDireccion($matricula)
+	{
+	
+		$this->sql = "select delegacion, cp,colonia, d.*
+						from b_direccion d
+						INNER JOIN cat_colonia c on c.id_colonia= d.id_colonia
+						
+						where matricula_asignada =  '$matricula';";
+				
+		$results = $this->db->query($this->sql);
+		return $results->result_array();
+	}
+	function getEscolarBach($matricula)
+	{
+	
+		$this->sql ="SELECT p.plantel, i.institucion, turno,g.grado,descripcion as sistema, matricula_escuela,promedio
+					 FROM b_escolar e 
+					 INNER JOIN  cat_institucion i ON i.id_institucion=e.id_institucion 
+					 INNER JOIN	cat_plantel p ON p.id_plantel=e.id_plantel
+					 INNER JOIN  cat_grados g on g.id_grado=e.id_grado
+					 LEFT JOIN   cat_turno t on e.id_turno=t.id_turno
+					 LEFT JOIN cat_sistema s on s.id_sistema=e.id_sistema
+					 WHERE matricula_asignada = '$matricula';";
+		$results = $this->db->query($this->sql);
+		return $results->result_array();
+	}
+	function getEscolarUni($matricula)
+	{
+	
+		$this->sql ="
+					SELECT i.institucion as institucion_uni,p.plantel as plantel_uni, gu.grado as grado_uni, descripcion as sistema,
+					turno as turno_uni,descripcion as sistema, matricula_escuela,promedio_uni
+					FROM b_escolar e 
+					INNER JOIN cat_institucion i ON i.id_institucion=e.id_institucion_uni
+					INNER JOIN cat_plantel p ON p.id_plantel=e.id_plantel_uni
+					INNER JOIN cat_grados g on g.id_grado=e.id_grado_uni
+					INNER JOIN cat_grados_uni gu on gu.id_grado_uni=e.id_grado_uni
+					INNER JOIN cat_turno t on e.id_turno_uni=t.id_turno
+					INNER JOIN cat_sistema s on s.id_sistema=e.id_sistema
+					WHERE matricula_asignada = '$matricula';";
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}

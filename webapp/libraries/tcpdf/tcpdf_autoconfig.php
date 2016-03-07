@@ -161,7 +161,7 @@ if (!defined('PDF_MARGIN_HEADER')) {
 }
 
 if (!defined('PDF_MARGIN_FOOTER')) {
-	define ('PDF_MARGIN_FOOTER', 10);
+	define ('PDF_MARGIN_FOOTER', 0);
 }
 
 if (!defined('PDF_MARGIN_TOP')) {
@@ -169,7 +169,7 @@ if (!defined('PDF_MARGIN_TOP')) {
 }
 
 if (!defined('PDF_MARGIN_BOTTOM')) {
-	define ('PDF_MARGIN_BOTTOM', 25);
+	define ('PDF_MARGIN_BOTTOM', 0);
 }
 
 if (!defined('PDF_MARGIN_LEFT')) {
@@ -193,7 +193,7 @@ if (!defined('PDF_FONT_NAME_DATA')) {
 }
 
 if (!defined('PDF_FONT_SIZE_DATA')) {
-	define ('PDF_FONT_SIZE_DATA', 8);
+	define ('PDF_FONT_SIZE_DATA', 3);
 }
 
 if (!defined('PDF_FONT_MONOSPACED')) {
@@ -225,7 +225,7 @@ if (!defined('K_THAI_TOPCHARS')) {
 }
 
 if (!defined('K_TCPDF_CALLS_IN_HTML')) {
-	define('K_TCPDF_CALLS_IN_HTML', false);
+	define('K_TCPDF_CALLS_IN_HTML',true);
 }
 
 if (!defined('K_TCPDF_THROW_EXCEPTION_ERROR')) {

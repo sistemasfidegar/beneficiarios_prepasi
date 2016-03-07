@@ -10,28 +10,16 @@ class Registro extends CI_Controller {
 		$this->load->model('m_registro');
 		$this->load->helper('my_date_helper');
 	}
-	
-	
-		
 	public function index()
 	{
-		$ejecuta = true;
-		if($_POST==null)
-		{			
-			$ejecuta = false;
-		}
-		
-		
-		
 		$id_modulo=1;
 		$hoy=new DateTime(fecha_actual());
-		
 		
 		//Datos Beneficiario
 		$datos['strNombre'] = $this->input->post('strNombre');
 		$datos['strAp'] = $this->input->post('strAp');
 		$datos['strAm'] = $this->input->post('strAm');
-
+		
 		
 		//Modulo Activo
 		$aux=$this->m_registro->getModuloActivo($id_modulo);
@@ -39,9 +27,8 @@ class Registro extends CI_Controller {
 		$fin = new DateTime($aux[0]['fin']);
 		
 			
-		if($hoy >= $inicio && $hoy <=$fin && $ejecuta== true)
-		{
-
+		if ($hoy >= $inicio && $hoy <=$fin){
+		
 				//Institucion Activa
 				$datos['selectInst'] = (int) $this->input->post('selectInst');
 				$aux=$this->m_registro->getFechaInscripcion($datos['selectInst']);
@@ -54,12 +41,12 @@ class Registro extends CI_Controller {
 				 print_r($inicio);
 				 */
 				
-				if($fin !=null && $inicio!=null && $hoy >= $inicio && $hoy <=$fin)
-				{
-									
+				if ($fin !=null && $inicio!=null && $hoy >= $inicio && $hoy <=$fin){
+				
+					
 					if($_POST!=null)
 					{				
-						//print_r($_POST);				
+// 					print_r($_POST);				
 						$datos['fechaNac'] = $this->input->post('fechanac');
 						$datos['strTramite'] = $this->input->post('tramite');
 						$datos['id_archivo'] = (int) $this->input->post('id_archivo');
@@ -79,10 +66,9 @@ class Registro extends CI_Controller {
 						$datos['strGenero'] = $this->input->post('strGenero');
 						$datos['strCurp'] = $this->input->post('strCurp');
 						
-						$aux_tot = $this->m_registro->getBeneficiarioUnico($datos['strCurp']);
-						$datos['total_benef'] = $aux_tot[0]['total'];
+					
 						
-												
+						
 						//APLICAR LAS VALIDACIONES NECESARIAS
 						
 						//tal vez que provenga del formulario de curp, luego vemos que hacer con esta
@@ -102,7 +88,6 @@ class Registro extends CI_Controller {
 							
 							$this->load->view('registro/form_registro', $datos, false);
 						}
-						
 						//Reinscripcion
 						if($datos['id_archivo']==2){
 							
@@ -163,26 +148,9 @@ class Registro extends CI_Controller {
 			}
 			else 
 			{
-				
-				if($ejecuta==false)
-				{
-					$datos['heading'] = "Sistema deshabilitado para esta operación";
-					$ip_addr = $_SERVER['REMOTE_ADDR'];
-					$msg = "&nbsp;&nbsp;&nbsp;  Estas intentando accesar directamente a la aplicación y no está permitido!!!<br /><br />&nbsp;&nbsp;&nbsp;";
-					$msg .= "Se ha registrado la IP: <strong>$ip_addr</strong> <br /><br />&nbsp;&nbsp;&nbsp;";
-					$msg .= '<a href="http://www.prepasi.df.gob.mx/Inscripcion">Sistema de Registro de Beneficiarios del Programa Prepa Sí</a><br /><br />';
-						
-					$datos['message'] = $msg;
-						
-					$this->load->view('errors/html/error_404', $datos, false);
-				}
-				else
-				{				
-					$datos['sin_ins']=2;
-					$this->load->view('registro/sin_inscripcion', $datos, false);
-				}
+				$datos['sin_ins']=2;
+				$this->load->view('registro/sin_inscripcion', $datos, false);
 			}
-			
 	}
 	
 	
@@ -192,7 +160,9 @@ class Registro extends CI_Controller {
 		$datos['id_programa'] =1;
 		$datos['id_solicitud']=1;
 		
-						
+		
+		
+		
 		$datos['nombre'] =$this->input->post('nombre');
 		$datos['ap_p'] =$this->input->post('ap_p');
 		$datos['ap_m'] =$this->input->post('ap_m');
@@ -237,10 +207,8 @@ class Registro extends CI_Controller {
 		if($aux!=null){
 			$datos['id_uts']=$aux[0]['id_ut'];
 		}
-		else
-		{ 
+		else 
 			$datos['id_uts']=0;
-		}
 		
 		$datos['apellidoPadreP'] =$this->input->post('apellidoPadreP');
 		$datos['apellidoPadreM'] =$this->input->post('apellidoPadreM');
@@ -252,7 +220,7 @@ class Registro extends CI_Controller {
 		$datos['id_institucion'] =$this->input->post('id_institucion');
 		$datos['id_plantel'] =$this->input->post('id_plantel');
 		$datos['id_carrera'] =$this->input->post('id_carrera');
-		$datos['id_generacion'] =$this->input->post('id_ciclo');
+		$datos['id_generacion'] =(int)$this->input->post('id_ciclo');
 		$datos['id_sistema'] =$this->input->post('id_sistema');
 		$datos['id_turno'] =$this->input->post('id_turno');
 		$datos['promedio'] =$this->input->post('promedio');
@@ -260,26 +228,20 @@ class Registro extends CI_Controller {
 		$datos['matricula_escuela'] =$this->input->post('matricula');
 		$datos['id_grado'] =$this->input->post('id_grado');
 		$aux=$this->input->post('finado_madre');
-		
 		if($aux=='on'){
 			$datos['finado_madre']=1;
-		}else{ 
+		}else 
 			$datos['finado_madre']=0;
-		}
-		
 		$aux=$this->input->post('finado_padre');
 		if($aux=='on'){
 			$datos['finado_padre']=1;
-		}else{ 
+		}else 
 			$datos['finado_padre']=0;
-		}
-		
 		$aux= $this->input->post('es_etnia');
 		if($aux=='on'){
 			$datos['petnica']=1;
-		}else{
+		}else
 			$datos['petnica']=0;
-		}
 		
 		
 		
@@ -288,14 +250,11 @@ class Registro extends CI_Controller {
 		$datos['escolar']=$datos['sexo'].$in.$pla;
 		
 		$datos['inserta']=$this->m_registro->InsertaInscripcion($datos);
-	
- 		echo trim($datos['inserta']);
-		//echo "1";
+		//$datos['inserta']=$this->m_registro->prueba();
+// 		echo $datos['inserta'];
+		print_r($datos['inserta']);
 		                                      
 	}
-	
-	
-	
 	function guardaReinscripcion(){
 		$datos['id_archivo'] =2;
 		$datos['id_programa'] =1;
