@@ -14,6 +14,7 @@ class Registro_uni extends CI_Controller {
 	public function index()
 	{
 		$id_modulo=5;
+		$datos['title']='Registro de Beneficiarios del Universitarios Sí';
 		$hoy=new DateTime(fecha_actual());
 		$aux=$this->m_registro->getModuloActivo($id_modulo);
 		$inicio=new DateTime($aux[0]['inicio']);
@@ -22,13 +23,17 @@ class Registro_uni extends CI_Controller {
 		//MODULO ACTIVO UNIVERSITARIOS=5
 		
 		if ($hoy >= $inicio && $hoy <=$fin){
+		 $this->load->view('layout/header', $datos, false);
 		 $this->load->view('universitario/registro_uni', false, false);
+		 $this->load->view('layout/footer', false, false);
 		}else 
 		{	
 			$aux=$this->m_registro->getModuloActivo($id_modulo);
 			$datos['fecha']=$aux[0];
 			$datos['sin_ins']=2;
+			$this->load->view('layout/header', $datos, false);
 			$this->load->view('universitario/sin_registro_uni', $datos, false);
+			$this->load->view('layout/footer', false, false);
 			
 		}
 		
@@ -39,11 +44,13 @@ class Registro_uni extends CI_Controller {
 		$aux=$this->m_registro_uni->getMatricula($datos['strCurp']);
 		$datos['matricula']= $aux[0]['matricula_asignada'];
 		
-		
+		$datos['title']='Registro de Beneficiarios del Universitarios Sí';
 		//print_r($datos['matricula']['matricula_asignada']);
 		if($datos['matricula']==""){
 			$datos['sin_ins']=3;
+			$this->load->view('layout/header', $datos, false);
 			$this->load->view('universitario/sin_registro_uni', $datos, false);
+			$this->load->view('layout/footer', false, false);
 		}
 		else{
 			
@@ -55,8 +62,10 @@ class Registro_uni extends CI_Controller {
 			$datos['pagoUni']=$aux[0]['cuenta'];
 			if ($datos['pagoUni']!=0){
 				$datos['sin_ins']=5;
+				$this->load->view('layout/header', $datos, false);
 				$this->load->view('universitario/sin_registro_uni', $datos, false);
-			
+				$this->load->view('layout/footer', false, false);
+				
 			}else{
 				
 				$aux=$this->m_registro_uni->getTarjeta($datos['matricula']);
@@ -65,25 +74,32 @@ class Registro_uni extends CI_Controller {
 				
 				if($datos['tarjeta']==null){
 					$datos['sin_ins']=4;
+					$this->load->view('layout/header', $datos, false);
 					$this->load->view('universitario/sin_registro_uni', $datos, false);
+					$this->load->view('layout/footer', false, false);
 				}
 				else{ 
 					$aux=$this->m_registro_uni->getDatosUniversitario($datos['matricula']);
 					$datos['dato']=$aux[0];
-					$this->load->view('universitario/form_registro_uni', $datos, false);
+					$this->load->view('layout/header', $datos, false);
+					$this->load->view('universitario/sin_registro_uni', $datos, false);
+					$this->load->view('layout/footer', false, false);
 				}
 			
 			}
 			}
 			else {
 				$datos['sin_ins']=6;
+				$this->load->view('layout/header', $datos, false);
 				$this->load->view('universitario/sin_registro_uni', $datos, false);
+				$this->load->view('layout/footer', false, false);
 			}
 		}		
 	}
 	
 	function buscaInstitucion(){
 		
+		$datos['title']='Registro de Beneficiarios del Universitarios Sí';
 		
 		$datos['matricula'] = $this->input->post('matricula');
 		$datos['id_institucion'] = $this->input->post('selectInst');
@@ -112,8 +128,9 @@ class Registro_uni extends CI_Controller {
 		$datos['del']=$aux[0];
 		$datos['colonias']=$this->m_registro_uni->getColonias($datos['del']['id_delegacion']);
 		
+		$this->load->view('layout/header', $datos, false);
 		$this->load->view('universitario/form_registro_completo', $datos, false);
-		
+		$this->load->view('layout/footer', false, false);
 	}
 	function  guardaUniversitario(){
 		

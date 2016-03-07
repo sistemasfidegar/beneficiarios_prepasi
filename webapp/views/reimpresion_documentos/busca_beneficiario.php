@@ -1,37 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-    	<base href="<?php echo base_url(); ?>">
-        <meta charset="utf-8">
-        <title>Registro de Beneficiarios del Programa Universitarios Sí</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <!-- CSS -->
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700'>
-        
-        <link rel="stylesheet" href="../resources/bootstrap-3.3.6/css/bootstrap.min.css"> 
-        <link rel="stylesheet" href="../resources/formulario/css/jquery-ui.css">
-        <link rel="stylesheet" href="../resources/formulario/css/style.css">       
-        <link rel="stylesheet" href="../resources/formulario/numeric/jquery-numeric.css">   
-        <!--  <link rel="stylesheet" href="../resources/formulario/qtip/jquery.qtip.css">-->
-		
-                 
-         
-        <script type="text/javascript" src="../resources/js/jquery-1.12.0.min.js" charset="UTF-8"></script>
-        
-        
-        <link rel="stylesheet" href="../resources/sweetalert/sweetalert.css">                            
-        <script type="text/javascript" src="../resources/sweetalert/sweetalert.min.js"></script>  
-        <script type="text/javascript" src="../resources/js/jquery.blockUI.js"></script>
-        <script type="text/javascript" src="../resources/formulario/js/bootbox.min.js"></script>
-        <script type="text/javascript" src="../resources/formulario/js/jquery-ui.js"></script>
-        <script type="text/javascript" src="../resources/formulario/js/jquery-validate.js"></script>
-        <script type="text/javascript" src="../resources/formulario/numeric/jquery-numeric.js"></script>
-        <!--<script type="text/javascript" src="../resources/formulario/qtip/jquery.qtip.js"></script>
-          -->
 		<script type="text/javascript" src="../resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
 				
 		<link href="../resources/formulario/css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -63,8 +29,7 @@
 	        }
 	        
         </style>
-        
-      <body>
+     
          <div class="register-container container">
             <div class="row">                
                 <div class="register">
@@ -134,5 +99,3 @@
 				</div>
 			</div>
 		</div>
-	</body>
-</html>

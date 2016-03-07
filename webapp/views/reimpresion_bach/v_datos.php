@@ -1,40 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
 
-   <meta charset="utf-8">
-   <title>Reimpresión de Documentos</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="description" content="">
-   <meta name="author" content="">
-   
-   <!-- CSS -->
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700'>
-        
-    <link rel="stylesheet" href="../../../resources/bootstrap-3.3.6/css/bootstrap.min.css"> 
-    <link rel="stylesheet" href="../../../resources/formulario/css/jquery-ui.css">
-    <link rel="stylesheet" href="../../../resources/formulario/css/style.css">       
-    <link rel="stylesheet" href="../../../resources/formulario/numeric/jquery-numeric.css">
-    
-     
-        <script type="text/javascript" src="../../../resources/js/jquery-1.12.0.min.js" charset="UTF-8"></script>
-        
-        
-        <link rel="stylesheet" href="..../../resources/sweetalert/sweetalert.css">                            
-        <script type="text/javascript" src="../../../resources/sweetalert/sweetalert.min.js"></script>  
-        <script type="text/javascript" src="../../../resources/js/jquery.blockUI.js"></script>
-        <script type="text/javascript" src="../../../resources/formulario/js/bootbox.min.js"></script>
-        <script type="text/javascript" src="../../../resources/formulario/js/jquery-ui.js"></script>
-        <script type="text/javascript" src="../../../resources/formulario/js/jquery-validate.js"></script>
-        <script type="text/javascript" src="../../../resources/formulario/numeric/jquery-numeric.js"></script>
-        <!--<script type="text/javascript" src="../../resources/formulario/qtip/jquery.qtip.js"></script>
-          -->
-		<script type="text/javascript" src="../../../resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-				
-		<link href="../../../resources/formulario/css/bootstrap-toggle.min.css" rel="stylesheet">
-		<script type="text/javascript" src="../../../resources/formulario/js/bootstrap-toggle.min.js"></script>
-          
    <style type="text/css">
 	.btn {
 		  background: #e61e85;
@@ -75,26 +39,17 @@
             window.location.href = '<?php echo base_url(); ?>' + uri;
         }
   </script>
-  </head>
-	
-  <body>
-    
-    <?php 
-   
-  
-    ?>
-       
-        <div class="register-container container">
+  <div class="register-container container">
             <div class="row">
                
                 <div class="register">
-                    <form id="registra" action="../pdf" method="post">
+                    <form id="registra" action="reimpresion/pdf" method="post">
                     	<!-- <input type="hidden" id="matricula" name="matricula" value="<?php  echo $matricula; ?>" /> -->
                     	
                     	<input type="hidden" id="id_archivo" name="id_archivo" value="<?php echo $identificacion['id_archivo']; ?>" />
                     	<input type="hidden" id="fecha_carga" name="fecha_carga" value="<?php echo $identificacion['fecha']; ?>" />
                         <div style="text-align:left; padding-left:20px; border-bottom: 2px dotted #bbb; min-height:73px;">
-                        	<a href="index.php/reimpresion/index"><img src="../../../resources/img/logo_gdf_cgdf.png" style="padding-top:0px;" align="top" /></a>&nbsp;                                               	
+                        	<a href="index.php/reimpresion/index"><img src="resources/img/logo_gdf_cgdf.png" style="padding-top:0px;" align="top" /></a>&nbsp;                                               	
                         </div>
                         
                         <div style="text-align:center; padding-top:20px;">
@@ -220,12 +175,6 @@
         
         
         <!-- Javascript -->
-        <script src="../../../resources/js/jquery.backstretch.min.js"></script>
-        <script src="../../../resources/js/scripts.js"></script>
+        <script src="resources/js/jquery.backstretch.min.js"></script>
+        <script src="resources/js/scripts.js"></script>
        
-      
-             
-    </body>
-
-</html>
-

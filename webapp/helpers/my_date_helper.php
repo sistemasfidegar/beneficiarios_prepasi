@@ -61,7 +61,7 @@ function fecha_con_letra($date) {
     if ($date != null) {
         $lista = explode('-', $date);
         $mes = mesLetra((int) $lista[1]);
-        return $lista[2] . ' de ' . $mes . ' de ' . $lista[0];
+        return $lista[0] . ' de ' . $mes . ' de ' . $lista[2];
     } else {
         return "Fecha vacia";
     }

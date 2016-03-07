@@ -12,7 +12,11 @@ class Registro extends CI_Controller {
 	}
 	public function index()
 	{
+		$datos['title']='Registro de Beneficiarios del Programa Prepa Sí';
 		$id_modulo=1;
+		$inicio=0;
+		$fin=0;
+		
 		$hoy=new DateTime(fecha_actual());
 		
 		//Datos Beneficiario
@@ -28,19 +32,21 @@ class Registro extends CI_Controller {
 		
 			
 		if ($hoy >= $inicio && $hoy <=$fin){
-		
-				//Institucion Activa
-				$datos['selectInst'] = (int) $this->input->post('selectInst');
-				$aux=$this->m_registro->getFechaInscripcion($datos['selectInst']);
-				
+			
+			//Institucion Activa
+			$datos['selectInst'] = (int) $this->input->post('selectInst');
+			$aux=$this->m_registro->getFechaInscripcion($datos['selectInst']);
+			
+			if ($aux !=null){
 				$inicio=new DateTime($aux[0]['inicio']);
 				$fin = new DateTime($aux[0]['fin']);
+			}
 				/*
 				 print_r($hoy);
 				 echo '<br>';
 				 print_r($inicio);
 				 */
-				
+			
 				if ($fin !=null && $inicio!=null && $hoy >= $inicio && $hoy <=$fin){
 				
 					
@@ -86,7 +92,9 @@ class Registro extends CI_Controller {
 						//Inscripcion
 						if($datos['id_archivo']==1){
 							
+							$this->load->view('layout/header', $datos, false);
 							$this->load->view('registro/form_registro', $datos, false);
+							$this->load->view('layout/footer', false, false);
 						}
 						//Reinscripcion
 						if($datos['id_archivo']==2){
@@ -96,7 +104,9 @@ class Registro extends CI_Controller {
 							if ($aux[0]['cuenta']>=30){ 
 									
 								$datos['sin_ins']=3;
+								$this->load->view('layout/header', $datos, false);
 								$this->load->view('registro/sin_inscripcion', $datos, false);
+								$this->load->view('layout/footer', false, false);
 							}
 							
 							
@@ -104,7 +114,9 @@ class Registro extends CI_Controller {
 							
 							if($aux[0]['cuenta']!=0){
 								$datos['sin_ins']=4;
+								$this->load->view('layout/header', $datos, false);
 								$this->load->view('registro/sin_inscripcion', $datos, false);
+								$this->load->view('layout/footer', false, false);
 							}
 							
 							if($datos['id_institucion']==$datos['selectInst']){//misma institucion 
@@ -115,12 +127,18 @@ class Registro extends CI_Controller {
 								$datos['del']=$aux[0];
 								$datos['colonias']=$this->m_registro->getColonias($datos['del']['id_delegacion']);
 								
+								
+								$datos['title']='Registro de Beneficiarios del Programa Prepa Sí';
+								$this->load->view('layout/header', $datos, false);
 								$this->load->view('registro/form_registro_reinscripcion', $datos, false);
+								$this->load->view('layout/footer', false, false);
 							}
 							else 
 							{
 								$datos['sin_ins']=5;
+								$this->load->view('layout/header', $datos, false);
 								$this->load->view('registro/sin_inscripcion', $datos, false);
+								$this->load->view('layout/footer', false, false);
 							}
 						}
 					}
@@ -139,17 +157,21 @@ class Registro extends CI_Controller {
 				}
 				else
 				{
-					
+					$datos['institucion']=0;
 					$datos['sin_ins']=1;
 					$aux=$this->m_registro->getInstitucion($datos['selectInst']);
 					$datos['institucion']=$aux[0];
+					$this->load->view('layout/header', $datos, false);
 					$this->load->view('registro/sin_inscripcion', $datos, false);
+					$this->load->view('layout/footer', false, false);
 				}
 			}
 			else 
 			{
 				$datos['sin_ins']=2;
+				$this->load->view('layout/header', $datos, false);
 				$this->load->view('registro/sin_inscripcion', $datos, false);
+				$this->load->view('layout/footer', false, false);
 			}
 	}
 	

@@ -14,6 +14,7 @@ class Reimpresion extends CI_Controller {
 	public function index()
 	{
 		$id_modulo=3;
+		$datos['title']='Reimpresión de Documentos';
 		$hoy=new DateTime(fecha_actual());
 		$aux=$this->m_reimpresion->getModuloActivo($id_modulo);
 		$inicio=new DateTime($aux[0]['inicio']);
@@ -21,11 +22,15 @@ class Reimpresion extends CI_Controller {
 		
 			
 		if ($hoy >= $inicio && $hoy <=$fin){
+			$this->load->view('layout/header', $datos, false);
 			$this->load->view('reimpresion_bach/busca_beneficiario', true, false);
+			$this->load->view('layout/footer', false, false);
 		}
 		else{
 			$datos['sin_ins']=2;
+			$this->load->view('layout/header', $datos, false);
 			$this->load->view('reimpresion_bach/sin_registro', $datos, false);
+			$this->load->view('layout/footer', false, false);
 		}
 		
 	}
@@ -67,6 +72,7 @@ class Reimpresion extends CI_Controller {
 		
 		$aux = $this->m_reimpresion->getIdentificacion($matricula);
     	$data['identificacion'] = $aux[0];
+    	$datos['title']='Reimpresión de Documentos';
     	
     	if($data['identificacion']['id_archivo']==2 || $data['identificacion']['id_archivo']==1){
     		
@@ -84,18 +90,23 @@ class Reimpresion extends CI_Controller {
 	    	}
 	    	
 	    	$data['matricula']=$matricula;
-	    	
+	    	$this->load->view('layout/header', $datos, false);
 	    	$this->load->view('reimpresion_bach/v_datos', $data, false);
+	    	$this->load->view('layout/footer', false, false);
 	    }
 	    else if($data['identificacion']['id_archivo']==3)
 	    { 
 	    	$datos['sin_ins']=3;
+	    	$this->load->view('layout/header', $datos, false);
 	    	$this->load->view('reimpresion_bach/sin_registro', $datos, false);
+	    	$this->load->view('layout/footer', false, false);
 	    }
 	    else
 	    {
 	    	$datos['sin_ins']=1;
+	    	$this->load->view('layout/header', $datos, false);
 	    	$this->load->view('reimpresion_bach/sin_registro', $datos, false);
+	    	$this->load->view('layout/footer', false, false);
 	    }
 	}
 	
