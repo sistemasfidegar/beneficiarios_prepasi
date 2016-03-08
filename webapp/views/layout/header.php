@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
+        
+        <!-- FAVICON -->
+        <link href="resources/img/fidegaricon" type="image/ico" rel="icon">
 
         <!-- CSS -->
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
