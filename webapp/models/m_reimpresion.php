@@ -23,7 +23,7 @@ class M_reimpresion extends MY_Model{
 		return $results->result_array();
 	}
 	function getMatriculaUnam($dato){
-		$this->sql="SELECT matricula_asignada FROM  b_escolar 	WHERE matricula_escuela ='$dato' and id_archivo in (1,2,3);";
+		$this->sql="SELECT matricula_asignada FROM  b_escolar 	WHERE matricula_escuela ='$dato' and id_archivo in (1,2,3) and id_institucion in (1,2,15);";
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}
