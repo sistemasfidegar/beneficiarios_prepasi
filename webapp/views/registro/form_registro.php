@@ -2,7 +2,7 @@
          <style>
         
 	        .error {
-			    background: url("../resources/formulario/css/images/ui-bg_glass_95_fef1ec_1x400.png") repeat-x scroll 50% 50% #fef1ec !important;
+			    background: url("resources/formulario/css/images/ui-bg_glass_95_fef1ec_1x400.png") repeat-x scroll 50% 50% #fef1ec !important;
 			    border: 1px solid #cd0a0a !important;
 			    color: #cd0a0a;
 			}
@@ -282,52 +282,48 @@
 							 $.blockUI({message: 'Procesando por favor espere...'});
 				             $.ajax({
 				                 type: 'POST',
-				                 url: $('#registra_beneficiario').attr("action"),
+				                 url: $('#registra_beneficiario').attr('action'),
 				                 data: $('#registra_beneficiario').serialize(),
-				                 success: function (data) {
-									//console.log(data);
-				                     $.unblockUI();
-				                     if(data == 'ok')
-				                     {
-				                    	 swal({
-				                          	  title: "¡Registro exitoso!",
-				                          	  text: "",
-				                          	  type: "success",
-				                          	  showCancelButton: false,
-				                          	  confirmButtonColor: "#34AF00",
-				                          	  confirmButtonText: "Ok",
-				                          	  //cancelButtonText: "No, cancel plx!",
-				                          	  closeOnConfirm: false
-				                          	  //closeOnCancel: false
-				                          	},
-				                          	function(isConfirm){
-// 				                          	  if (isConfirm) {
-// 				                          		irA('index.php/registro/registrado');
-// 				                          	  } 
-				                          	});
-				                     }
-				                     else
-				                     {
-				                    	 swal({
-				                         	  title: "Ocurrio un error, intentelo más tarde!!!",
-				                         	  text: "",
-				                         	  type: "error",
+				                 success: function(data){
+					                 alert(data);
+					                 }
+				             }).done(function( data ) {
+				            	 alert(data);
+				            	 if(data == 1) {
+				            		 swal({
+			                          	  title: 'Listo',
+			                          	  text: '¡Registro exitoso!',
+			                          	  type: "success",
+			                          	  showCancelButton: false,
+			                          	  confirmButtonColor: '#34AF00',
+			                          	  confirmButtonText: 'Ok',
+			                          	  closeOnConfirm: true,
+			                          	  closeOnCancel: true
+				            		 }
+// 			                          	function(isConfirm){
+// 			                          	  if (isConfirm) {
+// 			                          		irA('/registro/registrado');
+// 			                          	  } 
+// 			                          	}
+			                          	);
+// 										setTimeout(function() {
+// 											location.reload();
+// 										}, 2500);
+									} else {
+										swal({
+				                         	  title: 'Error',
+				                         	  text: 'Ocurrió un error, inténtelo más tarde!!!',
+				                         	  type: 'error',
 				                         	  showCancelButton: false,
-				                         	  confirmButtonColor: "#C9302C",
-				                         	  confirmButtonText: "Ok",
-				                         	  //cancelButtonText: "No, cancel plx!",
-				                         	  closeOnConfirm: false
-				                         	  //closeOnCancel: false
-				                         	},
-				                         	function(isConfirm){
-// 				                         	  if (isConfirm) {
-// 				                         		 irA('index.php/registro/registrado');
-// 				                         	  } 
+				                         	  confirmButtonColor: '#C9302C',
+				                         	  confirmButtonText: 'Ok',
+				                         	  closeOnConfirm: true,   
+				                         	  closeOnCancel: true
 				                         	});
-				                     }
-				                 }
-				             });
-			         }
+									}
+								});
+				             $.unblockUI();
+					}
 	         
 
 				     });

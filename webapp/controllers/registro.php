@@ -271,10 +271,17 @@ class Registro extends CI_Controller {
 		$pla = str_pad($datos['id_plantel'], 3,0, STR_PAD_LEFT);
 		$datos['escolar']=$datos['sexo'].$in.$pla;
 		
-		$datos['inserta']=$this->m_registro->InsertaInscripcion($datos);
+		//$datos['inserta']=$this->m_registro->InsertaInscripcion($datos);
+		if($this->m_registro->InsertaInscripcion($datos)) {
+			echo 1;
+			return true;
+		} else {
+			echo 2;
+			return false;
+		}
 		//$datos['inserta']=$this->m_registro->prueba();
-// 		echo $datos['inserta'];
-		print_r($datos['inserta']);
+
+		//print_r($datos['inserta']);
 		                                      
 	}
 	function guardaReinscripcion(){
@@ -357,11 +364,19 @@ class Registro extends CI_Controller {
 			$datos['petnica']=1;
 		}else
 			$datos['petnica']=0;
-		$datos['matricula_ps']=$this->input->post('matricula_ps');
-		$datos['inserta']=$this->m_registro->UpdateInscripcion($datos);
-		echo $datos['inserta'];
 		
+		$datos['matricula_ps']=$this->input->post('matricula_ps');
+		
+		
+		if($this->m_registro->UpdateInscripcion($datos)) {
+			echo 1;
+			return true;
+		} else {
+			echo 2;
+			return false;
+		}		
 	}
+	
 	function ajaxGetColonias($id_delegacion){
 		
 		$aux=$this->m_registro->getColonias($id_delegacion);

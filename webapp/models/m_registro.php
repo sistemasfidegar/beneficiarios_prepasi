@@ -85,8 +85,8 @@ class M_registro extends MY_Model{
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}
+	
 	function InsertaInscripcion($datos){
-		
 		// CONSTRUCCION DE PS
 		$consecutivo=$this->getConsecutivo();
 		
@@ -105,9 +105,10 @@ class M_registro extends MY_Model{
 		//beneficiario
 		$this->sql="insert into beneficiarios (matricula_asignada, ap, am, nombre, id_solicitud,id_archivo, id_generacion_ps,fecha_carga, id_programa) values(:ps,:ap_p,:ap_m,:nombre,:id_solicitud,:id_archivo,:id_generacion,now(),:id_programa) returning matricula_asignada;";
  		$this->bindParameters($datos);
+ 		$this->db->query($this->sql);
 		$beneficiario = $this->db->query($this->sql);
 		
-	 //print_r($beneficiario);
+	 	//print_r($beneficiario);
 		
 		//b_personal
 		$this->sql="insert into b_personal (matricula_asignada,ap_p, am_p, nombre_p,ap_m, am_m, nombre_m, celular,telefono, fecha_nacimiento, edad, id_sexo, email, curp, id_archivo, id_ocupacion,
@@ -116,35 +117,44 @@ class M_registro extends MY_Model{
 										   :id_estado_civil,:id_etnia,:id_hijos,:finado_padre, :finado_madre, :lugar_nac, :id_discapacidad, :petnica) returning matricula_asignada;";
 			
 		$this->bindParameters($datos);
+		$this->db->query($this->sql);
 		$b_personal = $this->db->query($this->sql);
 		
 		//b_escolar
 		$this->sql="insert into b_escolar (matricula_asignada,matricula_escuela, id_institucion,id_plantel,id_turno,promedio,id_grado,id_sistema,num_mat_adeuda,id_archivo,id_carrera, id_generacion) 
 									values(:ps,:matricula_escuela, :id_institucion,:id_plantel,:id_turno,:promedio,:id_grado,:id_sistema,:materias,:id_archivo,:id_carrera, :id_generacion) returning matricula_asignada;";
 		$this->bindParameters($datos);
+		$this->db->query($this->sql);
 		$b_escolar = $this->db->query($this->sql);
 		
 		//b_direccion
 		$this->sql="insert into b_direccion (matricula_asignada,calle,noext,noint,ecalle,id_colonia,id_entidad,id_ut,id_archivo,ycalle,manzana,lote,edificio,rampa,andador,departamento,pasillo,villa,entrada,id_tiempo_residencia)
 									values(:ps,upper(:calle),:noext,:noint,upper(:ecalle),:id_colonia,:lugar_nac,:id_uts,:id_archivo,upper(:ycalle),:manzana,:lote,:edificio,:rampa,:andador,:departamento,:pasillo,:villa,:entrada,:id_tiempo_residencia) returning matricula_asignada;";
 		$this->bindParameters($datos);
+		$this->db->query($this->sql);
 		$b_dir = $this->db->query($this->sql);
 
-		
-		
-		
-		if ($beneficiario==1 && $b_personal==1 && $b_escolar==1&& $b_dir==1)
-		{
+		//if ($beneficiario==1 && $b_personal==1 && $b_escolar==1&& $b_dir==1)
+		if($this->db->trans_status() === TRUE){
 			$this->db->trans_commit();
-			return 'ok';
-		}
-		else
-		{
+			return true;
+		} else {
 			$this->db->trans_rollback();
-			return 'nook';
+			//asignamos el motivo por el cual falló la inscripción
+			$motivo = ($beneficiario != 1) ? "Datos incorrectos en la Tabla beneficiarios" : ($b_personal != 1) ? "Datos incorrectos en la Tabla b_personal" : ($b_escolar != 1) ? "Datos incorrectos en la Tabla b_escolar" : ($b_dir != 1) ? "Datos incorrectos en la Tabla b_direccion" : "";
+			//insertamos en la tabla log_inscripcion el error producido para tener conocimiento de los consecutivos perdidos y el por qué
+			$data = array(
+					'matricula_asignada' => $datos['ps'],
+					'curp' => $datos['curp'],
+					'consecutivo' => $datos['cons'],
+					'ciclo' => $datos['ciclo'],
+					'motivo' => $motivo,
+					'fecha_carga' => date('Y-m-d H:i:s')
+			);
 			
+			$this->db->insert('log_inscripcion', $data);
+			return false;
 		}
-		
 	}
 	
 	function getUT($id_colonia, $id_cp){
@@ -152,6 +162,7 @@ class M_registro extends MY_Model{
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}
+	
 	function UpdateInscripcion($datos){
 		$this->db->trans_begin();
 		
@@ -159,7 +170,8 @@ class M_registro extends MY_Model{
 		$this->sql="update beneficiarios set id_solicitud=:id_solicitud,id_archivo=:id_archivo, id_generacion_ps=:id_generacion,fecha_carga=now(), id_programa=:id_programa 
 					where matricula_asignada=:matricula_ps;";
 		$this->bindParameters($datos);
-		$beneficiario = $this->db->query($this->sql);
+		$this->db->query($this->sql);
+		//$beneficiario = $this->db->query($this->sql);
 		
 		//b_personal
 		$this->sql="update b_personal set ap_p=upper(:apellidoPadreP), am_p=upper(:apellidoPadreM), nombre_p=upper(:nombrePadre), ap_m=upper(:apellidoMadreP), am_m=upper(:apellidoMadreM), nombre_m=upper(:nombreMadre), celular=:celular
@@ -167,32 +179,32 @@ class M_registro extends MY_Model{
 				id_grupo_etnico=:id_etnia, id_hijos=:id_hijos, finado_padre=:finado_padre, finado_madre=:finado_madre, id_lugar_nacimiento=:lugar_nac, id_discapacidad=:id_discapacidad,petnica=:petnica
 				where matricula_asignada=:matricula_ps;";
 		$this->bindParameters($datos);
-		$b_personal = $this->db->query($this->sql);
+		$this->db->query($this->sql);
+		//$b_personal = $this->db->query($this->sql);
 		
 		//b_escolar
 		$this->sql="update b_escolar set matricula_escuela=:matricula_escuela, id_plantel=:id_plantel,id_turno=:id_turno,promedio=:promedio,id_grado=:id_grado
 					,id_sistema=:id_sistema,num_mat_adeuda=:materias,id_archivo=:id_archivo,id_carrera=:id_carrera, id_generacion=:id_generacion
 					where matricula_asignada=:matricula_ps;";
 		$this->bindParameters($datos);
-		$b_escolar = $this->db->query($this->sql);
+		$this->db->query($this->sql);
+		//$b_escolar = $this->db->query($this->sql);
 		
 		//b_direccion
 		$this->sql="update b_direccion set calle=upper(:calle),noext=:noext,noint=:noint,ecalle=upper(:ecalle),id_colonia=:id_colonia,id_entidad=:lugar_nac,id_ut=:id_uts,id_archivo=:id_archivo,ycalle=upper(:ycalle)
 								,manzana=:manzana,lote=:lote,edificio=:edificio,rampa=:rampa,andador=:andador,departamento=:departamento,pasillo=:pasillo,villa=:villa,entrada=:entrada,id_tiempo_residencia=:id_tiempo_residencia
 								where matricula_asignada=:matricula_ps;";
 		$this->bindParameters($datos);
-		$b_dir = $this->db->query($this->sql);
+		$this->db->query($this->sql);
+		//$b_dir = $this->db->query($this->sql);
 		
-		if ($beneficiario && $b_personal && $b_escolar && $b_dir)
-		{
+		//if ($beneficiario && $b_personal && $b_escolar && $b_dir)
+		if($this->db->trans_status() === TRUE){
 			$this->db->trans_commit();
 			return 'ok';
-		}
-		else
-		{
+		} else {
 			$this->db->trans_rollback();
-			return false;
-				
+			return false;	
 		}
 	}
 	

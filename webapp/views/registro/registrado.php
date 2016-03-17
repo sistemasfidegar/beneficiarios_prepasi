@@ -3,7 +3,7 @@
          <style>
         
 	        .error {
-			    background: url("../resources/formulario/css/images/ui-bg_glass_95_fef1ec_1x400.png") repeat-x scroll 50% 50% #fef1ec !important;
+			    background: url("resources/formulario/css/images/ui-bg_glass_95_fef1ec_1x400.png") repeat-x scroll 50% 50% #fef1ec !important;
 			    border: 1px solid #cd0a0a !important;
 			    color: #cd0a0a;
 			}

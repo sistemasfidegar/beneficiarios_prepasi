@@ -284,51 +284,45 @@
 							 $.blockUI({message: 'Procesando por favor espere...'});
 				             $.ajax({
 				                 type: 'POST',
-				                 url: $('#registra_beneficiario').attr("action"),
+				                 url: $('#registra_beneficiario').attr('action'),
 				                 data: $('#registra_beneficiario').serialize(),
-				                 success: function (data) {
-
-				                     $.unblockUI();
-				                     if(data === 'ok')
-				                     {
-				                    	 swal({
-				                          	  title: "¡Registro exitoso!",
-				                          	  text: "",
-				                          	  type: "success",
-				                          	  showCancelButton: false,
-				                          	  confirmButtonColor: "#34AF00",
-				                          	  confirmButtonText: "Ok",
-				                          	  //cancelButtonText: "No, cancel plx!",
-				                          	  closeOnConfirm: false
-				                          	  //closeOnCancel: false
-				                          	},
-				                          	function(isConfirm){
-				                          	  if (isConfirm) {
-				                          		irA('index.php/registro/registrado');
-				                          	  } 
-				                          	});
-				                     }
-				                     else
-				                     {
-				                    	 swal({
-				                         	  title: "Ocurrio un error, intentelo más tarde!!!",
-				                         	  text: "",
-				                         	  type: "error",
-				                         	  showCancelButton: false,
-				                         	  confirmButtonColor: "#C9302C",
-				                         	  confirmButtonText: "Ok",
-				                         	  //cancelButtonText: "No, cancel plx!",
-				                         	  closeOnConfirm: false
-				                         	  //closeOnCancel: false
-				                         	},
-				                         	function(isConfirm){
-				                         	  if (isConfirm) {
-				                         		 irA('index.php/registro/registrado');
-				                         	  } 
-				                         	});
-				                     }
+				                 success: function(data){
 				                 }
-				             });
+			             }).done(function( data ) {
+			            	 if(data == 1) {
+			            		 swal({
+		                          	  title: 'Listo',
+		                          	  text: '¡Registro exitoso!',
+		                          	  type: "success",
+		                          	  showCancelButton: false,
+		                          	  confirmButtonColor: '#34AF00',
+		                          	  confirmButtonText: 'Ok',
+		                          	  closeOnConfirm: true,
+		                          	  closeOnCancel: true
+			            		 }
+//			                          	function(isConfirm){
+//			                          	  if (isConfirm) {
+//			                          		irA('/registro/registrado');
+//			                          	  } 
+//			                          	}
+		                          	);
+// 									setTimeout(function() {
+// 										location.reload();
+// 									}, 2500);
+								} else {
+									swal({
+			                         	  title: 'Error',
+			                         	  text: 'Ocurrió un error, inténtelo más tarde!!!',
+			                         	  type: 'error',
+			                         	  showCancelButton: false,
+			                         	  confirmButtonColor: '#C9302C',
+			                         	  confirmButtonText: 'Ok',
+			                         	  closeOnConfirm: true,   
+			                         	  closeOnCancel: true
+			                         	});
+								}
+							});
+			             $.unblockUI();
 			         }
 	         
 
