@@ -26,7 +26,9 @@ class M_correccion extends MY_Model{
 		$results = $this->db->query($this->sql);
 		return $results->result_array();
 	}
+	
 	function aceptado($matricula){
+		/** */
 		$this->sql="SELECT aceptado from revision where matricula_asignada='$matricula';";
 		$results = $this->db->query($this->sql);
 		return $results->result_array();

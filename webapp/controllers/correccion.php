@@ -113,23 +113,19 @@ class Correccion extends CI_Controller {
 		}
 	}
 	function ajax_beneficiario_matricula(){
-	
-	
 		$matricula =  $this->input->post('matricula');
-	
-	
-		$aux=$this->m_correccion->getMatricula($matricula);
-	
-		if($aux!=null)
-		{
-				
-			$aceptado=$this->m_correccion->aceptado($matricula);
-			if (is_null($aceptado[0]['aceptado'])!=null || isset($aceptado[0]['aceptado'])!=1)
-				echo $matricula = $aux[0]['matricula_asignada'];
-			else 
-				echo 'aceptado';
-					
+		$aux = $this->m_correccion->getMatricula($matricula);
 		
+		$aux = isset($aux[0]['matricula_asignada']) ? $aux[0]['matricula_asignada'] : null;
+		
+		if(!is_null($aux)) {
+			$aceptado = $this->m_correccion->aceptado($aux);
+			$aceptado = isset($aceptado[0]['aceptado']) ? $aceptado[0]['aceptado'] : null;
+			
+			if (is_null($aceptado) || $aceptado != 1)
+				echo $matricula = $aux;
+			else
+				echo 'aceptado';
 		}
 		else
 		{
@@ -139,15 +135,18 @@ class Correccion extends CI_Controller {
 	
 	
 	function ajax_beneficiario_unam(){
-	
 		$matricula =  $this->input->post('matricula_escuela');
-	
-	
-		$aux=$this->m_correccion->getMatriculaUnam($matricula);
-	
-		if($aux!=null)
-		{
-			echo $matricula = $aux[0]['matricula_asignada'];
+		$aux = $this->m_correccion->getMatriculaUnam($matricula);
+		$aux = isset($aux[0]['matricula_asignada']) ? $aux[0]['matricula_asignada'] : null;
+		
+		if(!is_null($aux)) {
+			$aceptado = $this->m_correccion->aceptado($aux);
+			$aceptado = isset($aceptado[0]['aceptado']) ? $aceptado[0]['aceptado'] : null;
+			
+			if (is_null($aceptado) || $aceptado != 1)
+				echo $matricula = $aux;
+			else
+				echo 'aceptado';
 		}
 		else
 		{

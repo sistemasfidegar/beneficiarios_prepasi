@@ -13,7 +13,6 @@
     		            url: 'correccion/ajax_beneficiario_matricula',
     		            data: {matricula: $("#matricula_asignada").val()},
     		            success: function (data) {
-
         		            if(data!="bad")
         		            {
             		            if(data!="aceptado"){
@@ -78,7 +77,7 @@
                        	<!-- <img src="../resources/formulario/img/tit_sistema.png" style="padding-top:10px;" align="top" />  -->                        	
                  </div>
                  <br>
-                 	<div style="text-align:CENTER !important;"><label class="leyenda" style="color:#E6007E; padding-left:20px;"> REIMPRESIÓN DE DOCUMENTOS</label></div>
+                 	<div style="text-align:CENTER !important;"><label class="leyenda" style="color:#E6007E; padding-left:20px;"> CORRECCI&Oacute;N DE DATOS </label></div>
 						<table width="620" border="0" align="center" cellpadding="0" cellspacing="0">
 							 <tr>
 							   	<td bgcolor="">
