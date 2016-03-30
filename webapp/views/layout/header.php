@@ -15,7 +15,9 @@
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700'>
         
-        <link rel="stylesheet" href="resources/bootstrap-3.3.6/css/bootstrap.min.css"> 
+        <link rel="stylesheet" type="text/css" href="resources/bootstrap-3.3.6/css/bootstrap.min.css"> 
+        <link rel="stylesheet" type="text/css" href="resources/bootstrap-3.3.6/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="resources/font-awesome-4.5.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="resources/formulario/css/jquery-ui.css">
         <link rel="stylesheet" href="resources/formulario/css/style.css">       
         <link rel="stylesheet" href="resources/formulario/numeric/jquery-numeric.css">   
@@ -24,7 +26,6 @@
                  
          
         <script type="text/javascript" src="resources/js/jquery-1.12.0.min.js" charset="UTF-8"></script>
-        
         
         <link rel="stylesheet" href="resources/sweetalert/sweetalert.css">                            
         <script type="text/javascript" src="resources/sweetalert/sweetalert.min.js"></script>  
