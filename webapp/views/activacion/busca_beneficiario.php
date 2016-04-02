@@ -4,8 +4,7 @@
     			if($("#matricula_asignada").val() != "") { 
     				$.blockUI({message: 'Procesando por favor espere...'});
     	        	jQuery.ajax({
-    		            type: 'post',
-    		            dataType: 'html',
+    		            type: 'POST',
     		            url: 'activacion/getBeneficiario',
     		            data: {matricula: $("#matricula_asignada").val()},
     		            success: function (data) {
@@ -51,8 +50,7 @@
 
         });//ready
         function irA(uri) {
-            window.location.href =  uri;
-            
+        	window.location.href = '<?= base_url(); ?>' + uri;
         }	
         </script>
         
@@ -71,7 +69,7 @@
 							situaci&oacute;n que presenta el expediente que entregaste.<br /><br/>
 							
 							Para dar seguimiento a tu tr&aacute;mite, es indispensable que <strong>te presentes en las oficinas del 
-							Programa</strong>, ubicadas en Lucas Alamán #45 en la colonia Obrera, Delegaci&oacute;n Cuauht&eacute;moc 
+							Programa</strong>, ubicadas en Lucas Alam&aacute;n #45 en la colonia Obrera, Delegaci&oacute;n Cuauht&eacute;moc 
 							(Metro Doctores), de lunes a viernes de 9:00 a 17:00 hrs.<br/><br/>
 							
 							Te recomendamos que <strong>revises cu&aacute;les son los documentos aceptados y sus 
@@ -127,8 +125,8 @@
 				<div class="modal-body">
 					<form id="attributeForm" role="form">
 						<div class="form-group">
-							Aún no es posible que realices la activación de la tarjeta, debido a que tu expediente se encuentra en proceso de revisión. <br />
-							Recuerda que debes intentarlo 2 semanas después de haber concluido la recepción de documentos en tu plantel.<br />	
+							A&uacute;n no es posible que realices la activaci&oacute;n de la tarjeta, debido a que tu expediente se encuentra en proceso de revisi&oacute;n. <br />
+							Recuerda que debes intentarlo 2 semanas despu&eacute;s de haber conclu&iacute;do la recepci&oacute;n de documentos en tu plantel.<br />	
 						</div>
 					</form>
 				</div>
@@ -171,12 +169,12 @@
 				<div class="modal-body">
 					<form id="attributeForm" role="form">
 						<div class="form-group">
-							Recuerda que la activación de tarjeta únicamente la puedes llevar a cabo si realizaste tu registro electrónico para el ciclo 2015-2016, si entregaste tus documentos y
+							Recuerda que la activaci&oacute;n de tarjeta &uacute;nicamente la puedes llevar a cabo si realizaste tu registro electr&oacute;nico para el ciclo 2016-2017, si entregaste tus documentos y
 	                        si estos fueron aceptados. <br /><br />
 	                        
 	                        1. Verifica que el dato que proporcionaste para ingresar al sistema es correcto (CURP, PS o No. de cuenta), ya que puede ser un error al teclear.<br /><br />
 	                        
-	                        Si los datos proporcionados son correctos, comunícate al teléfono <br />1102 1750 (L a V de 9 a 18 hrs) para que puedan brindarte mayor información.<br /><br />  
+	                        Si los datos proporcionados son correctos, comun&iacute;cate al tel&eacute;fono 1102 1750 (L a V de 9 a 18 hrs) para que puedan brindarte mayor informaci&oacute;n.<br /><br />  
 						</div>
 					</form>
 				</div>
