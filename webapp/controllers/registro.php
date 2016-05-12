@@ -27,8 +27,10 @@ class Registro extends CI_Controller {
 		
 		//Modulo Activo
 		$aux=$this->m_registro->getModuloActivo($id_modulo);
-		$inicio=new DateTime($aux[0]['inicio']);
-		$fin = new DateTime($aux[0]['fin']);
+		
+		
+		$inicio = isset ($aux[0]['inicio']) ? new DateTime ($aux[0]['inicio']) : null;
+		$fin = isset ($aux[0]['fin']) ? new DateTime ($aux[0]['fin']) : null;
 		
 			
 		if ($hoy >= $inicio && $hoy <=$fin){
@@ -47,7 +49,7 @@ class Registro extends CI_Controller {
 				 print_r($inicio);
 				 */
 			
-				if ($fin !=null && $inicio!=null && $hoy >= $inicio && $hoy <=$fin){
+				if (!is_null($inicio) && ! is_null($fin) && $hoy >= $inicio && $hoy <=$fin){
 				
 					
 					if($_POST!=null)
@@ -101,7 +103,9 @@ class Registro extends CI_Controller {
 							
 							//#pagos
 							$aux=$this->m_registro->getNoPagosBach($datos['matricula']);
-							if ($aux[0]['cuenta']>=30){ 
+							$aux = isset($aux[0]['cuenta']) ? $aux[0]['cuenta'] : null;
+							
+							if (!is_null($aux) && $aux>=30){ 
 									
 								$datos['sin_ins']=3;
 								$this->load->view('layout/header', $datos, false);
@@ -111,8 +115,9 @@ class Registro extends CI_Controller {
 							
 							
 							$aux=$this->m_registro->getNoPagosUni($datos['matricula']);
+							$aux = isset($aux[0]['cuenta']) ? $aux[0]['cuenta'] : null;
 							
-							if($aux[0]['cuenta']!=0){
+							if($aux!=0){
 								$datos['sin_ins']=4;
 								$this->load->view('layout/header', $datos, false);
 								$this->load->view('registro/sin_inscripcion', $datos, false);

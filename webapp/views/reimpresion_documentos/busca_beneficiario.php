@@ -80,7 +80,7 @@
 							          
 							          <td colspan ="2""center">
 							          <div class="box-footer" style="text-align: right;" >
-						     				<button id="guardar" name="guardar" type="submit" class="btn ">Consultar</button>
+						     				<button id="guardar" name="guardar" type="submit" class="btn">Consultar</button>
 						     		   </div>
 							          </td>
 							        </tr>

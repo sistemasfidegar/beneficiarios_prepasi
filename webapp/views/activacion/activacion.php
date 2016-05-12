@@ -29,7 +29,7 @@
 		        messages: {
 		        	tarjeta1: {required: "Campo obligatorio"},
 		        	tarjeta2: {required: "Campo obligatorio", tarjetaigual: "La tarjeta no coincide"},
-		        	mes: {required: "Campo obligatorio", checkmonthandyear: "El mes no está vigente"},
+		        	mes: {required: "Campo obligatorio", checkmonthandyear: "El mes no está¡ vigente"},
 		        	anio: {required: "Campo obligatorio", checkyear: "El año no está vigente", checkyearandmonth: "El año no está vigente"},		        
 		        },
 		        ignore: ":not(:visible)",
@@ -129,7 +129,7 @@
   				            if(data == 'ok') {
   				             	swal({
   				             		title: 'Listo',
-		                          	  text: '¡Registro exitoso!',
+		                          	  text: 'Â¡Registro exitoso!',
 		                          	  type: "success",
 		                          	  showCancelButton: false,
 		                          	  confirmButtonColor: '#34AF00',

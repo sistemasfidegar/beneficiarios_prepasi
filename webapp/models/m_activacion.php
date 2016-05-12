@@ -28,7 +28,11 @@ class M_activacion extends MY_Model {
 		$results = $this->db->query ( $this->sql );
 		return $results->result_array ();
 	}
-	
+	function getMatriculaUnam($dato) {
+		$this->sql="select matricula_asignada FROM b_escolar WHERE matricula_escuela='$dato' AND id_archivo IN (1,2) and id_institucion in (1,2);";
+		$results = $this->db->query ( $this->sql );
+		return $results->result_array ();
+	}
 	function revision($matricula) {
 		$this->sql = "SELECT R.matricula_asignada, R.id_rechazo, R.aceptado, RE.descripcion 
 		FROM revision R
@@ -83,5 +87,19 @@ class M_activacion extends MY_Model {
 		
 		return false;
 		}
+	}
+	//universitarios
+	function getMatriculaUni($dato) {
+		$this->sql = "SELECT B.matricula_asignada
+		FROM beneficiarios B
+		INNER JOIN b_personal P on B.matricula_asignada = P.matricula_asignada
+		WHERE  P.matricula_asignada ='$dato' OR P.CURP='$dato' and b.id_archivo=3;";
+		$results = $this->db->query ( $this->sql );
+		return $results->result_array ();
+	}
+	function getMatriculaUnamUni($dato) {
+		$this->sql="select matricula_asignada FROM b_escolar WHERE matricula_escuela_uni='$dato' AND id_archivo =3 and id_institucion_uni = 15;";
+		$results = $this->db->query ( $this->sql );
+		return $results->result_array ();
 	}
 }

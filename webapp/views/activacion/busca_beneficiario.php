@@ -37,12 +37,25 @@
     		            url: 'activacion/getBeneficiarioUnam',
     		            data: {matricula_escuela: $("#matricula_escuela").val()},
     		            success: function (data) {
-        		            if(data != "bad") {
-	    		            	irA('activacion/buscaBeneficiario/'+data);	               
-        		            } else {
-            		            alert('No se encontr\xf3 al beneficiario');
-            		            irA('activacion');
-            		        }
+    		            	 if(data == 'sinregistro') {
+         		            	$.unblockUI();
+         		            	$('#myModalSinRegistro').modal('show'); //open modal                 
+         		            } else if(data == 'ok'){
+         		            	irA('activacion/buscaBeneficiarioUnam/'+$("#matricula_escuela").val());
+             		        } else if(data == 'revision'){
+             		        	$.unblockUI();
+ 								$('#myModalRevision').modal('show'); //open modal  
+ 								$("#matricula_asignada").val('');	
+             		        } else if(data == 'activa'){
+             		        	$.unblockUI();
+ 								$('#myModalActiva').modal('show'); //open modal  
+ 								$("#matricula_asignada").val('');
+             		        } else {
+             		        	$.unblockUI();
+ 								$('#myModalRechazo').modal('show'); //open modal  
+ 								$('#motivo').html('Motivo: '+ data);
+                 		        $("#matricula_asignada").val('');
+                 		    }
     		            }   
     		        });
     			}
