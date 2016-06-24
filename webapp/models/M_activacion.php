@@ -32,7 +32,7 @@ class M_activacion extends MY_Model {
 	/**
 	 * Obtiene si la persona a buscar es un beneficiario o no.
 	 * 
-	 * @param String:$dato                 Dato a buscar (Matr&iacute;cula PS o CURP).
+	 * @param  String:$dato                 Dato a buscar (Matr&iacute;cula PS o CURP).
 	 * 
 	 * @return String:matricula_asignada   Matr&iacute;cula asignada. Null en caso contrario.
 	 * 
@@ -46,7 +46,7 @@ class M_activacion extends MY_Model {
 			$this->sql = "SELECT B.matricula_asignada
 			FROM beneficiarios B
 			INNER JOIN b_personal P ON B.matricula_asignada = P.matricula_asignada
-			WHERE  P.matricula_asignada = UPPER('$dato') OR P.CURP = '$dato' AND B.id_archivo IN (1, 2);";
+			WHERE P.matricula_asignada = UPPER('$dato') OR P.CURP = UPPER('$dato') AND B.id_archivo IN (1, 2);";
 			$results = $this->db->query ($this->sql);
 			return $results->result_array();
 		}

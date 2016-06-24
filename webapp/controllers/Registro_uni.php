@@ -14,7 +14,7 @@ class Registro_uni extends CI_Controller {
 	public function index()
 	{
 		$id_modulo=5;
-		$datos['title']='Registro de Beneficiarios del Universitarios Sí';
+		$datos['title']='Registro de Beneficiarios Universitarios Sí';
 		$hoy=new DateTime(fecha_actual());
 		$aux=$this->m_registro->getModuloActivo($id_modulo);
 		$inicio=new DateTime($aux[0]['inicio']);

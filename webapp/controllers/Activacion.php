@@ -42,7 +42,7 @@ class Activacion extends CI_Controller {
 		}
 	}
 	
-	function getBeneficiario() {
+	public function getBeneficiario() {
 		if(!empty($this->input->post())){
 			$matricula = $this->input->post('matricula');
 			$aux = $this->m_activacion->getMatricula($matricula);
@@ -92,54 +92,59 @@ class Activacion extends CI_Controller {
 			header("Location: " . base_url('activacion'));
 		}
 	}
-	function getBeneficiarioUnam()
-	{
-		$matricula = $this->input->post('matricula_escuela');
-		$aux = $this->m_activacion->getMatriculaUnam($matricula);
-		$matricula = isset($aux[0]['matricula_asignada']) ? $aux[0]['matricula_asignada'] : null;
-		
-		if (! is_null($matricula)) {
-			
-			$revision = $this->m_activacion->revision ($matricula);
+	
+	public function getBeneficiarioUnam() {
+		if(!empty($this->input->post())){
+			$matricula = $this->input->post('matricula_escuela');
+			$aux = $this->m_activacion->getMatriculaUnam($matricula);
 				
-			if (!empty($revision)) {
-				// verificamos que el beneficiario no tenga rechazos
-				if ($revision[0]['id_rechazo'] != 0) {
-					echo $revision[0]['descripcion'];
-				}
-			
-				//verificamos si le expediente del beneficiario se encuentra en revision
-				if ($revision[0]['aceptado'] == 0) {
-					echo 'revision';
-				}
-			
-				$tarjeta = $this->m_activacion->tarjeta($revision[0]['matricula_asignada']);
-			
-				if (!empty($tarjeta)) {
-					if (($tarjeta[0]['id_statustarjeta'] == 1 || $tarjeta[0]['id_statustarjeta'] == 100) && ($tarjeta[0]['id_archivo'] == 1 || $tarjeta[0]['id_archivo'] == 2)) {
-						echo 'activa';
+			$aux = isset($aux[0]['matricula_asignada']) ? $aux[0]['matricula_asignada'] : null;
+				
+			if (!is_null($aux)) {
+				$revision = $this->m_activacion->revision($aux);
+	
+				if (!empty($revision)) {
+					// verificamos que el beneficiario no tenga rechazos
+					if ($revision[0]['id_rechazo'] != 0) {
+						echo $revision[0]['descripcion'];
+						return;
 					}
 						
-					$status = $this->m_activacion->statusEspera();
-						
-					if (($tarjeta[0]['id_archivo'] == 1 || $tarjeta[0]['id_archivo'] == 2) && ($tarjeta[0]['id_statustarjeta'] == $status[0]['status'])) {
-						echo 'ok';
-					} else {
-						echo 'sinregistro';
+					//verificamos si le expediente del beneficiario se encuentra en revision
+					if ($revision[0]['aceptado'] == 0) {
+						echo 'revision';
+						return;
 					}
+						
+					$tarjeta = $this->m_activacion->tarjeta($revision[0]['matricula_asignada']);
+						
+					if (!empty($tarjeta)) {
+						//verificamos si el beneficiario ya tiene tarjeta activa
+						if ($tarjeta[0]['id_statustarjeta'] == 1 || $tarjeta[0]['id_statustarjeta'] == 100) {
+							echo 'activa';
+							return;
+						}
+	
+						$status = $this->m_activacion->statusEspera();
+	
+						if ($tarjeta[0]['id_statustarjeta'] == $status[0]['status']) {
+							echo 'ok';
+						} else {
+							echo 'sinregistro';
+						}
+					}
+				} else {
+					echo 'sinregistro';
 				}
-			} else
-			{
+			} else {
 				echo 'sinregistro';
 			}
+		} else {
+			header("Location: " . base_url('activacion'));
 		}
-		else
-		{
-			echo 'sinregistro';
-		}	
 	}
 	
-	function buscaBeneficiario($matricula) {
+	public function buscaBeneficiario($matricula) {
 		if(!empty($matricula)){
 			$datos['title'] = 'Activaci&oacute;n de Tarjeta';
 			
@@ -173,7 +178,7 @@ class Activacion extends CI_Controller {
 		}
 	}
 	
-	function buscaBeneficiarioUnam($matricula) {
+	public function buscaBeneficiarioUnam($matricula) {
 		if(!empty($matricula)){
 			$datos['title'] = 'Activaci&oacute;n de Tarjeta';
 				
@@ -207,90 +212,19 @@ class Activacion extends CI_Controller {
 		}
 	}
 	
-	function getBeneficiarioUnam() {
+	public function actualizar() {
 		if(!empty($this->input->post())){
-			$matricula = $this->input->post('matricula_escuela');
-			$aux = $this->m_activacion->getMatriculaUnam($matricula);
-			
-			$aux = isset($aux[0]['matricula_asignada']) ? $aux[0]['matricula_asignada'] : null;
-			
-			if (!is_null($aux)) {
-				$revision = $this->m_activacion->revision($aux);
-				
-				if (!empty($revision)) {
-					// verificamos que el beneficiario no tenga rechazos
-					if ($revision[0]['id_rechazo'] != 0) {
-						echo $revision[0]['descripcion'];
-						return;
-					}
-					
-					//verificamos si le expediente del beneficiario se encuentra en revision
-					if ($revision[0]['aceptado'] == 0) {
-						echo 'revision';
-						return;
-					}
-					
-					$tarjeta = $this->m_activacion->tarjeta($revision[0]['matricula_asignada']);
-					
-					if (!empty($tarjeta)) {
-						//verificamos si el beneficiario ya tiene tarjeta activa
-						if ($tarjeta[0]['id_statustarjeta'] == 1 || $tarjeta[0]['id_statustarjeta'] == 100) {
-							echo 'activa';
-							return;
-						}
-						
-						$status = $this->m_activacion->statusEspera();
-						
-						if ($tarjeta[0]['id_statustarjeta'] == $status[0]['status']) {
-							echo 'ok';
-						} else {
-							echo 'sinregistro';
-						}
-					}
+			if($this->m_activacion->checkTarjeta($this->input->post())) {
+				if($this->m_activacion->update($this->input->post(), 1)) {
+					echo 'ok';
 				} else {
-					echo 'sinregistro';
+					echo 'bad';
 				}
 			} else {
-				echo 'sinregistro';
+				echo 'nocoincide';
 			}
 		} else {
 			header("Location: " . base_url('activacion'));
 		}
 	}
-	function buscaBeneficiarioUnam($matricula) {
-		$datos['title'] = 'Activaci&oacute;n de Tarjeta';
-		$aux = $this->m_activacion->getMatriculaUnam($matricula);
-	
-		$matricula = isset($aux[0]['matricula_asignada']) ? $aux[0]['matricula_asignada'] : null;
-	
-		$this->load->view('layout/header', $datos, false);
-	
-		if(!is_null($matricula)) {
-			$beneficiario = $this->m_activacion->getDatos($matricula);
-				
-			if(!empty($beneficiario)) {
-				$datos['beneficiario'] = $beneficiario[0];
-				$this->load->view('activacion/activacion', $datos, false);
-			} else {
-				$this->load->view('activacion/activacion', false, false);
-			}
-		} else {
-			$this->load->view('activacion/activacion', false, false);
-		}
-	
-		$this->load->view('layout/footer', false, false);
-	}
-	
-	function actualizar() {
-		if($this->m_activacion->checkTarjeta($this->input->post())) {
-			if($this->m_activacion->update($this->input->post(), 1)) {
-				echo 'ok';
-			} else {
-				echo 'bad';
-			}
-		} else {
-			echo 'nocoincide';
-		}
-	}
-	
 }
