@@ -71,7 +71,7 @@ if (! defined ( 'BASEPATH' ))
 				$this->sql = "SELECT E.matricula_asignada 
 				FROM  b_escolar E
 				INNER JOIN b_personal P ON E.matricula_asignada = P.matricula_asignada
-				WHERE E.matricula_escuela = UPPER('$dato') AND E.id_archivo = 3 AND E.id_institucion = 15;";
+				WHERE E.matricula_escuela_uni = UPPER('$dato') AND E.id_archivo = 3 AND E.id_institucion_uni = 15;";
 				$results = $this->db->query($this->sql);
 				return $results->result_array();
 			}
